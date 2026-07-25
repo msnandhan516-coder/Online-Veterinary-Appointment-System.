@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Pending Appointments | Admin</title>
+    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+       <script>
+    // Force no back navigation after logout
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+        window.location.href = "{% url 'login' %}";
+    };
+</script>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<div class="block1">
+    <div class="main">
+        <header>
+            <h1>
+                <a class="logo" href="{% url 'admin_dashboard' %}">
+                    Admin Panel
+                </a>
+            </h1>
+        </header>
+    </div>
+</div>
+
+<!-- ================= CONTENT ================= -->
+<div class="block4">
+    <div class="main">
+        <section id="content">
+            <div class="container_12">
+                <div class="wrapper v_stripe">
+
+                    <article class="grid_12">
+                        <div class="appointment-card fade-anim">
+
+                            <h2 class="ind">
+                                <span>Pending</span> Appointments
+                            </h2>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Pet</th>
+                                        <th>Owner</th>
+                                        <th>Service</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th style="text-align:center;">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for appointment in appointments %}
+                                    <tr>
+                                        <td>{{ appointment.pet_name }}</td>
+                                        <td>{{ appointment.user.username }}</td>
+                                        <td>{{ appointment.service }}</td>
+                                        <td>{{ appointment.appointment_date }}</td>
+                                        <td>{{ appointment.appointment_time }}</td>
+
+                                        <td class="action-buttons">
+
+                                            <a href="{% url 'approve_appointment' appointment.id %}"
+                                               class="button approve-btn">
+                                                Approve
+                                            </a>
+
+                                            <a href="{% url 'reject_appointment' appointment.id %}"
+                                               class="button reject-btn">
+                                                Reject
+                                            </a>
+
+                                        </td>
+                                    </tr>
+
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="6" style="text-align:center;">
+                                            No pending appointments.
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                            <button type="button" class="button"
+                                onclick="window.location.href='{% url 'admin_dashboard' %}'">
+                                Back
+                            </button>
+
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+</body>
+</html>

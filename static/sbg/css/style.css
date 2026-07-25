@@ -1,0 +1,508 @@
+@import "../css/reset.css";@import "../css/grid.css";@import "../css/superfish.css";@import url(http://fonts.googleapis.com/css?family=Cabin:400,700|Lobster|Bevan);
+article,aside,audio,canvas,command,datalist,details,embed,figcaption,figure,footer,header,hgroup,keygen,meter,nav,output,progress,section,source,video{display:block}mark,rp,rt,ruby,summary,time{display:inline}
+/* Global properties ======================================================== */
+html {width:100%}
+
+body {font-family:Arial, Arial, Helvetica, sans-serif; font-size:12px; line-height:22px; color:#736d68; min-width:990px; background:url(../images/body_bg.png) 50% 0 repeat #e7e2d8;}
+.main {width:960px;padding:0;margin:0 auto;}
+
+/*********************************fonts*************************************/
+.reg {text-transform:uppercase}
+.rel{position: relative;}
+.f_left {float:left}
+.f_right {float:right}
+.align_right {text-align:right}
+.align_center {text-align:center}
+
+.it{font-style:italic}
+.let{letter-spacing:-1px}
+
+/*********************************CLASSES**********************************/
+.m_bottom_zero{ margin-bottom:0 !important;}
+.m_left_zero{ margin-left:0 !important;}
+.p_bottom_zero{ padding-bottom:0 !important;}
+.p_left_zero{ padding-left:0 !important;}
+
+.clear {clear:both;width:100%;line-height:0;font-size:0;}
+.wrapper {width:100%;overflow:hidden}
+.extra_wrapper{ overflow:hidden;}
+.container{width:100%}
+.extra_last, .last{ margin-bottom:0 !important; padding-bottom:0 !important;}
+.extra_last{ border:none !important; background:none !important;}
+.bg_none{ background:none !important;}
+
+/*==================================== Links ======================================================== */
+a {color:#736d68;outline:none; text-decoration:none; cursor:pointer;}
+a:hover{ color:#c45740; text-decoration:none;}
+
+.button{ display:inline-block; padding:11px 27px; margin: 18px 0 0; font-size: 12px; font-weight:bold; text-transform:uppercase; border-radius:20px; line-height: 18px; color:#6b6763; background:#fff;}
+.button:hover{ background:#c45740;color:#fff;}
+
+.link1{font-size: 15px; line-height: 20px; color: #fff; text-transform:uppercase; font-weight:bold;display:inline-block;padding-left:18px;background: url('../images/link1.png') 0 5px no-repeat;margin-top:15px;}
+
+/*********************************Displays*************************************/
+.block{ display:block;}
+.inline-block{ display:inline-block;}
+
+/*================================>> Global Blocks <<========================================*/
+.block1{background: url('../images/block1.jpg') 50% 0 repeat;}
+.block2{background: url('../images/block2.png') 50% 0 repeat;position:relative;z-index:10;}
+.block3{margin-top:-68px;height:674px;background:#e8e3df;}
+.block3>.bg{background: url('../images/block3.png') 0px 0 no-repeat #e8e3df;width:990px;margin:0 auto;}
+.block4{border-top:5px solid #d4cdc1;overflow:hidden;}
+/*********************************header*************************************/
+
+header {padding:34px 0 25px;margin: 0 10px;}
+header h1{width:434px;margin: 0 auto;}
+header h1 a {display:block;width:364px;height:73px;background:url(../images/logo.png) 0 0 no-repeat; text-decoration:none; text-indent:-9999px;}
+
+/*********************************content*************************************/
+#content {padding:65px 0px 37px 0px;background: url('../images/stripe.png') 50% bottom no-repeat;}
+.cont_pad{padding:76px 0 37px 0 !important;}
+
+/*================================>> aside <<========================================*/
+aside{background: url('../images/stripe.png') 50% bottom no-repeat; padding: 34px 0 30px 0;}
+
+/*===============================>> Paragraphs <<=============================*/
+
+p {margin-bottom:22px}
+.p2{ margin-bottom:14px;}
+.p3{ margin-bottom:13px;}
+.p4{ margin-bottom:12px;}
+/*================================>> LISTS <<========================================*/
+.list1{line-height:16px;}
+.list1 li{ background:url(../images/marker1.jpg) 0 7px no-repeat; padding-left:7px;margin-bottom:3px;}
+.list1 a{}
+
+.list2{}
+.list2 li{ background:url(../images/marker2.png) 0 3px no-repeat; padding-left:27px;margin-bottom:8px;}
+.list2 a{text-transform:uppercase;color:#736d68;font-weight:bold;word-spacing: -1px}
+.list2 a:hover{color:#c45740;}
+
+/*================================>> H <<========================================*/
+h2,h3,h4{ font-weight:normal;}
+h2{font-size: 32px;text-shadow:1px 1px 2px rgba(168,158,146,0.88);line-height: 38px; color:#3c3b3a;font-weight:bold;border-bottom:1px solid #c6c0b7;padding-bottom:18px;margin-bottom:20px; white-space: nowrap}
+h2 span{color:#c45740;}
+
+h2.ind{ margin-bottom:22px;}
+h2.ind1{ margin-bottom:19px;}
+h2.ind2{ margin-bottom:20px;}
+/*================================>> GOOGLE FONTS  <<========================================*/
+.cabin, .sf-menu a, .button, .link1, h2, footer{font-family: 'Cabin', sans-serif;}
+.bevan{font-family: 'Bevan', serif;}
+.serv_list figure{font-family: 'Lobster', cursive;}
+/*================================>> hovers <<========================================*/
+.button, .img_wrap, .sf-menu li a{-webkit-transition: all 0.3s ease;-moz-transition: all 0.3s ease;-o-transition: all 0.3s ease;transition: all 0.3s ease;}
+
+/*********************************page_1*************************************/
+.ext_list>li, .ext_box{ overflow:hidden;}
+.ext_list>li>figure, .ext_box>figure{ float:left;}
+.ext_list>li>div, .ext_box>div{overflow:hidden;}
+
+.slogans_box{padding: 153px 0 59px 9px;}
+.slogans_box .rel{margin-top:21px;}
+.slogans_box .button{margin:0;}
+.slogans{position:relative;}
+.slogans>div{width:370px;line-height:18px;background:none !important;height:230px;}
+.slogans .title1{font-size: 70px; line-height: 84px; color: #c45740;text-transform:uppercase;padding-left:3px;}
+.slogans .title2{font-size: 48px; line-height: 56px; color: #514d46;font-weight:bold;text-transform:uppercase;margin: -10px 0 3px 0;}
+.buttons{position:relative;height:50px;padding: 0 0 51px 10px;}
+.buttons .btn{display:block;float:left;width:35px;height:35px;margin-right:3px;}
+.buttons .prev{background: url('../images/prev.png') no-repeat;}
+.buttons .next{background: url('../images/next.png') no-repeat;}
+.buttons .btn:hover{background-position:0 -35px;}
+
+.offers{position: relative; margin-bottom:58px;}
+.offers:after{display: block; height:58px; width:100%; position: absolute; bottom:-59px; left: 0; background: url('../images/offers_after.png') repeat-x; content: "";}
+.offer{float:left;height:177px;}
+.offer1{background: url('../images/offer1.jpg') no-repeat;width:479px;}
+.offer2{background: url('../images/offer2.jpg') no-repeat;width:461px;}
+.offer .text{padding: 31px 30px 0 160px;color:#b2a9a1;line-height:20px;}
+.offer .title{font-size: 32px; line-height: 39px; color: #fff;margin-bottom:2px;}
+
+.f_19{font-size: 19px; line-height: 23px; color: #c45740; letter-spacing:-1px;}
+.lh_20{line-height:20px;}
+strong{text-transform:uppercase;color:#736d68;}
+
+.p_top1{padding-top:9px;}
+
+.img_wrap{border:7px solid #fff;display:inline-block;}
+a.img_wrap:hover{border-color:#c45740;}
+
+.box1{border-right:1px dashed #d9d2c8;padding: 9px 50px 12px 0;margin: 0 26px 0 0;}
+
+.serv_list{}
+.serv_list>li{border-bottom:1px solid #f1eee9;padding-bottom:11px;margin-bottom:12px;}
+.serv_list>li>div{margin: 1px 0 0 0px;}
+.serv_list>li>figure{width:65px;text-align: center;text-shadow: 1px 1px #b04d38;font-size: 30px; line-height: 36px; color: #fff;height:52px;padding-top:13px;border-radius:100%;margin: 0 15px 0 1px;}
+
+.bg1{background:#c45740;}
+.bg2{background:#d7826f;}
+.bg3{background:#e6a091;}
+
+.social{}
+.social .title{font-size: 21px; line-height: 25px; color: #64615c;margin-bottom:4px;}
+.social .subtitle{font-size: 11px; line-height: 14px; color: #8f887b;}
+.social .f_left{word-spacing: -1px}
+.social .f_right{padding: 6px 0px 0 0;width:92px;right:38px;position:relative;}
+.social .f_right a{display:inline-block;overflow:hidden;margin-left: 19px; height:30px;}
+.social .f_right a:hover img{margin-top:-30px;}
+/*********************************page_2*************************************/
+
+.m_bot1{margin-bottom:71px;}
+.m_bot2{margin-bottom:20px;}
+.m_bot3{margin-bottom:67px;}
+.m_bot4{margin-bottom:74px;}
+
+.clinic{margin-bottom:73px;}
+.clinic>div{padding-top:1px;}
+.clinic>div strong{word-spacing: -2px}
+.clinic>figure{margin: 3px 20px 0 0;}
+
+.team{display: block;padding: 15px 15px 14px;float:left;margin-left:17px;background: url('../images/team.jpg') repeat;width:165px;}
+.team img{margin-bottom: 13px;}
+.team strong{ display: block; margin-bottom:2px;white-space: nowrap}
+.team:hover{background:#fff;}
+
+.v_stripe{background: url('../images/vert_stripe.png') 280px 0 repeat-y;padding-bottom:16px;}
+/*********************************page_3*************************************/
+
+.treatment{background: url('../images/team.jpg') repeat;padding: 15px 15px 10px;}
+.treatment img{margin-bottom:17px;}
+.treatment strong{display:inline-block;margin-bottom:2px;}
+
+#newsletter label{margin-bottom:4px;display:block;}
+#newsletter input[type="text"]{width:204px;}
+#newsletter .button{margin-top:14px;}
+
+.product{float:left;margin-left:17px;background: url('../images/team.jpg') repeat; padding: 15px 15px 14px ;width:165px;}
+.product img{margin-bottom:13px;}
+.product strong{display: inline-block; margin-bottom:2px;}
+
+/*********************************page_4*************************************/
+
+
+/*********************************page_5*************************************/
+
+
+/* Contact form */
+#contact-form {padding:0px 0 0 0;}
+#contact-form .success {width:200px; margin-bottom:10px;text-align:center;}
+#contact-form textarea, input[type="text"]{margin:0;font-size:12px; border:1px solid #ded8cd; color:#736d68; padding:8px 7px 9px;outline:none; position:relative; font-family:Arial, Helvetica, sans-serif;background:#efece8;border-radius:15px;}
+#contact-form input {width:204px;}
+#contact-form textarea {overflow:auto; width:204px; height:244px;resize:none; float:left; margin: 0 0 0 0;}
+#contact-form label {display:block; min-height:44px; overflow:hidden;}
+#contact-form label.message { display:block; padding-bottom:0; }
+#contact-form .button {margin-right:8px;}
+#contact-form .error, #contact-form .empty, #contact-form .success {display:none;}
+#contact-form .error, #contact-form .empty {text-align:left; color:red; font-size:11px; clear:both;}
+#contact-form .buttons2 {overflow:hidden; position:relative; clear:both; padding-top:24px;}
+#contact-form .buttons2 a {
+	cursor:pointer;
+	margin-top:0;
+	text-align:center;
+}
+#contact-form span{ display:block; margin: 0px 0 0 5px;}
+
+.map_wrapper{overflow:hidden;display:inline-block;margin-bottom:26px;}
+#map_canvas {
+   width:366px;
+   height:381px;
+}
+.adress{margin: -2px 0 24px;}
+.adress span{ display:inline-block; width:79px;}
+.adress dt{}
+
+.demo{color:#c45740;text-decoration:underline;}
+.demo:hover{ text-decoration:none;}
+/****************************footer************************/
+footer {padding:31px 90px 31px 0;font-size: 14px; line-height: 19px;text-align:center;font-weight:bold;text-transform:uppercase;}
+footer, footer a{color: #918b81;}
+
+
+
+/* Appointment Form Card */
+.appointment-card {
+    width: 650px;
+    margin: 40px auto; /* centers horizontally */
+    padding: 30px 40px;
+
+    background: rgba(255, 255, 255, 0.85); /* transparent white */
+    border-radius: 12px;
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(6px);
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Center content section */
+#content {
+    text-align: center;
+}
+
+/* Keep table readable */
+.appointment-card table {
+    margin: 0 auto;
+    text-align: left;
+}
+
+/* Inputs */
+.appointment-card .input {
+    width: 260px;
+    padding: 6px 8px;
+}
+
+/* Buttons spacing */
+.appointment-card .button {
+    margin-top: 10px;
+}
+
+/* ===== Uniform Appointment Form Fields ===== */
+.appointment-card input[type="text"],
+.appointment-card input[type="email"],
+.appointment-card textarea {
+    width: 280px;
+    padding: 8px 10px;
+
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: #f2efe9;
+    color: #333;
+
+    border: 1px solid #d6d2cb;
+    border-radius: 18px;
+
+    outline: none;
+    box-sizing: border-box;
+}
+
+/* Textarea adjustments */
+.appointment-card textarea {
+    border-radius: 10px;
+    resize: none;
+    height: 90px;
+}
+
+/* Focus effect (same for all) */
+.appointment-card input:focus,
+.appointment-card textarea:focus {
+    border-color: #c96a3b;
+    background: #fff;
+}
+
+/* Align labels neatly */
+.appointment-card td strong {
+    font-size: 13px;
+    color: #666;
+    letter-spacing: 1px;
+}
+
+/* ================= Appointment Page ================= */
+
+.appointment-card {
+    width: 680px;
+    margin: 0 auto 40px;   /* top = 0 */
+    padding: 35px 45px;
+
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+
+.appointment-card table {
+    margin: 0 auto;
+}
+
+.appointment-card input,
+.appointment-card select,
+.appointment-card textarea {
+    width: 280px;
+    padding: 8px 10px;
+
+    background: #f2efe9;
+    border: 1px solid #d6d2cb;
+    border-radius: 18px;
+
+    font-size: 14px;
+    outline: none;
+
+    margin-bottom: 15px;
+}
+
+.appointment-card textarea {
+    resize: none;
+    height: 90px;
+    border-radius: 10px;
+
+}
+
+.appointment-card input:focus,
+.appointment-card select:focus,
+.appointment-card textarea:focus {
+    background: #fff;
+    border-color: #c45740;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Center appointment form perfectly */
+.appointment-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 0;
+}
+
+/* Make sure content text stays centered */
+#content {
+    text-align: center;
+}
+
+/* Select dropdown match inputs */
+.appointment-card select.input {
+    width: 280px;
+    padding: 8px 10px;
+    background: #f2efe9;
+    border: 1px solid #d6d2cb;
+    border-radius: 18px;
+}
+
+/* ================= My Appointments Card ================= */
+
+.fade-anim {
+    animation: fadeUp 0.5s ease;
+}
+
+/* Table cleanup (keep classic look) */
+.appointment-card table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.appointment-card th {
+    font-weight: bold;
+    color: #514d46;
+    border-bottom: 1px solid #d6d2cb;
+    padding-bottom: 8px;
+}
+
+.appointment-card td {
+    padding: 10px 6px;
+    border-bottom: 1px dashed #ddd;
+}
+
+/* Hover (very subtle, old-theme friendly) */
+.appointment-card tr:hover td {
+    background: #f7f4ef;
+}
+
+/* Center wrapper spacing fix */
+.appointment-wrapper {
+    padding-top: 10px;
+}
+
+/* ===== Action Buttons ===== */
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-approve,
+.btn-reject {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+/* Approve Button */
+.btn-approve {
+    background-color: #27ae60;
+    color: #fff;
+}
+
+.btn-approve:hover {
+    background-color: #1e8449;
+}
+
+/* Reject Button */
+.btn-reject {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+.btn-reject:hover {
+    background-color: #c0392b;
+}
+/* ===== Table Styling ===== */
+.admin-table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.admin-table th {
+    padding: 10px;
+    text-align: left;
+}
+
+.admin-table td {
+    padding: 10px;
+}
+
+/* ===== Action Buttons Alignment ===== */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+/* ===== Match Site Button Style with Status Colors ===== */
+
+.approve-btn {
+    background-color: #4CAF50 !important;
+    border-color: #4CAF50 !important;
+}
+
+.approve-btn:hover {
+    background-color: #3e8e41 !important;
+}
+
+.reject-btn {
+    background-color: #e74c3c !important;
+    border-color: #e74c3c !important;
+}
+
+.reject-btn:hover {
+    background-color: #c0392b !important;
+}
+
+.success-message {
+    background: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+
+

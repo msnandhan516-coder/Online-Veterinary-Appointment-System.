@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Add Service | Admin</title>
+    <meta charset="utf-8">
+
+    <!-- FAVICON -->
+    <link rel="icon" href="{% static 'sbg/images/favicon.ico' %}" type="image/x-icon">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'sbg/css/ui.totop.css' %}">
+
+    <!-- JS -->
+    <script src="{% static 'sbg/js/jquery-1.7.min.js' %}"></script>
+    <script src="{% static 'sbg/js/jquery.ui.totop.js' %}"></script>
+
+    <script>
+        $(function () {
+            $().UItoTop({ easingType: 'easeOutQuart' });
+        });
+    </script>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <script>
+            // Force no back navigation after logout
+            window.history.pushState(null, "", window.location.href);
+            window.onpopstate = function () {
+                window.location.href = "{% url 'login' %}";
+            };
+     </script>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<div class="block1">
+    <div class="main">
+        <header>
+            <h1>
+                <a class="logo" href="{% url 'admin_dashboard' %}">
+                    Admin Panel
+                </a>
+            </h1>
+        </header>
+    </div>
+</div>
+
+<!-- ================= CONTENT ================= -->
+<div class="block4">
+    <div class="main">
+        <section id="content">
+            <div class="container_12">
+                <div class="wrapper v_stripe">
+
+                    <article class="grid_12">
+
+                        <div class="appointment-card fade-anim">
+
+                            <h2 class="ind">
+                                <span>Add New</span> Service
+                            </h2>
+
+                            <form method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                <!-- SERVICE NAME -->
+                                <div class="form-group">
+                                    <label style="color:black; font-weight:bold;">Service Name:</label>
+                                    <input type="text" name="name" required>
+                                </div>
+
+                                <!-- DESCRIPTION -->
+                                <div class="form-group">
+                                    <label style="color:black; font-weight:bold;">Description:</label>
+                                    <textarea name="description" required></textarea>
+                                </div>
+
+                                <!-- IMAGE -->
+                                <div class="form-group">
+                                    <label style="color:black; font-weight:bold;">Upload Image:</label>
+                                    <input type="file" name="image" required>
+                                </div>
+
+                                <!-- BUTTONS -->
+                                <div class="buttons2">
+                                    <button type="submit" class="button">
+                                        Add Service
+                                    </button>
+
+                                    <button type="button" class="button"
+                                        onclick="window.location.href='{% url 'admin_dashboard' %}'">
+                                        Cancel
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </article>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<div class="main">
+    <footer>
+        Pet Clinic © 2026
+        <img src="{% static 'sbg/images/heart.png' %}" alt="">
+        <a href="#">Privacy Policy</a>
+    </footer>
+</div>
+
+</body>
+</html>

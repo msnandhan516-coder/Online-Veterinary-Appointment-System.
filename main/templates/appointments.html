@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Appointments | Pet Clinic</title>
+    <meta charset="utf-8">
+    <link rel="icon" href="{% static 'sbg/images/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="block1">
+    <div class="main">
+        <header>
+            <h1>
+                <a class="logo" href="{% url 'dashboard' %}">
+                    pet clinic
+                </a>
+            </h1>
+        </header>
+    </div>
+</div>
+
+
+
+<!-- CONTENT -->
+<div class="block4">
+    <div class="main">
+        <section id="content">
+
+    <h2 class="ind"><span>My</span> Appointments</h2>
+    <p>View and manage your appointments.</p>
+
+    <div class="appointment-wrapper">
+        <div class="appointment-card fade-anim">
+
+            <table width="100%" cellpadding="10" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Pet</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Service</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for appt in appointments %}
+                    <tr>
+                        <td>{{ appt.pet_name }}</td>
+                        <td>{{ appt.appointment_date|default:"-" }}</td>
+                        <td>{{ appt.appointment_time|default:"-" }}</td>
+                        <td>{{ appt.service.name }}</td>
+                        <td>{{ appt.status }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" align="center">
+                            No appointments found
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div style="text-align:center; margin-top:25px;">
+               <button type="button" class="button"
+                                        onclick="window.location.href='{% url 'create_appointment' %}'">
+                                        Book New Appointment
+               </button>
+                <button type="button" class="button"
+                    onclick="window.location.href='{% url 'dashboard' %}'">
+                    Back
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+    </div>
+</div>
+
+</body>
+</html>

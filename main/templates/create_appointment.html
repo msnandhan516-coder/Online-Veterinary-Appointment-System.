@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Create Appointment | Pet Clinic</title>
+    <meta charset="utf-8">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'sbg/images/favicon.ico' %}">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'sbg/css/ui.totop.css' %}">
+
+    <!-- JS -->
+    <script src="{% static 'sbg/js/jquery-1.7.min.js' %}"></script>
+    <script src="{% static 'sbg/js/jquery.ui.totop.js' %}"></script>
+
+    <script>
+        $(function () {
+            $().UItoTop({ easingType: 'easeOutQuart' });
+        });
+    </script>
+
+    <style>
+        table {
+            width: 100%;
+        }
+
+        td {
+            padding: 10px;
+            vertical-align: middle;
+        }
+
+        td:first-child {
+            width: 30%;
+            font-weight: bold;
+            color: black;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+        }
+
+        .buttons2 {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<div class="block1">
+    <div class="main">
+        <header>
+            <h1>
+                <a class="logo" href="{% url 'index' %}">
+                    Pet Clinic
+                </a>
+            </h1>
+        </header>
+    </div>
+</div>
+
+<!-- ================= CONTENT ================= -->
+<div class="block4">
+    <div class="main">
+        <section id="content">
+            <div class="container_12">
+                <div class="wrapper v_stripe">
+
+                    <article class="grid_12">
+
+                        <div class="appointment-card fade-anim">
+
+                            <h2 class="ind">
+                                <span>Book</span> Appointment
+                            </h2>
+
+                            <form method="post">
+                                {% csrf_token %}
+
+                                <table>
+
+                                    <tr>
+                                        <td>Owner Name</td>
+                                        <td><input type="text" name="name" required></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Email</td>
+                                        <td><input type="email" name="email" required></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Pet Name</td>
+                                        <td><input type="text" name="pet_name" required></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Pet Breed</td>
+                                        <td><input type="text" name="pet_breed" required></td>
+                                    </tr>
+
+                                    <!-- ✅ DYNAMIC SERVICE -->
+                                    <tr>
+                                        <td>Service</td>
+                                        <td>
+                                            <select name="service" required>
+                                                <option value="">-- Select Service --</option>
+
+                                                {% for service in services %}
+                                                    <option value="{{ service.id }}">
+                                                        {{ service.name }}
+                                                    </option>
+                                                {% endfor %}
+
+                                            </select>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Date</td>
+                                        <td>
+                                            <input type="date" name="appointment_date" id="appointment_date" required>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Time</td>
+                                        <td>
+                                            <input type="time" name="appointment_time" min="09:00" max="17:00" required>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Description</td>
+                                        <td>
+                                            <textarea name="description" rows="4"></textarea>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <div class="buttons2">
+                                                <button type="submit" class="button">Submit</button>
+
+                                                <button type="button" class="button"
+                                                    onclick="window.location.href='{% url 'dashboard' %}'">
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+
+                            </form>
+
+                        </div>
+
+                    </article>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<div class="main">
+    <footer>
+        Pet Clinic © {% now "Y" %}
+        <img src="{% static 'sbg/images/heart.png' %}" alt="">
+        <a href="#">Privacy Policy</a>
+    </footer>
+</div>
+
+<!-- DATE SCRIPT -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dateInput = document.getElementById('appointment_date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+    });
+</script>
+
+</body>
+</html>

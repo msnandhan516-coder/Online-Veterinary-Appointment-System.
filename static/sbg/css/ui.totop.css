@@ -1,0 +1,26 @@
+/*
+|--------------------------------------------------------------------------
+| UItoTop jQuery Plugin 1.1
+| http://www.mattvarone.com/web-design/uitotop-jquery-plugin/
+|--------------------------------------------------------------------------
+*/
+
+#toTop {
+	display:none;
+	text-decoration:none;
+	position:fixed;
+	bottom:50px;
+	overflow:hidden;
+	width:50px;
+	height:50px;
+	border:none;
+	text-indent:-999px;
+	z-index:20;
+	background:url(../images/back_to.png) no-repeat left top;
+}
+
+
+#toTop:hover {
+	outline:none;
+	background-position: 0 -50px;
+}

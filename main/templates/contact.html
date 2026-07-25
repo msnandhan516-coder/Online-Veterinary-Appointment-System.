@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Contact Us | Pet Clinic</title>
+    <meta charset="utf-8">
+
+    <link rel="icon" href="{% static 'sbg/images/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="block1">
+    <div class="main">
+        <header>
+            <h1>
+                <a class="logo" href="{% url 'index' %}">Pet Clinic</a>
+            </h1>
+        </header>
+    </div>
+</div>
+
+<!-- NAVIGATION -->
+<div class="block2">
+    <div class="main">
+        <nav>
+            <ul class="sf-menu">
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'about_us' %}">About Us</a></li>
+                <li><a href="{% url 'services' %}">Our Services</a></li>
+                <li class="current"><a href="{% url 'contact' %}">Contact Us</a></li>
+            </ul>
+            <div class="clear"></div>
+        </nav>
+    </div>
+</div>
+
+<!-- CONTENT -->
+<div class="block4">
+    <div class="main">
+        <section id="content">
+    <div class="main">
+
+        <!-- FLEX CONTAINER -->
+        <div style="display:flex; gap:40px; justify-content:center; flex-wrap:wrap;">
+
+            <!-- ================= LEFT CARD : FEEDBACK FORM ================= -->
+            <div class="appointment-card fade-anim" style="flex:1; min-width:350px; max-width:500px;">
+
+                <h2 class="ind"><span>Send</span> Feedback</h2>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="success-message">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <input type="text" name="name" placeholder="Name" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="text" name="phone" placeholder="Phone">
+                    <textarea name="message" placeholder="Message" required></textarea>
+
+                    <div class="buttons2">
+                        <button type="reset" class="button">Clear</button>
+                        <button type="submit" class="button">Send</button>
+                    </div>
+                </form>
+
+            </div>
+
+            <!-- ================= RIGHT CARD : CONTACT INFO ================= -->
+            <div class="appointment-card fade-anim" style="flex:1; min-width:350px; max-width:500px;">
+
+                <h2 class="ind"><span>Contact</span> Information</h2>
+
+                <div class="map_wrapper img_wrap">
+                    <iframe
+                        width="100%"
+                        height="250"
+                        frameborder="0"
+                        style="border:0"
+                        src="https://maps.google.com/maps?q=Kochi,Kerala&output=embed">
+                    </iframe>
+                </div>
+
+                <dl class="adress" style="margin-top:20px;">
+                    <dt>
+                        <strong>Pet Clinic</strong><br>
+                        Kochi, Kerala, India
+                    </dt>
+                    <dd><span>Phone:</span> +91 98765 43210</dd>
+                    <dd><span>Email:</span> petclinicportal@gmail.com</dd>
+                </dl>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="main">
+    <footer>
+        Pet Clinic &copy; {% now "Y" %}
+    </footer>
+</div>
+
+</body>
+</html>

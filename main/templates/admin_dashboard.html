@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+
+<style>
+
+body{
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#eef2f7,#dfe9f3);
+    margin:0;
+}
+
+/* HEADER */
+.header{
+    background: linear-gradient(135deg,#1f2c3a,#2c3e50);
+    color:white;
+    padding:20px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 4px 15px rgba(0,0,0,0.2);
+}
+
+.logout a{
+    background:#ff5e57;
+    padding:8px 18px;
+    border-radius:20px;
+    text-decoration:none;
+    color:white;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.logout a:hover{
+    background:#ff3b30;
+}
+
+/* WELCOME */
+.welcome{
+    text-align:center;
+    margin:40px 0 20px;
+}
+
+.welcome h1{
+    font-size:32px;
+}
+
+.welcome p{
+    color:#666;
+}
+
+/* GRID */
+.dashboard-wrapper{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+    gap:30px;
+    padding:20px 60px;
+}
+
+/* CARD */
+.dashboard-card{
+    border-radius:18px;
+    padding:25px;
+    color:white;
+    text-align:center;
+    backdrop-filter: blur(10px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
+    transition:0.4s;
+    position:relative;
+    overflow:hidden;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-12px) scale(1.03);
+    box-shadow:0 15px 35px rgba(0,0,0,0.2);
+}
+
+/* ICON */
+.icon{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+/* COUNT */
+.count{
+    font-size:36px;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+/* TEXT */
+.dashboard-card p{
+    font-size:15px;
+    opacity:0.9;
+}
+
+/* BUTTON */
+.dashboard-card a{
+    display:inline-block;
+    margin-top:12px;
+    padding:7px 18px;
+    background:white;
+    color:#333;
+    border-radius:25px;
+    text-decoration:none;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.dashboard-card a:hover{
+    background:#000;
+    color:white;
+}
+
+/* MODERN COLOR PALETTE */
+.users{ background:linear-gradient(135deg,#667eea,#764ba2); }
+.confirmed{ background:linear-gradient(135deg,#43e97b,#38f9d7); }
+.pending{ background:linear-gradient(135deg,#f7971e,#ffd200); }
+.cancelled{ background:linear-gradient(135deg,#ff6a6a,#ff3b3b); }
+.feedback{ background:linear-gradient(135deg,#a18cd1,#fbc2eb); }
+.users-list{ background:linear-gradient(135deg,#30cfd0,#330867); }
+.completed-works{ background:linear-gradient(135deg,#11998e,#38ef7d); }
+.services-add{
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+}
+
+/* FOOTER */
+.footer{
+    text-align:center;
+    margin:40px;
+    color:#777;
+}
+
+</style>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+       <script>
+            // Force no back navigation after logout
+            window.history.pushState(null, "", window.location.href);
+            window.onpopstate = function () {
+                window.location.href = "{% url 'login' %}";
+            };
+        </script>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <h2>Admin Dashboard</h2>
+    <div class="logout">
+        <a href="/logout/">Logout</a>
+    </div>
+</div>
+
+<!-- WELCOME -->
+<div class="welcome">
+    <h1>Welcome, Admin 👋</h1>
+    <p>Manage your system efficiently</p>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard-wrapper">
+
+<div class="dashboard-card users">
+    <div class="icon">👤</div>
+    <h3>Edit Profile</h3>
+    <p>Update admin account details</p>
+    <a href="/edit_admin_profile/">Edit</a>
+</div>
+
+<div class="dashboard-card confirmed">
+    <div class="icon">📅</div>
+    <div class="count">{{ total_appointments }}</div>
+    <p>Approved Appointments</p>
+    <a href="/admin-appointments/">View</a>
+</div>
+
+<div class="dashboard-card pending">
+    <div class="icon">⏳</div>
+    <div class="count">{{ pending_appointments }}</div>
+    <p>Waiting Approval</p>
+    <a href="/admin-pending/">Review</a>
+</div>
+
+<div class="dashboard-card cancelled">
+    <div class="icon">❌</div>
+    <div class="count">{{ cancelled_appointments }}</div>
+    <p>Rejected Appointments</p>
+    <a href="/admin-cancelled/">View</a>
+</div>
+
+<div class="dashboard-card feedback">
+    <div class="icon">💬</div>
+    <div class="count">{{ total_contacts }}</div>
+    <p>Customer Messages</p>
+    <a href="/admin-feedback/">Read</a>
+</div>
+
+<div class="dashboard-card services-add">
+    <div class="icon">➕</div>
+    <p>Add New Service</p>
+    <a href="{% url 'add_service' %}">Add</a>
+</div>
+
+<div class="dashboard-card users-list">
+    <div class="icon">👥</div>
+    <div class="count">{{ total_users }}</div>
+    <p>Manage Users</p>
+    <a href="/admin-users/">View</a>
+</div>
+
+<div class="dashboard-card completed-works">
+    <div class="icon">✔️</div>
+    <div class="count">{{ completed_appointments_count }}</div>
+    <p>Completed Appointments</p>
+    <a href="{% url 'completed_appointments' %}">View</a>
+</div>
+
+</div>
+
+<div class="footer">
+© 2026 Pet Clinic Admin Panel
+</div>
+
+</body>
+</html>

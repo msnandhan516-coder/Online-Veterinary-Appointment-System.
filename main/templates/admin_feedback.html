@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Feedback Messages | Admin</title>
+    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
+
+    <style>
+        .custom-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-card {
+            width: 600px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+    </style>
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+   <script>
+    // Force no back navigation after logout
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+        window.location.href = "{% url 'login' %}";
+    };
+</script>
+</head>
+<body>
+
+<div class="block1">
+    <div class="main">
+        <header>
+            <h1>
+                <a class="logo" href="{% url 'admin_dashboard' %}">
+                    Admin Panel
+                </a>
+            </h1>
+        </header>
+    </div>
+</div>
+
+<div class="block4">
+    <div class="main">
+        <section id="content">
+            <div class="container_12">
+                <div class="wrapper v_stripe">
+
+                    <article class="grid_12">
+                        <div class="appointment-card">
+
+                            <h2 class="ind">
+                                <span>Feedback</span> Messages
+                            </h2>
+
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for contact in contacts %}
+                                    <tr>
+                                        <td>{{ contact.name }}</td>
+                                        <td>
+
+                                            <a href="javascript:void(0);"
+                                               class="button"
+                                               onclick="openView('{{ contact.id }}')">
+                                                View
+                                            </a>
+
+                                            <a href="javascript:void(0);"
+                                               class="button"
+                                               onclick="openReply('{{ contact.id }}')">
+                                                Reply
+                                            </a>
+
+                                            <a href="{% url 'delete_contact' contact.id %}"
+                                               class="button"
+                                               onclick="return confirm('Delete this message?');">
+                                                Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="2">No feedback messages found.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                            <button type="button" class="button"
+                                onclick="window.location.href='{% url 'admin_dashboard' %}'">
+                                Back
+                            </button>
+
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<!-- ================= VIEW MODALS ================= -->
+{% for contact in contacts %}
+<div id="view-{{ contact.id }}" class="custom-modal">
+    <div class="appointment-card modal-card">
+        <h2><span>Feedback</span> Details</h2>
+
+        <p><strong>Name:</strong> {{ contact.name }}</p>
+        <p><strong>Email:</strong> {{ contact.email }}</p>
+        <p><strong>Phone:</strong> {{ contact.phone }}</p>
+
+        <p><strong>Message:</strong></p>
+        <p>{{ contact.message }}</p>
+
+        {% if contact.reply %}
+            <p><strong>Reply:</strong></p>
+            <p>{{ contact.reply }}</p>
+        {% endif %}
+
+        <br>
+        <button class="button" onclick="closeModal('view-{{ contact.id }}')">Close</button>
+    </div>
+</div>
+{% endfor %}
+
+
+<!-- ================= REPLY MODALS ================= -->
+{% for contact in contacts %}
+<div id="reply-{{ contact.id }}" class="custom-modal">
+    <div class="appointment-card modal-card">
+        <h2><span>Reply</span> to {{ contact.name }}</h2>
+
+        <p><strong>Email:</strong> {{ contact.email }}</p>
+
+        <form method="POST" action="{% url 'reply_contact' contact.id %}">
+            {% csrf_token %}
+
+            <textarea name="reply" required
+                      placeholder="Type your reply here..."></textarea>
+
+            <br><br>
+
+            <button type="submit" class="button">Send Email</button>
+            <button type="button" class="button"
+                    onclick="closeModal('reply-{{ contact.id }}')">
+                Cancel
+            </button>
+        </form>
+    </div>
+</div>
+{% endfor %}
+
+
+<script>
+function openView(id) {
+    document.getElementById("view-" + id).style.display = "flex";
+}
+
+function openReply(id) {
+    document.getElementById("reply-" + id).style.display = "flex";
+}
+
+function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+<title>Edit User</title>
+<link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+ <script>
+    // Force no back navigation after logout
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+        window.location.href = "{% url 'login' %}";
+    };
+</script>
+</head>
+
+<body>
+
+<div class="block1">
+    <div class="main">
+        <header>
+            <h1>
+                <a class="logo" href="{% url 'admin_dashboard' %}">
+                    Admin Panel
+                </a>
+            </h1>
+        </header>
+    </div>
+</div>
+
+<div class="block4">
+<div class="main">
+
+<section id="content">
+<div class="container_12">
+
+<div class="appointment-card">
+
+<h2 class="ind">
+<span>Edit</span> User
+</h2>
+
+<form method="POST">
+{% csrf_token %}
+
+<table>
+
+<tr>
+<td>Username</td>
+<td>
+<input type="text" value="{{ user.username }}" readonly>
+</td>
+</tr>
+
+<tr>
+<td>Email</td>
+<td>
+<input type="email" name="email" value="{{ user.email }}">
+</td>
+</tr>
+
+<tr>
+<td>Phone</td>
+<td>
+<input type="text" name="phone" value="{{ user.phone }}">
+</td>
+</tr>
+
+<tr>
+<td>Password</td>
+<td>
+<input type="password" name="password" placeholder="Enter new password">
+</td>
+</tr>
+
+</table>
+
+<br>
+
+<button type="submit" class="button">Update</button>
+
+<button type="button" class="button"
+onclick="window.location.href='{% url 'admin_users' %}'">
+Cancel
+</button>
+
+</form>
+
+</div>
+
+</div>
+</section>
+
+</div>
+</div>
+
+</body>
+</html>

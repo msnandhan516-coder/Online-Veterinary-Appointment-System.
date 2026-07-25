@@ -1,0 +1,3 @@
+.button, .serv_list>li>figure, input[type="text"], textarea{behavior:url(js/PIE.htc);position:relative;}
+footer, h2, .sf-menu>li>a{letter-spacing:-1px;}
+.slogans>div{background: url('../images/banner_bg.jpg') 0 5px no-repeat !important;}

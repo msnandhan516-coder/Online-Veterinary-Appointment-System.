@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>User Registration | Pet Clinic</title>
+    <meta charset="utf-8">
+
+    <!-- FAVICON -->
+    <link rel="icon" href="{% static 'sbg/images/favicon.ico' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'sbg/images/favicon.ico' %}" type="image/x-icon">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'sbg/css/ui.totop.css' %}">
+
+    <!-- JS -->
+    <script src="{% static 'sbg/js/jquery-1.7.min.js' %}"></script>
+    <script src="{% static 'sbg/js/jquery.ui.totop.js' %}"></script>
+
+    <script>
+        $(function () {
+            $().UItoTop({ easingType: 'easeOutQuart' });
+        });
+    </script>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<div class="block1">
+    <div class="main">
+        <header>
+            <h1><a class="logo" href="{% url 'index' %}">Pet Clinic</a></h1>
+        </header>
+    </div>
+</div>
+
+<!-- ================= REGISTRATION CONTENT ================= -->
+<div class="block4">
+    <div class="main">
+        <section id="content">
+            <div class="container_12">
+                <div class="wrapper v_stripe">
+
+                    <!-- FULL WIDTH LIKE LOGIN -->
+                    <article class="grid_12">
+
+                        <div class="appointment-card fade-anim">
+
+                            <h2 class="ind"><span>User</span> Registration</h2>
+
+                            <form method="post">
+                                {% csrf_token %}
+
+                                <!-- MESSAGES -->
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        <p style="color:red; text-align:center; font-weight:bold;">
+                                            {{ message }}
+                                        </p>
+                                    {% endfor %}
+                                {% endif %}
+
+                                <div class="form-group">
+                                    <label style="color:black; font-weight:bold;">Full Name: </label>
+                                    <input type="text" name="fullname" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color:black; font-weight:bold;">User Name: </label>
+                                    <input type="text" name="username" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color:black; font-weight:bold;">Password: </label>
+                                    <input type="password" name="password" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color:black; font-weight:bold;">Confirm Password: </label>
+                                    <input type="password" name="confirm_password" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color:black; font-weight:bold;">Email: </label>
+                                    <input type="email" name="email" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color:black; font-weight:bold;">Phone no: </label>
+                                    <input type="text"
+                                           name="phone"
+                                           pattern="[0-9]{10}"
+                                           title="Enter exactly 10 digits"
+                                           required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label style="color:black; font-weight:bold;">Registered As</label>
+                                    <select name="role" required>
+                                        <option value="">-- Select Role --</option>
+                                        <option value="user" selected>User</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
+
+                                <div class="buttons2">
+                                    <button type="submit" class="button">Register</button>
+                                    <button type="button" class="button"
+                                            onclick="window.location.href='{% url 'index' %}'">
+                                        Cancel
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </article>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<div class="main">
+    <footer>
+        Pet Clinic © 2026
+        <img src="{% static 'sbg/images/heart.png' %}" alt="">
+        <a href="#">Privacy Policy</a>
+    </footer>
+</div>
+
+</body>
+</html>

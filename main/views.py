@@ -18,7 +18,8 @@ from django.views.decorators.cache import never_cache
 # PUBLIC PAGES
 # =========================
 def index(request):
-    return render(request, 'index.html')
+    services = Service.objects.all()[:6]
+    return render(request, 'index.html', {'services': services})
 
 
 # =========================
@@ -108,10 +109,16 @@ def user_dashboard(request):
     if "user_id" not in request.session:
         return redirect("login")
 
-    user = UserRegister.objects.get(id=request.session["user_id"])
+    user = get_object_or_404(UserRegister, id=request.session["user_id"])
+    user_appointments = Appointment.objects.filter(user=user).order_by('-appointment_date', '-appointment_time')
 
     context = {
-        "user": user
+        "user": user,
+        "recent_appointments": user_appointments[:5],
+        "total_appointments": user_appointments.count(),
+        "pending_count": user_appointments.filter(status='Pending').count(),
+        "approved_count": user_appointments.filter(status='Approved', work_status='Not Done').count(),
+        "completed_count": user_appointments.filter(work_status='Done').count(),
     }
 
     return render(request, "user_dashboard.html", context)
@@ -127,7 +134,7 @@ def appointments(request):
 
     user_id = request.session["user_id"]
 
-    appointments = Appointment.objects.filter(user_id=user_id)
+    appointments = Appointment.objects.filter(user_id=user_id).order_by('-appointment_date', '-appointment_time')
 
     return render(request, 'appointments.html', {
         'appointments': appointments
@@ -139,43 +146,67 @@ def create_appointment(request):
     if "user_id" not in request.session:
         return redirect("login")
 
-    user = UserRegister.objects.get(id=request.session["user_id"])
+    user = get_object_or_404(UserRegister, id=request.session["user_id"])
 
     if request.method == "POST":
         date_str = request.POST.get("appointment_date")
         time_str = request.POST.get("appointment_time")
-
-        # ✅ GET SERVICE OBJECT
         service_id = request.POST.get("service")
-        service = Service.objects.get(id=service_id)
+        pet_name = request.POST.get("pet_name", "").strip()
+        pet_breed = request.POST.get("pet_breed", "").strip()
+        description = request.POST.get("description", "").strip()
 
-        appointment = Appointment(
+        if not service_id or not date_str or not time_str or not pet_name:
+            messages.error(request, "Please fill in all required fields.")
+            return redirect("create_appointment")
+
+        service = get_object_or_404(Service, id=service_id)
+
+        try:
+            appt_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+            appt_time = datetime.strptime(time_str, "%H:%M").time()
+        except ValueError:
+            messages.error(request, "Invalid date or time format.")
+            return redirect("create_appointment")
+
+        from django.utils import timezone
+        if appt_date < timezone.now().date():
+            messages.error(request, "Appointment date cannot be in the past.")
+            return redirect("create_appointment")
+
+        # Check for exact duplicate slot for this user
+        existing_appt = Appointment.objects.filter(
             user=user,
-            pet_name=request.POST.get("pet_name"),
-            pet_breed=request.POST.get("pet_breed"),
-            service=service,   # ✅ FIXED
-            description=request.POST.get("description", "")
+            appointment_date=appt_date,
+            appointment_time=appt_time,
+            service=service
+        ).exists()
+        if existing_appt:
+            messages.error(request, "You already have an appointment scheduled for this exact date, time and service.")
+            return redirect("create_appointment")
+
+        Appointment.objects.create(
+            user=user,
+            pet_name=pet_name,
+            pet_breed=pet_breed,
+            service=service,
+            appointment_date=appt_date,
+            appointment_time=appt_time,
+            description=description,
+            status='Pending'
         )
-
-        if date_str:
-            appointment.appointment_date = datetime.strptime(
-                date_str, "%Y-%m-%d"
-            ).date()
-
-        if time_str:
-            appointment.appointment_time = datetime.strptime(
-                time_str, "%H:%M"
-            ).time()
-
-        appointment.save()
+        messages.success(request, f"Appointment for {pet_name} booked successfully! Our clinic team will review and confirm your visit.")
         return redirect("appointments")
 
-    # ✅ ADD THIS (VERY IMPORTANT)
     services = Service.objects.all()
+    selected_service_id = request.GET.get('service_id')
 
     return render(request, "create_appointment.html", {
-        "services": services
+        "services": services,
+        "user": user,
+        "selected_service_id": selected_service_id
     })
+
 @never_cache
 def edit_profile(request):
 
@@ -209,16 +240,19 @@ def approve_appointment(request, appointment_id):
     appointment.status = 'Approved'
     appointment.save()
 
-    # Send email
-    send_mail(
-        "Appointment Approved 🐾",
-        f"Your appointment for {appointment.pet_name} has been approved.",
-        settings.DEFAULT_FROM_EMAIL,
-        [appointment.user.email],
-        fail_silently=False,
-    )
+    # Send email safely
+    try:
+        send_mail(
+            "Appointment Approved 🐾 - VetCare Clinic",
+            f"Dear {appointment.user.fullname},\n\nYour appointment for {appointment.pet_name} on {appointment.appointment_date} at {appointment.appointment_time} has been approved.\n\nThank you,\nVetCare Animal Clinic",
+            settings.DEFAULT_FROM_EMAIL,
+            [appointment.user.email],
+            fail_silently=True,
+        )
+    except Exception:
+        pass
 
-    messages.success(request, "Appointment approved successfully ✅")
+    messages.success(request, f"Appointment for {appointment.pet_name} approved successfully ✅")
 
     return redirect('admin_pending')
 
@@ -232,15 +266,18 @@ def reject_appointment(request, appointment_id):
     appointment.status = 'Rejected'
     appointment.save()
 
-    send_mail(
-        "Appointment Rejected ❌",
-        f"Your appointment for {appointment.pet_name} has been rejected.",
-        settings.DEFAULT_FROM_EMAIL,
-        [appointment.user.email],
-        fail_silently=False,
-    )
+    try:
+        send_mail(
+            "Appointment Update ❌ - VetCare Clinic",
+            f"Dear {appointment.user.fullname},\n\nUnfortunately your appointment request for {appointment.pet_name} on {appointment.appointment_date} could not be accommodated at this time.\n\nPlease contact the clinic or schedule an alternative slot.\n\nVetCare Animal Clinic",
+            settings.DEFAULT_FROM_EMAIL,
+            [appointment.user.email],
+            fail_silently=True,
+        )
+    except Exception:
+        pass
 
-    messages.error(request, "Appointment rejected successfully ❌")
+    messages.error(request, f"Appointment for {appointment.pet_name} rejected ❌")
 
     return redirect('admin_pending')
 
@@ -393,16 +430,18 @@ def reply_feedbacks(request, id):
         contact.reply = reply_message
         contact.save()
 
-        # Send email
-        send_mail(
-            subject="Reply to your Feedback - Pet Clinic",
-            message=reply_message,
-            from_email=None,
-            recipient_list=[contact.email],
-            fail_silently=False,
-        )
-
-        messages.success(request, f"Reply sent successfully to {contact.email}!")
+        # Send email safely
+        try:
+            send_mail(
+                subject="Reply to your Feedback - VetCare Clinic",
+                message=reply_message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[contact.email],
+                fail_silently=True,
+            )
+            messages.success(request, f"Reply sent successfully to {contact.email}!")
+        except Exception:
+            messages.success(request, f"Reply recorded for {contact.email}.")
 
     return redirect("feedbacks")
 

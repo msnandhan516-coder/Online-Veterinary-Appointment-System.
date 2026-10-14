@@ -1,89 +1,76 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <title>Appointments | Pet Clinic</title>
-    <meta charset="utf-8">
-    <link rel="icon" href="{% static 'sbg/images/favicon.ico' %}">
-    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
-</head>
 
-<body>
+{% block title %}My Appointments | VetCare{% endblock %}
 
-<!-- HEADER -->
-<div class="block1">
-    <div class="main">
-        <header>
-            <h1>
-                <a class="logo" href="{% url 'dashboard' %}">
-                    pet clinic
-                </a>
-            </h1>
-        </header>
-    </div>
-</div>
-
-
-
-<!-- CONTENT -->
-<div class="block4">
-    <div class="main">
-        <section id="content">
-
-    <h2 class="ind"><span>My</span> Appointments</h2>
-    <p>View and manage your appointments.</p>
-
-    <div class="appointment-wrapper">
-        <div class="appointment-card fade-anim">
-
-            <table width="100%" cellpadding="10" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Pet</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Service</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {% for appt in appointments %}
-                    <tr>
-                        <td>{{ appt.pet_name }}</td>
-                        <td>{{ appt.appointment_date|default:"-" }}</td>
-                        <td>{{ appt.appointment_time|default:"-" }}</td>
-                        <td>{{ appt.service.name }}</td>
-                        <td>{{ appt.status }}</td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="5" align="center">
-                            No appointments found
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-
-            <div style="text-align:center; margin-top:25px;">
-               <button type="button" class="button"
-                                        onclick="window.location.href='{% url 'create_appointment' %}'">
-                                        Book New Appointment
-               </button>
-                <button type="button" class="button"
-                    onclick="window.location.href='{% url 'dashboard' %}'">
-                    Back
-                </button>
-            </div>
-
+{% block content %}
+<div class="content-card">
+    <div class="card-header-styled">
+        <div>
+            <span class="section-tag">Pet Health Records</span>
+            <h1 class="card-heading">My Scheduled Appointments</h1>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 4px;">
+                Review the approval status and consultation details for your registered pets.
+            </p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <a href="{% url 'dashboard' %}" class="btn-pill-outline">Dashboard</a>
+            <a href="{% url 'create_appointment' %}" class="btn-pill-dark">+ Book New Visit</a>
         </div>
     </div>
 
-</section>
-
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Pet Name</th>
+                    <th>Breed / Species</th>
+                    <th>Clinical Service</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Approval Status</th>
+                    <th>Clinical Work</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appt in appointments %}
+                <tr>
+                    <td><strong>{{ appt.pet_name }}</strong></td>
+                    <td>{{ appt.pet_breed|default:"-" }}</td>
+                    <td>{{ appt.service.name }}</td>
+                    <td>{{ appt.appointment_date|default:"-" }}</td>
+                    <td>{{ appt.appointment_time|default:"-" }}</td>
+                    <td>
+                        {% if appt.status == "Approved" %}
+                            <span class="badge-status badge-approved">✓ Approved</span>
+                        {% elif appt.status == "Rejected" %}
+                            <span class="badge-status badge-rejected">✕ Rejected</span>
+                        {% else %}
+                            <span class="badge-status badge-pending">⏳ Pending</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if appt.work_status == "Done" %}
+                            <span class="badge-status badge-done">Completed</span>
+                        {% else %}
+                            <span style="color: var(--text-muted); font-size: 0.85rem;">In Progress</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" style="text-align: center; padding: 48px 20px;">
+                        <div style="font-size: 2.2rem; margin-bottom: 8px;">🐾</div>
+                        <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 6px;">No Appointments Scheduled</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 18px;">
+                            You haven't scheduled any veterinary consultations yet.
+                        </p>
+                        <a href="{% url 'create_appointment' %}" class="btn-pill-dark">Book Your Pet's First Visit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
-
-</body>
-</html>
+{% endblock %}

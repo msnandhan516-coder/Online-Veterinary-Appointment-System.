@@ -1,101 +1,64 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html>
-<head>
-    <title>Completed Appointments | Admin</title>
-    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
-    <script>
-        // Force no back navigation after logout
-        window.history.pushState(null, "", window.location.href);
-        window.onpopstate = function () {
-            window.location.href = "{% url 'login' %}";
-        };
-    </script>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-</head>
-<body>
 
-<!-- ================= HEADER ================= -->
-<div class="block1">
-    <div class="main">
-        <header>
-            <h1>
-                <a class="logo" href="{% url 'admin_dashboard' %}">
-                    Admin Panel
-                </a>
-            </h1>
-        </header>
+{% block title %}Completed Appointments | VetCare Admin{% endblock %}
+
+{% block content %}
+<div class="content-card">
+    <div class="card-header-styled">
+        <div>
+            <span class="section-tag" style="background: #E0E7FF; color: #4338CA;">Archive Records</span>
+            <h1 class="card-heading">Completed Appointments Archive</h1>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 4px;">
+                Historical log of successfully completed veterinary visits and treatments.
+            </p>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <a href="{% url 'admin_dashboard' %}" class="btn-pill-outline">&larr; Dashboard</a>
+            <a href="{% url 'admin_appointments' %}" class="btn-pill-dark">Active Appointments</a>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Pet Name</th>
+                    <th>Client (Owner)</th>
+                    <th>Service Provided</th>
+                    <th>Visit Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Work Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appt in appointments %}
+                <tr>
+                    <td><strong>{{ appt.pet_name }}</strong></td>
+                    <td>
+                        <strong>{{ appt.user.fullname|default:appt.user.username }}</strong><br>
+                        <small style="color: var(--text-secondary);">{{ appt.user.phone }}</small>
+                    </td>
+                    <td>{{ appt.service.name }}</td>
+                    <td>{{ appt.appointment_date }}</td>
+                    <td>{{ appt.appointment_time }}</td>
+                    <td><span class="badge-status badge-approved">Approved</span></td>
+                    <td><span class="badge-status badge-done">✔ Work Completed</span></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" style="text-align: center; padding: 48px 20px;">
+                        <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 4px;">No Completed Appointments Yet</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            Completed consultations will appear here once marked done.
+                        </p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
-
-<!-- ================= CONTENT ================= -->
-<div class="block4">
-    <div class="main">
-        <section id="content">
-            <div class="container_12">
-                <div class="wrapper v_stripe">
-
-                    <article class="grid_12">
-                        <div class="appointment-card fade-anim">
-
-                            <h2 class="ind">
-                                <span>Completed</span> Appointments
-                            </h2>
-
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Pet</th>
-                                        <th>Owner</th>
-                                        <th>Service</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Status</th>
-                                        <th>Work Status</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {% for appointment in appointments %}
-                                    <tr>
-                                        <td>{{ appointment.pet_name }}</td>
-                                        <td>{{ appointment.user.username }}</td>
-                                        <td>{{ appointment.service.name }}</td>
-                                        <td>{{ appointment.appointment_date }}</td>
-                                        <td>{{ appointment.appointment_time }}</td>
-                                        <td>{{ appointment.status }}</td>
-
-                                        <td>
-                                            <span style="color: green; font-weight: bold;">
-                                                ✔ Work Completed
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    {% empty %}
-                                    <tr>
-                                        <td colspan="7">
-                                            No completed appointments found.
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-
-                            <button type="button" class="button"
-                                onclick="window.location.href='{% url 'admin_dashboard' %}'">
-                                Back
-                            </button>
-
-                        </div>
-                    </article>
-
-                </div>
-            </div>
-        </section>
-    </div>
-</div>
-
-</body>
-</html>
+{% endblock %}

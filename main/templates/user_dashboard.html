@@ -1,160 +1,140 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <title>User Dashboard | Pet Clinic</title>
-    <meta charset="utf-8">
 
-    <!-- FAVICON -->
-    <link rel="icon" href="{% static 'sbg/images/favicon.ico' %}">
-    <link rel="shortcut icon" href="{% static 'sbg/images/favicon.ico' %}">
+{% block title %}Owner Dashboard | VetCare Clinic{% endblock %}
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'sbg/css/ui.totop.css' %}">
+{% block content %}
+<div class="content-card">
+    <!-- Welcome Header -->
+    <div class="card-header-styled">
+        <div>
+            <span class="section-tag">Pet Owner Portal</span>
+            <h1 class="card-heading">Welcome, {{ user.fullname }} 👋</h1>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 4px;">
+                Manage appointments, track clinic visit statuses, and maintain your account.
+            </p>
+        </div>
 
-    <!-- JS -->
-    <script src="{% static 'sbg/js/jquery-1.7.min.js' %}"></script>
-    <script src="{% static 'sbg/js/jquery.ui.totop.js' %}"></script>
-
-    <script>
-        $(function () {
-            $().UItoTop({ easingType: 'easeOutQuart' });
-        });
-    </script>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <script>
-    // Force no back navigation after logout
-    window.history.pushState(null, "", window.location.href);
-    window.onpopstate = function () {
-        window.location.href = "{% url 'login' %}";
-    };
-</script>
-</head>
-
-<body>
-
-<!-- ================= HEADER ================= -->
-<div class="block1">
-    <div class="main">
-        <header>
-            <h1>
-                <a class="logo" href="{% url 'index' %}">
-                    Pet Clinic
-                </a>
-            </h1>
-        </header>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="{% url 'edit_profile' %}" class="btn-pill-outline">Edit Profile</a>
+            <a href="{% url 'create_appointment' %}" class="btn-pill-dark">+ Book Appointment</a>
+        </div>
     </div>
-</div>
 
-
-
-<!-- ================= DASHBOARD CONTENT ================= -->
-
-<div class="block4">
-    <div class="main">
-        <section id="content">
-            <div class="container_12">
-                <div class="wrapper v_stripe">
-
-
-                    <!-- DASHBOARD CARD -->
-                    <article class="grid_12">
-
-                        <div class="appointment-card">
-
-                            <h2 class="ind">
-                                <span>User</span> Dashboard
-                            </h2>
-
-
-
-                            <div class="card-body">
-
-                                <p class="f_19" style="color:#000;">
-                                    Welcome, <strong>{{ request.session.username }}</strong> 👋
-                                </p>
-
-                                <br>
-
-                                <!-- ACTION BUTTONS -->
-                                <div class="dashboard-actions">
-
-                                    <button type="button" class="button"
-                                        onclick="window.location.href='{% url 'create_appointment' %}'">
-                                        Book Appointments
-                                    </button>
-
-                                    <button type="button" class="button"
-                                        onclick="window.location.href='{% url 'appointments' %}'">
-                                        My Appointments
-                                    </button>
-
-                                    <button type="button" class="button"
-                                        onclick="window.location.href='{% url 'edit_profile' %}'">
-                                        Edit Profile
-                                    </button>
-
-                                   <button type="button" class="button"
-                                        onclick="window.location.href='{% url 'logout' %}'">
-                                        Logout
-                                    </button>
-
-                                </div>
-
-                                <br><br>
-
-
-                                <!-- PROFILE SUMMARY -->
-                                <div class="profile-preview">
-
-                                    <h3 style="color:#000;"><b>My Profile</b></h3>
-
-                                    <table>
-                                        <tr>
-                                            <td><strong>Username</strong></td>
-                                            <td style="color:#000;">{{ request.session.username }}</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td><strong>Email</strong></td>
-                                            <td style="color:#000;">{{ user.email }}</td>
-                                        </tr>
-
-                                        <tr>
-                                            <td><strong>Phone</strong></td>
-                                            <td style="color:#000;">{{ user.phone }}</td>
-                                        </tr>
-                                    </table>
-
-                                </div>
-
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-                </div>
+    <!-- Real Statistics Grid -->
+    <div class="stats-grid">
+        <div class="stat-widget">
+            <div class="stat-header">
+                <span class="stat-title">Total Appointments</span>
+                <div class="stat-icon">📅</div>
             </div>
-        </section>
+            <div class="stat-count">{{ total_appointments }}</div>
+            <a href="{% url 'appointments' %}" class="stat-footer-link">View all &rarr;</a>
+        </div>
+
+        <div class="stat-widget">
+            <div class="stat-header">
+                <span class="stat-title">Approved Visits</span>
+                <div class="stat-icon" style="color: var(--success);">✓</div>
+            </div>
+            <div class="stat-count" style="color: var(--success);">{{ approved_count }}</div>
+            <span style="font-size: 0.8rem; color: var(--text-secondary);">Confirmed by clinic</span>
+        </div>
+
+        <div class="stat-widget">
+            <div class="stat-header">
+                <span class="stat-title">Under Review</span>
+                <div class="stat-icon" style="color: var(--warning);">⏳</div>
+            </div>
+            <div class="stat-count" style="color: var(--warning);">{{ pending_count }}</div>
+            <span style="font-size: 0.8rem; color: var(--text-secondary);">Awaiting confirmation</span>
+        </div>
+
+        <div class="stat-widget">
+            <div class="stat-header">
+                <span class="stat-title">Completed Care</span>
+                <div class="stat-icon" style="color: #4338CA;">🐾</div>
+            </div>
+            <div class="stat-count" style="color: #4338CA;">{{ completed_count }}</div>
+            <span style="font-size: 0.8rem; color: var(--text-secondary);">Finished consultations</span>
+        </div>
+    </div>
+
+    <!-- Quick Owner Profile Info Banner -->
+    <div style="background: var(--surface-offwhite); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px 24px; margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+            <div>
+                <small style="color: var(--text-secondary); text-transform: uppercase; font-weight: 700; font-size: 0.72rem;">Email</small>
+                <div style="font-weight: 600;">{{ user.email }}</div>
+            </div>
+            <div>
+                <small style="color: var(--text-secondary); text-transform: uppercase; font-weight: 700; font-size: 0.72rem;">Phone</small>
+                <div style="font-weight: 600;">{{ user.phone|default:"Not specified" }}</div>
+            </div>
+            <div>
+                <small style="color: var(--text-secondary); text-transform: uppercase; font-weight: 700; font-size: 0.72rem;">Username</small>
+                <div style="font-weight: 600;">@{{ user.username }}</div>
+            </div>
+        </div>
+        <a href="{% url 'edit_profile' %}" class="btn-pill-outline" style="font-size: 0.82rem; padding: 6px 16px;">Update Details</a>
+    </div>
+
+    <!-- Recent Bookings Table -->
+    <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3 style="font-size: 1.2rem; font-weight: 800;">Recent Appointments</h3>
+            <a href="{% url 'appointments' %}" style="font-size: 0.88rem; font-weight: 700; color: var(--accent-cyan-dark); text-decoration: none;">
+                View All Appointments &rarr;
+            </a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Pet Name</th>
+                        <th>Service</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Work Progress</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appt in recent_appointments %}
+                    <tr>
+                        <td><strong>{{ appt.pet_name }}</strong></td>
+                        <td>{{ appt.service.name }}</td>
+                        <td>{{ appt.appointment_date }}</td>
+                        <td>{{ appt.appointment_time }}</td>
+                        <td>
+                            {% if appt.status == "Approved" %}
+                                <span class="badge-status badge-approved">Approved</span>
+                            {% elif appt.status == "Rejected" %}
+                                <span class="badge-status badge-rejected">Rejected</span>
+                            {% else %}
+                                <span class="badge-status badge-pending">Pending</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if appt.work_status == "Done" %}
+                                <span class="badge-status badge-done">Completed</span>
+                            {% else %}
+                                <span style="color: var(--text-muted); font-size: 0.85rem;">Not Done</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 36px 20px;">
+                            <p style="color: var(--text-secondary); margin-bottom: 12px;">You haven't made any appointments yet.</p>
+                            <a href="{% url 'create_appointment' %}" class="btn-pill-dark">Schedule First Visit</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-
-
-<!-- ================= FOOTER ================= -->
-
-<div class="main">
-    <footer>
-        Pet Clinic © 2026
-        <img src="{% static 'sbg/images/heart.png' %}" alt="">
-        <a href="#">Privacy Policy</a>
-    </footer>
-</div>
-
-</body>
-</html>
+{% endblock %}

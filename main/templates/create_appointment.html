@@ -1,192 +1,106 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <title>Create Appointment | Pet Clinic</title>
-    <meta charset="utf-8">
 
-    <!-- Favicon -->
-    <link rel="icon" href="{% static 'sbg/images/favicon.ico' %}">
+{% block title %}Book Veterinary Appointment | VetCare{% endblock %}
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'sbg/css/ui.totop.css' %}">
-
-    <!-- JS -->
-    <script src="{% static 'sbg/js/jquery-1.7.min.js' %}"></script>
-    <script src="{% static 'sbg/js/jquery.ui.totop.js' %}"></script>
-
-    <script>
-        $(function () {
-            $().UItoTop({ easingType: 'easeOutQuart' });
-        });
-    </script>
-
-    <style>
-        table {
-            width: 100%;
-        }
-
-        td {
-            padding: 10px;
-            vertical-align: middle;
-        }
-
-        td:first-child {
-            width: 30%;
-            font-weight: bold;
-            color: black;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 8px;
-        }
-
-        .buttons2 {
-            margin-top: 15px;
-        }
-    </style>
-</head>
-
-<body>
-
-<!-- ================= HEADER ================= -->
-<div class="block1">
-    <div class="main">
-        <header>
-            <h1>
-                <a class="logo" href="{% url 'index' %}">
-                    Pet Clinic
-                </a>
-            </h1>
-        </header>
+{% block content %}
+<div class="content-card" style="max-width: 760px; margin: 20px auto;">
+    <div class="card-header-styled">
+        <div>
+            <span class="section-tag">Appointment Booking</span>
+            <h1 class="card-heading">Schedule a Visit for Your Pet</h1>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 4px;">
+                Owner: <strong>{{ user.fullname }}</strong> ({{ user.email }})
+            </p>
+        </div>
+        <a href="{% url 'appointments' %}" class="btn-pill-outline">&larr; My Appointments</a>
     </div>
-</div>
 
-<!-- ================= CONTENT ================= -->
-<div class="block4">
-    <div class="main">
-        <section id="content">
-            <div class="container_12">
-                <div class="wrapper v_stripe">
+    <form method="POST">
+        {% csrf_token %}
 
-                    <article class="grid_12">
+        <!-- STEP 1: SERVICE SELECTION -->
+        <div style="background: var(--surface-offwhite); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; margin-bottom: 24px;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-cyan-dark); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">
+                Step 1 &bull; Clinical Service
+            </div>
 
-                        <div class="appointment-card fade-anim">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label">Select Medical Service *</label>
+                <select name="service" class="form-control" required>
+                    <option value="">-- Choose Veterinary Service --</option>
+                    {% for s in services %}
+                        <option value="{{ s.id }}" {% if selected_service_id|stringformat:"s" == s.id|stringformat:"s" %}selected{% endif %}>
+                            {{ s.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
 
-                            <h2 class="ind">
-                                <span>Book</span> Appointment
-                            </h2>
+        <!-- STEP 2: PET INFORMATION -->
+        <div style="background: var(--surface-offwhite); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; margin-bottom: 24px;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-cyan-dark); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">
+                Step 2 &bull; Pet Information
+            </div>
 
-                            <form method="post">
-                                {% csrf_token %}
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group">
+                    <label class="form-label">Pet's Name *</label>
+                    <input type="text" name="pet_name" class="form-control" placeholder="e.g. Luna, Max" required>
+                </div>
 
-                                <table>
-
-                                    <tr>
-                                        <td>Owner Name</td>
-                                        <td><input type="text" name="name" required></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Email</td>
-                                        <td><input type="email" name="email" required></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Pet Name</td>
-                                        <td><input type="text" name="pet_name" required></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Pet Breed</td>
-                                        <td><input type="text" name="pet_breed" required></td>
-                                    </tr>
-
-                                    <!-- ✅ DYNAMIC SERVICE -->
-                                    <tr>
-                                        <td>Service</td>
-                                        <td>
-                                            <select name="service" required>
-                                                <option value="">-- Select Service --</option>
-
-                                                {% for service in services %}
-                                                    <option value="{{ service.id }}">
-                                                        {{ service.name }}
-                                                    </option>
-                                                {% endfor %}
-
-                                            </select>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Date</td>
-                                        <td>
-                                            <input type="date" name="appointment_date" id="appointment_date" required>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Time</td>
-                                        <td>
-                                            <input type="time" name="appointment_time" min="09:00" max="17:00" required>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Description</td>
-                                        <td>
-                                            <textarea name="description" rows="4"></textarea>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            <div class="buttons2">
-                                                <button type="submit" class="button">Submit</button>
-
-                                                <button type="button" class="button"
-                                                    onclick="window.location.href='{% url 'dashboard' %}'">
-                                                    Cancel
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                </table>
-
-                            </form>
-
-                        </div>
-
-                    </article>
-
+                <div class="form-group">
+                    <label class="form-label">Breed / Animal Species *</label>
+                    <input type="text" name="pet_breed" class="form-control" placeholder="e.g. Golden Retriever, Siamese Cat" required>
                 </div>
             </div>
-        </section>
-    </div>
-</div>
 
-<!-- ================= FOOTER ================= -->
-<div class="main">
-    <footer>
-        Pet Clinic © {% now "Y" %}
-        <img src="{% static 'sbg/images/heart.png' %}" alt="">
-        <a href="#">Privacy Policy</a>
-    </footer>
-</div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label">Reason for Visit / Symptoms (Optional)</label>
+                <textarea name="description" class="form-control" rows="3" placeholder="Briefly describe your pet's current health condition or questions..."></textarea>
+            </div>
+        </div>
 
-<!-- DATE SCRIPT -->
+        <!-- STEP 3: SCHEDULE & TIMING -->
+        <div style="background: var(--surface-offwhite); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; margin-bottom: 28px;">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-cyan-dark); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">
+                Step 3 &bull; Date & Time Preference
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="form-group">
+                    <label class="form-label">Appointment Date *</label>
+                    <input type="date" name="appointment_date" id="appointment_date" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Preferred Time (09:00 - 17:00) *</label>
+                    <input type="time" name="appointment_time" min="09:00" max="17:00" class="form-control" required>
+                </div>
+            </div>
+            <small style="color: var(--text-secondary);">Clinic hours: 08:00 AM - 08:00 PM. Appointments are scheduled between 09:00 AM and 05:00 PM.</small>
+        </div>
+
+        <!-- SUBMIT ACTIONS -->
+        <div style="display: flex; gap: 14px; align-items: center; justify-content: flex-end;">
+            <a href="{% url 'dashboard' %}" class="btn-pill-outline">Cancel</a>
+            <button type="submit" class="btn-pill-dark" style="padding: 12px 32px;">
+                Confirm & Submit Booking
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const dateInput = document.getElementById('appointment_date');
-        const today = new Date().toISOString().split('T')[0];
-        dateInput.setAttribute('min', today);
+        var dateInput = document.getElementById('appointment_date');
+        if (dateInput) {
+            var today = new Date().toISOString().split('T')[0];
+            dateInput.setAttribute('min', today);
+        }
     });
 </script>
-
-</body>
-</html>
+{% endblock %}

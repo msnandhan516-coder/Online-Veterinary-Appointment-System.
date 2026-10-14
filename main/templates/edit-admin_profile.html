@@ -1,171 +1,48 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Admin Profile | Pet Clinic</title>
 
-<link rel="icon" href="{% static 'sbg/images/favicon.ico' %}">
-<link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
-<link rel="stylesheet" href="{% static 'sbg/css/ui.totop.css' %}">
+{% block title %}Edit Admin Profile | VetCare{% endblock %}
 
-<style>
+{% block content %}
+<div class="content-card" style="max-width: 580px; margin: 30px auto;">
+    <div class="card-header-styled">
+        <div>
+            <span class="section-tag" style="background: var(--primary-blue-light); color: var(--text-primary);">Security & Profile</span>
+            <h1 class="card-heading">Edit Administrator Profile</h1>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 4px;">
+                Administrator: <strong>@{{ user.username }}</strong>
+            </p>
+        </div>
+        <a href="{% url 'admin_dashboard' %}" class="btn-pill-outline">&larr; Dashboard</a>
+    </div>
 
-.profile-card{
-    width:550px;
-    margin:80px auto;
-    background:#ffffff;
-    padding:40px;
-    border-radius:12px;
-    box-shadow:0px 0px 20px rgba(0,0,0,0.1);
-}
+    <form method="POST">
+        {% csrf_token %}
 
-.profile-card h2{
-    text-align:center;
-}
+        <div class="form-group">
+            <label class="form-label">Admin Username</label>
+            <input type="text" value="{{ user.username }}" class="form-control" style="background: #edf2f5; cursor: not-allowed;" readonly>
+        </div>
 
-.profile-card table{
-    width:100%;
-    margin-top:20px;
-}
+        <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <input type="email" name="email" value="{{ user.email }}" class="form-control" required>
+        </div>
 
-.profile-card td{
-    padding:12px;
-}
+        <div class="form-group">
+            <label class="form-label">Phone Number *</label>
+            <input type="tel" name="phone" value="{{ user.phone }}" class="form-control" required>
+        </div>
 
-.profile-card input{
-    width:100%;
-    padding:10px;
-    border-radius:20px;
-    border:1px solid #ddd;
-    background:#f5f5f5;
-    outline:none;
-}
+        <div class="form-group">
+            <label class="form-label">Change Password (leave blank to keep current)</label>
+            <input type="password" name="password" placeholder="Enter new admin password" class="form-control">
+        </div>
 
-.profile-actions{
-    text-align:center;
-    margin-top:25px;
-}
-
-.admin-badge{
-    text-align:center;
-    color:#fff;
-    background:#2c3e50;
-    padding:6px;
-    border-radius:20px;
-    margin-bottom:15px;
-    font-size:14px;
-}
-
-</style>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <script>
-    // Force no back navigation after logout
-    window.history.pushState(null, "", window.location.href);
-    window.onpopstate = function () {
-        window.location.href = "{% url 'login' %}";
-    };
-</script>
-</head>
-
-<body>
-
-<!-- HEADER -->
-<div class="block1">
-<div class="main">
-<header>
-<h1>
-<a class="logo" href="{% url 'index' %}">
-Pet Clinic
-</a>
-</h1>
-</header>
+        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 28px;">
+            <a href="{% url 'admin_dashboard' %}" class="btn-pill-outline">Cancel</a>
+            <button type="submit" class="btn-pill-dark">Save Admin Changes</button>
+        </div>
+    </form>
 </div>
-</div>
-
-<!-- CONTENT -->
-<div class="block4">
-<div class="main">
-
-<section id="content">
-<div class="container_12">
-
-<div class="profile-card">
-
-
-
-<h2 class="ind">
-<span>Edit</span> Admin Profile
-</h2>
-
-<form method="POST">
-{% csrf_token %}
-
-<table>
-
-<tr>
-<td><strong>Username</strong></td>
-<td>
-<input type="text" value="{{ user.username }}" readonly>
-</td>
-</tr>
-
-<tr>
-<td><strong>Email</strong></td>
-<td>
-<input type="email" name="email" value="{{ user.email }}" required>
-</td>
-</tr>
-
-<tr>
-<td><strong>Phone</strong></td>
-<td>
-<input type="text" name="phone" value="{{ user.phone|default:'' }}">
-</td>
-</tr>
-
-<tr>
-<td><strong>New Password</strong></td>
-<td>
-<input type="password" name="password" placeholder="Enter new password">
-</td>
-</tr>
-
-</table>
-
-<div class="profile-actions">
-
-<button type="submit" class="button">
-Update Profile
-</button>
-
-<button type="button" class="button"
-onclick="window.location.href='{% url 'admin_dashboard' %}'">
-Cancel
-</button>
-
-</div>
-
-</form>
-
-</div>
-
-</div>
-</section>
-
-</div>
-</div>
-
-<!-- FOOTER -->
-<div class="main">
-<footer>
-Pet Clinic © 2026
-<img src="{% static 'sbg/images/heart.png' %}" alt="">
-<a href="#">Privacy Policy</a>
-</footer>
-</div>
-
-</body>
-</html>
+{% endblock %}

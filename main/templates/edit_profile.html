@@ -1,175 +1,46 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Edit Profile | Pet Clinic</title>
 
-<link rel="icon" href="{% static 'sbg/images/favicon.ico' %}">
-<link rel="shortcut icon" href="{% static 'sbg/images/favicon.ico' %}">
+{% block title %}Edit Profile | VetCare{% endblock %}
 
-<link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
-<link rel="stylesheet" href="{% static 'sbg/css/ui.totop.css' %}">
+{% block content %}
+<div class="content-card" style="max-width: 580px; margin: 30px auto;">
+    <div class="card-header-styled">
+        <div>
+            <span class="section-tag">Account Settings</span>
+            <h1 class="card-heading">Edit My Profile</h1>
+        </div>
+        <a href="{% url 'dashboard' %}" class="btn-pill-outline">&larr; Back to Dashboard</a>
+    </div>
 
-<script src="{% static 'sbg/js/jquery-1.7.min.js' %}"></script>
-<script src="{% static 'sbg/js/jquery.ui.totop.js' %}"></script>
+    <form method="POST">
+        {% csrf_token %}
 
-<style>
+        <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" value="{{ user.username }}" class="form-control" style="background: #edf2f5; cursor: not-allowed;" readonly>
+            <small style="color: var(--text-muted);">Username cannot be changed.</small>
+        </div>
 
-.profile-card{
-    width:520px;
-    margin:80px auto;
-    background:#ffffff;
-    padding:40px;
-    border-radius:10px;
-    box-shadow:0px 0px 15px rgba(0,0,0,0.1);
-}
+        <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <input type="email" name="email" value="{{ user.email }}" class="form-control" required>
+        </div>
 
-.profile-card h2{
-    text-align:center;
-}
+        <div class="form-group">
+            <label class="form-label">Phone Number *</label>
+            <input type="tel" name="phone" value="{{ user.phone }}" class="form-control" pattern="[0-9]{10}" title="Enter exactly 10 digits" required>
+        </div>
 
-.profile-card table{
-    width:100%;
-    margin-top:20px;
-}
+        <div class="form-group">
+            <label class="form-label">New Password (or keep current)</label>
+            <input type="password" name="password" value="{{ user.password }}" class="form-control" required>
+        </div>
 
-.profile-card td{
-    padding:12px;
-}
-
-.profile-card input{
-    width:100%;
-    padding:10px;
-    border-radius:20px;
-    border:1px solid #ddd;
-    background:#e9e4dc;
-    outline:none;
-}
-
-.profile-actions{
-    text-align:center;
-    margin-top:20px;
-}
-
-</style>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <script>
-    // Force no back navigation after logout
-    window.history.pushState(null, "", window.location.href);
-    window.onpopstate = function () {
-        window.location.href = "{% url 'login' %}";
-    };
-</script>
-</head>
-
-<body>
-
-<!-- HEADER -->
-<div class="block1">
-<div class="main">
-<header>
-<h1>
-<a class="logo" href="{% url 'index' %}">
-Pet Clinic
-</a>
-</h1>
-</header>
+        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 28px;">
+            <a href="{% url 'dashboard' %}" class="btn-pill-outline">Cancel</a>
+            <button type="submit" class="btn-pill-dark">Save Profile Changes</button>
+        </div>
+    </form>
 </div>
-</div>
-
-
-
-
-
-<!-- CONTENT -->
-<div class="block4">
-<div class="main">
-
-<section id="content">
-<div class="container_12">
-
-<div class="profile-card">
-
-<h2 class="ind">
-<span>Edit</span> Profile
-</h2>
-
-
-
-<form method="POST">
-
-{% csrf_token %}
-
-<table>
-
-<tr>
-<td><strong>Username</strong></td>
-<td>
-<input type="text" name="username" value="{{user.username}}" readonly>
-</td>
-</tr>
-
-<tr>
-<td><strong>Email</strong></td>
-<td>
-<input type="email" name="email" value="{{user.email}}" required>
-</td>
-</tr>
-
-<tr>
-<td><strong>Phone</strong></td>
-<td>
-<input type="text" name="phone" value="{{user.phone}}" required>
-</td>
-</tr>
-
-<tr>
-<td><strong>Password</strong></td>
-<td>
-<input type="password" name="password" value="{{user.password}}" required>
-</td>
-</tr>
-
-</table>
-
-
-<div class="profile-actions">
-
-<button type="submit" class="button">
-Update Profile
-</button>
-
-<button type="button" class="button"
-onclick="window.location.href='{% url 'dashboard' %}'">
-Cancel
-</button>
-
-</div>
-
-</form>
-
-</div>
-
-</div>
-</section>
-
-</div>
-</div>
-
-
-
-<!-- FOOTER -->
-<div class="main">
-<footer>
-Pet Clinic © 2026
-<img src="{% static 'sbg/images/heart.png' %}" alt="">
-<a href="#">Privacy Policy</a>
-</footer>
-</div>
-
-
-</body>
-</html>
+{% endblock %}

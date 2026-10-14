@@ -1,119 +1,102 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <title>Contact Us | Pet Clinic</title>
-    <meta charset="utf-8">
 
-    <link rel="icon" href="{% static 'sbg/images/favicon.ico' %}" type="image/x-icon">
-    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
-</head>
+{% block title %}Contact & Inquiries | VetCare Clinic{% endblock %}
 
-<body>
-
-<!-- HEADER -->
-<div class="block1">
-    <div class="main">
-        <header>
-            <h1>
-                <a class="logo" href="{% url 'index' %}">Pet Clinic</a>
-            </h1>
-        </header>
+{% block content %}
+<div class="content-card">
+    <div class="card-header-styled">
+        <div>
+            <span class="section-tag">Get In Touch</span>
+            <h1 class="card-heading">Contact & Consultations</h1>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 6px;">
+                Reach our team for general questions, appointment inquiries, or feedback.
+            </p>
+        </div>
+        <div class="nav-phone-pill">
+            <span class="phone-dot"></span>
+            <span>Emergency: 24/7 On-Call</span>
+        </div>
     </div>
-</div>
 
-<!-- NAVIGATION -->
-<div class="block2">
-    <div class="main">
-        <nav>
-            <ul class="sf-menu">
-                <li><a href="{% url 'index' %}">Home</a></li>
-                <li><a href="{% url 'about_us' %}">About Us</a></li>
-                <li><a href="{% url 'services' %}">Our Services</a></li>
-                <li class="current"><a href="{% url 'contact' %}">Contact Us</a></li>
-            </ul>
-            <div class="clear"></div>
-        </nav>
-    </div>
-</div>
+    <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: start;">
+        <!-- Left: Feedback Form -->
+        <div style="background: var(--surface-offwhite); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 32px;">
+            <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 20px;">Send Us A Message</h3>
 
-<!-- CONTENT -->
-<div class="block4">
-    <div class="main">
-        <section id="content">
-    <div class="main">
-
-        <!-- FLEX CONTAINER -->
-        <div style="display:flex; gap:40px; justify-content:center; flex-wrap:wrap;">
-
-            <!-- ================= LEFT CARD : FEEDBACK FORM ================= -->
-            <div class="appointment-card fade-anim" style="flex:1; min-width:350px; max-width:500px;">
-
-                <h2 class="ind"><span>Send</span> Feedback</h2>
-
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="success-message">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-
-                <form method="POST">
-                    {% csrf_token %}
-
-                    <input type="text" name="name" placeholder="Name" required>
-                    <input type="email" name="email" placeholder="Email" required>
-                    <input type="text" name="phone" placeholder="Phone">
-                    <textarea name="message" placeholder="Message" required></textarea>
-
-                    <div class="buttons2">
-                        <button type="reset" class="button">Clear</button>
-                        <button type="submit" class="button">Send</button>
-                    </div>
-                </form>
-
-            </div>
-
-            <!-- ================= RIGHT CARD : CONTACT INFO ================= -->
-            <div class="appointment-card fade-anim" style="flex:1; min-width:350px; max-width:500px;">
-
-                <h2 class="ind"><span>Contact</span> Information</h2>
-
-                <div class="map_wrapper img_wrap">
-                    <iframe
-                        width="100%"
-                        height="250"
-                        frameborder="0"
-                        style="border:0"
-                        src="https://maps.google.com/maps?q=Kochi,Kerala&output=embed">
-                    </iframe>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label">Full Name *</label>
+                    <input type="text" name="name" class="form-control" placeholder="Your name" required>
                 </div>
 
-                <dl class="adress" style="margin-top:20px;">
-                    <dt>
-                        <strong>Pet Clinic</strong><br>
-                        Kochi, Kerala, India
-                    </dt>
-                    <dd><span>Phone:</span> +91 98765 43210</dd>
-                    <dd><span>Email:</span> petclinicportal@gmail.com</dd>
-                </dl>
+                <div class="form-group">
+                    <label class="form-label">Email Address *</label>
+                    <input type="email" name="email" class="form-control" placeholder="name@example.com" required>
+                </div>
 
-            </div>
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" name="phone" class="form-control" placeholder="10-digit contact number">
+                </div>
 
+                <div class="form-group">
+                    <label class="form-label">Your Message or Feedback *</label>
+                    <textarea name="message" class="form-control" rows="4" placeholder="How can our veterinary team assist you?" required></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-pill-dark">Send Message</button>
+                    <button type="reset" class="btn-pill-outline">Clear</button>
+                </div>
+            </form>
         </div>
 
-    </div>
-</section>
+        <!-- Right: Clinic Information & Map -->
+        <div>
+            <div style="background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 28px; margin-bottom: 24px;">
+                <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 18px;">Clinic Information</h3>
+                
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <div style="display: flex; align-items: flex-start; gap: 14px;">
+                        <div style="width: 38px; height: 38px; border-radius: 10px; background: var(--bg-page); display: flex; align-items: center; justify-content: center; color: var(--accent-cyan); font-size: 1.1rem; flex-shrink: 0;">📍</div>
+                        <div>
+                            <strong>VetCare Animal Hospital</strong>
+                            <p style="color: var(--text-secondary); font-size: 0.88rem;">Kochi, Kerala, India &bull; Babushkina Medical Center</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: flex-start; gap: 14px;">
+                        <div style="width: 38px; height: 38px; border-radius: 10px; background: var(--bg-page); display: flex; align-items: center; justify-content: center; color: var(--accent-cyan); font-size: 1.1rem; flex-shrink: 0;">📞</div>
+                        <div>
+                            <strong>Phone Numbers</strong>
+                            <p style="color: var(--text-secondary); font-size: 0.88rem;">Appointments: +91 98765 43210<br>Emergency: +7 861 250 66 60</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: flex-start; gap: 14px;">
+                        <div style="width: 38px; height: 38px; border-radius: 10px; background: var(--bg-page); display: flex; align-items: center; justify-content: center; color: var(--accent-cyan); font-size: 1.1rem; flex-shrink: 0;">⏰</div>
+                        <div>
+                            <strong>Working Hours</strong>
+                            <p style="color: var(--text-secondary); font-size: 0.88rem;">Monday – Saturday: 08:00 AM – 08:00 PM<br>Emergency & Intensive Care: 24/7</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Google Maps Embed -->
+            <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-color); height: 220px;">
+                <iframe
+                    width="100%"
+                    height="100%"
+                    frameborder="0"
+                    style="border:0;"
+                    src="https://maps.google.com/maps?q=Kochi,Kerala&output=embed"
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
     </div>
 </div>
-
-<!-- FOOTER -->
-<div class="main">
-    <footer>
-        Pet Clinic &copy; {% now "Y" %}
-    </footer>
-</div>
-
-</body>
-</html>
+{% endblock %}

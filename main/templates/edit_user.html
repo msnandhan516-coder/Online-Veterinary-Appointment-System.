@@ -1,100 +1,48 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html>
-<head>
-<title>Edit User</title>
-<link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
-        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
- <script>
-    // Force no back navigation after logout
-    window.history.pushState(null, "", window.location.href);
-    window.onpopstate = function () {
-        window.location.href = "{% url 'login' %}";
-    };
-</script>
-</head>
 
-<body>
+{% block title %}Edit User Account | VetCare Admin{% endblock %}
 
-<div class="block1">
-    <div class="main">
-        <header>
-            <h1>
-                <a class="logo" href="{% url 'admin_dashboard' %}">
-                    Admin Panel
-                </a>
-            </h1>
-        </header>
+{% block content %}
+<div class="content-card" style="max-width: 580px; margin: 30px auto;">
+    <div class="card-header-styled">
+        <div>
+            <span class="section-tag">Account Management</span>
+            <h1 class="card-heading">Edit Client Profile</h1>
+            <p style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 4px;">
+                User: <strong>@{{ user.username }}</strong>
+            </p>
+        </div>
+        <a href="{% url 'admin_users' %}" class="btn-pill-outline">&larr; User Directory</a>
     </div>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" value="{{ user.username }}" class="form-control" style="background: #edf2f5; cursor: not-allowed;" readonly>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Email Address *</label>
+            <input type="email" name="email" value="{{ user.email }}" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Phone Number *</label>
+            <input type="tel" name="phone" value="{{ user.phone }}" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">New Password (leave blank to keep current)</label>
+            <input type="password" name="password" placeholder="Enter new password if changing" class="form-control">
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 28px;">
+            <a href="{% url 'admin_users' %}" class="btn-pill-outline">Cancel</a>
+            <button type="submit" class="btn-pill-dark">Update Client Account</button>
+        </div>
+    </form>
 </div>
-
-<div class="block4">
-<div class="main">
-
-<section id="content">
-<div class="container_12">
-
-<div class="appointment-card">
-
-<h2 class="ind">
-<span>Edit</span> User
-</h2>
-
-<form method="POST">
-{% csrf_token %}
-
-<table>
-
-<tr>
-<td>Username</td>
-<td>
-<input type="text" value="{{ user.username }}" readonly>
-</td>
-</tr>
-
-<tr>
-<td>Email</td>
-<td>
-<input type="email" name="email" value="{{ user.email }}">
-</td>
-</tr>
-
-<tr>
-<td>Phone</td>
-<td>
-<input type="text" name="phone" value="{{ user.phone }}">
-</td>
-</tr>
-
-<tr>
-<td>Password</td>
-<td>
-<input type="password" name="password" placeholder="Enter new password">
-</td>
-</tr>
-
-</table>
-
-<br>
-
-<button type="submit" class="button">Update</button>
-
-<button type="button" class="button"
-onclick="window.location.href='{% url 'admin_users' %}'">
-Cancel
-</button>
-
-</form>
-
-</div>
-
-</div>
-</section>
-
-</div>
-</div>
-
-</body>
-</html>
+{% endblock %}

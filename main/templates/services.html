@@ -1,113 +1,57 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <title>Our Services | Pet Clinic</title>
-    <meta charset="utf-8">
 
-    <!-- Favicon -->
-    <link rel="icon" href="{% static 'sbg/images/favicon.ico' %}" type="image/x-icon">
+{% block title %}Our Veterinary Services | VetCare{% endblock %}
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'sbg/css/ui.totop.css' %}">
+{% block content %}
+<div class="content-card">
+    <div class="card-header-styled">
+        <div>
+            <span class="section-tag">Clinical Services</span>
+            <h1 class="card-heading">Our Veterinary Care & Treatments</h1>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 6px;">
+                Comprehensive diagnostics, treatment plans, surgery, and preventive wellness for your animal companions.
+            </p>
+        </div>
 
-    <!-- JS -->
-    <script src="{% static 'sbg/js/jquery-1.7.min.js' %}"></script>
-    <script src="{% static 'sbg/js/superfish.js' %}"></script>
-    <script src="{% static 'sbg/js/jquery.easing.1.3.js' %}"></script>
-    <script src="{% static 'sbg/js/jquery.ui.totop.js' %}"></script>
-
-    <script>
-        $(function(){
-            $().UItoTop({ easingType: 'easeOutQuart' });
-        });
-    </script>
-</head>
-
-<body>
-
-<!-- ================= HEADER ================= -->
-<div class="block1">
-    <div class="main">
-        <header>
-            <h1>
-                <a class="logo" href="{% url 'index' %}">
-                    Pet Clinic
-                </a>
-            </h1>
-        </header>
+        {% if request.session.role == 'admin' %}
+            <a href="{% url 'add_service' %}" class="btn-pill-cyan">
+                <span>+ Add New Service</span>
+            </a>
+        {% else %}
+            <a href="{% url 'create_appointment' %}" class="btn-pill-dark">
+                <span>Book Appointment</span>
+            </a>
+        {% endif %}
     </div>
-</div>
 
-<!-- ================= NAVIGATION ================= -->
-<div class="block2">
-    <div class="main">
-        <nav>
-            <ul class="sf-menu">
-                <li><a href="{% url 'index' %}">Home</a></li>
-                <li><a href="{% url 'about_us' %}">About Us</a></li>
-                <li class="current"><a href="{% url 'services' %}">Our Services</a></li>
-                <li><a href="/contact/">Contact Us</a></li>
-            </ul>
-            <div class="clear"></div>
-        </nav>
-    </div>
-</div>
-
-<!-- ================= CONTENT ================= -->
-<div class="block4">
-    <div class="main">
-        <section id="content">
-            <div class="container_12">
-                <div class="wrapper">
-
-                    {% for service in services %}
-
-                        {% if forloop.counter0|divisibleby:3 %}
-                            <div class="wrapper m_bot2"> <!-- NEW ROW -->
-                        {% endif %}
-
-                        <article class="grid_4
-                            {% if forloop.first or forloop.counter0|divisibleby:3 %}alpha{% endif %}
-                            {% if forloop.counter|divisibleby:3 %}omega{% endif %}">
-
-                            <div class="treatment">
-
-                                {% if service.image %}
-                                    <img src="{{ service.image.url }}" alt="">
-                                {% else %}
-                                    <img src="{% static 'sbg/images/3page_img1.jpg' %}" alt="">
-                                {% endif %}
-
-                                <strong>{{ service.name }}</strong><br>
-                                {{ service.description }}
-
-                            </div>
-
-                        </article>
-
-                        {% if forloop.counter|divisibleby:3 or forloop.last %}
-                            </div> <!-- END ROW -->
-                        {% endif %}
-
-                    {% endfor %}
-
+    <!-- Services Grid -->
+    <div class="grid-services">
+        {% for service in services %}
+            <div class="service-card">
+                <div class="service-img-wrapper">
+                    {% if service.image %}
+                        <img src="{{ service.image.url }}" alt="{{ service.name }}" loading="lazy">
+                    {% else %}
+                        <img src="{% static 'sbg/images/3page_img1.jpg' %}" alt="{{ service.name }}" loading="lazy">
+                    {% endif %}
+                </div>
+                <h3 class="service-name">{{ service.name }}</h3>
+                <p class="service-desc">{{ service.description }}</p>
+                <div style="margin-top: auto; padding-top: 14px;">
+                    <a href="{% url 'create_appointment' %}?service_id={{ service.id }}" class="btn-pill-dark" style="width: 100%; font-size: 0.88rem; padding: 10px 18px;">
+                        Book This Service
+                    </a>
                 </div>
             </div>
-        </section>
+        {% empty %}
+            <div style="grid-column: 1 / -1; text-align: center; padding: 50px 20px;">
+                <p style="color: var(--text-secondary); font-size: 1rem;">No services listed yet.</p>
+                {% if request.session.role == 'admin' %}
+                    <a href="{% url 'add_service' %}" class="btn-pill-cyan" style="margin-top: 16px;">Add First Service</a>
+                {% endif %}
+            </div>
+        {% endfor %}
     </div>
 </div>
-
-<!-- ================= FOOTER ================= -->
-<div class="main">
-    <footer>
-        Pet Clinic &copy; {% now "Y" %} &nbsp;
-        <img src="{% static 'sbg/images/heart.png' %}" alt="">
-        &nbsp;
-        <a href="#">Privacy Policy</a>
-    </footer>
-</div>
-
-</body>
-</html>
+{% endblock %}

@@ -1,103 +1,65 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html>
-<head>
-    <title>All Users | Admin</title>
-    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
-        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <script>
-    // Force no back navigation after logout
-    window.history.pushState(null, "", window.location.href);
-    window.onpopstate = function () {
-        window.location.href = "{% url 'login' %}";
-    };
-</script>
-</head>
-<body>
 
-<!-- ================= HEADER ================= -->
-<div class="block1">
-    <div class="main">
-        <header>
-            <h1>
-                <a class="logo" href="{% url 'admin_dashboard' %}">
-                    Admin Panel
-                </a>
-            </h1>
-        </header>
+{% block title %}User Management | VetCare Admin{% endblock %}
+
+{% block content %}
+<div class="content-card">
+    <div class="card-header-styled">
+        <div>
+            <span class="section-tag">Account Directory</span>
+            <h1 class="card-heading">Registered Pet Owners</h1>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 4px;">
+                Directory of registered clients and pet owners with active accounts.
+            </p>
+        </div>
+
+        <a href="{% url 'admin_dashboard' %}" class="btn-pill-outline">&larr; Admin Dashboard</a>
     </div>
-</div>
 
-<!-- ================= CONTENT ================= -->
-<div class="block4">
-    <div class="main">
-        <section id="content">
-            <div class="container_12">
-                <div class="wrapper v_stripe">
-
-                    <article class="grid_12">
-
-                        <!-- SAME CARD STYLE -->
-                        <div class="appointment-card fade-anim">
-
-                            <h2 class="ind">
-                                <span>All</span> Users
-                            </h2>
-
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Username</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {% for user in users %}
-                                    <tr>
-                                        <td>{{ user.username }}</td>
-                                        <td>{{ user.email }}</td>
-                                        <td>{{ user.phone }}</td>
-                                        <td>
-                                           <button type="button" class="button"
-                                                onclick="window.location.href='{% url 'edit_user' user.id %}'">
-                                                EDIT
-                                           </button> |
-                                            <button type="button" class="button"
-                                                onclick="if(confirm('Are you sure you want to delete this user?')) { window.location.href='{% url 'delete_user' user.id %}'; }">
-                                                Delete
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    {% empty %}
-                                    <tr>
-                                        <td colspan="4">
-                                            No users found.
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-
-                            <button type="button" class="button"
-                                onclick="window.location.href='{% url 'admin_dashboard' %}'">
-                                Back
-                            </button>
-
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Username</th>
+                    <th>Email Address</th>
+                    <th>Phone Number</th>
+                    <th>Role</th>
+                    <th style="text-align: center;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td><strong>{{ user.fullname|default:user.username }}</strong></td>
+                    <td>@{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phone|default:"-" }}</td>
+                    <td><span class="badge-status badge-approved">{{ user.role|upper }}</span></td>
+                    <td style="text-align: center;">
+                        <div style="display: inline-flex; gap: 8px;">
+                            <a href="{% url 'edit_user' user.id %}" class="btn-pill-outline" style="font-size: 0.78rem; padding: 6px 14px;">
+                                Edit
+                            </a>
+                            <a href="{% url 'delete_user' user.id %}" class="btn-pill-danger" style="font-size: 0.78rem; padding: 6px 12px;" onclick="return confirm('Are you sure you want to delete user {{ user.username }} and all their appointments?');">
+                                Delete
+                            </a>
                         </div>
-
-                    </article>
-
-                </div>
-            </div>
-        </section>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 48px 20px;">
+                        <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 4px;">No Registered Users</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            No client accounts found.
+                        </p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
-
-</body>
-</html>
+{% endblock %}

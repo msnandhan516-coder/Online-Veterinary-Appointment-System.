@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}VetCare | Online Veterinary Clinic{% endblock %}</title>
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'images/vet_logo.svg' %}" type="image/svg+xml">
+
+    <!-- Modern Theme Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <!-- Outer Master White Rounded Container -->
+    <div class="site-container">
+
+        <!-- Global Header & Navigation -->
+        <header class="site-header">
+            <!-- Brand Logo -->
+            <a href="{% url 'index' %}" class="brand-wrapper">
+                <div class="brand-logo-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 10.5h-5.5V5h-3v5.5H5v3h5.5V19h3v-5.5H19v-3z"/>
+                    </svg>
+                </div>
+                <div class="brand-info">
+                    <span class="brand-title">VetCare Clinic</span>
+                    <span class="brand-subtitle">Professional Healthcare & Assistance</span>
+                </div>
+            </a>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button class="mobile-nav-toggle" id="mobileNavBtn" aria-label="Toggle navigation">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+
+            <!-- Navigation Links -->
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="{% url 'index' %}" class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}">Home</a></li>
+                    <li><a href="{% url 'about_us' %}" class="nav-link {% if request.resolver_match.url_name == 'about_us' %}active{% endif %}">About Clinic</a></li>
+                    <li><a href="{% url 'services' %}" class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}">Services</a></li>
+                    <li><a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contacts</a></li>
+
+                    {% if request.session.role == 'admin' %}
+                        <li><a href="{% url 'admin_dashboard' %}" class="nav-link {% if 'admin' in request.resolver_match.url_name %}active{% endif %}">Admin Panel</a></li>
+                    {% elif request.session.username %}
+                        <li><a href="{% url 'dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Dashboard</a></li>
+                        <li><a href="{% url 'appointments' %}" class="nav-link {% if request.resolver_match.url_name == 'appointments' %}active{% endif %}">My Bookings</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+            <!-- Navigation Actions on Right -->
+            <div class="nav-actions">
+                <a href="tel:+919876543210" class="nav-phone-pill" title="Call Clinic">
+                    <span class="phone-dot"></span>
+                    <span>+91 98765 43210</span>
+                </a>
+
+                {% if request.session.username %}
+                    <a href="{% url 'logout' %}" class="btn-pill-outline" style="padding: 8px 16px; font-size: 0.82rem;">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn-pill-outline" style="padding: 8px 16px; font-size: 0.82rem;">Sign In</a>
+                {% endif %}
+
+                <a href="{% url 'create_appointment' %}" class="btn-pill-dark">
+                    <span>Book Appointment</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Django Flash Messages -->
+        {% if messages %}
+            <div class="messages-container" style="margin-top: 10px; margin-bottom: 20px;">
+                {% for message in messages %}
+                    <div class="alert-box {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %}">
+                        {% if message.tags == 'success' %}
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                        {% else %}
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                        {% endif %}
+                        <span>{{ message }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <!-- Page Specific Content -->
+        <main class="page-main-body">
+            {% block content %}{% endblock %}
+        </main>
+
+        <!-- Global Site Footer -->
+        <footer class="site-footer">
+            <div>
+                <strong>VetCare Animal Healthcare</strong> &copy; {% now "Y" %} &bull; All Rights Reserved
+            </div>
+            <ul class="footer-links">
+                <li><a href="{% url 'index' %}" class="footer-link">Home</a></li>
+                <li><a href="{% url 'about_us' %}" class="footer-link">About Clinic</a></li>
+                <li><a href="{% url 'services' %}" class="footer-link">Services</a></li>
+                <li><a href="{% url 'contact' %}" class="footer-link">Contact</a></li>
+                {% if not request.session.username %}
+                    <li><a href="{% url 'login' %}" class="footer-link">Admin / Staff Login</a></li>
+                {% endif %}
+            </ul>
+        </footer>
+
+    </div>
+
+    <!-- Mobile Navigation Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var toggleBtn = document.getElementById('mobileNavBtn');
+            var navMenu = document.getElementById('navMenu');
+            if (toggleBtn && navMenu) {
+                toggleBtn.addEventListener('click', function() {
+                    navMenu.classList.toggle('is-open');
+                });
+            }
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

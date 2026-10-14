@@ -1,130 +1,80 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html>
-<head>
-    <title>All Appointments | Admin</title>
-    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
-        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-           <script>
-            // Force no back navigation after logout
-            window.history.pushState(null, "", window.location.href);
-            window.onpopstate = function () {
-                window.location.href = "{% url 'login' %}";
-            };
-        </script>
 
-</head>
-<body>
+{% block title %}Approved Appointments | VetCare Admin{% endblock %}
 
-<!-- ================= HEADER ================= -->
-<div class="block1">
-    <div class="main">
-        <header>
-            <h1>
-                <a class="logo" href="{% url 'admin_dashboard' %}">
-                    Admin Panel
-                </a>
-            </h1>
-        </header>
+{% block content %}
+<div class="content-card">
+    <div class="card-header-styled">
+        <div>
+            <span class="section-tag" style="background: var(--success-bg); color: var(--success);">Active Consultations</span>
+            <h1 class="card-heading">Approved Clinical Appointments</h1>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 4px;">
+                Appointments confirmed by staff that are scheduled or currently in clinic.
+            </p>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <a href="{% url 'admin_dashboard' %}" class="btn-pill-outline">&larr; Dashboard</a>
+            <a href="{% url 'completed_appointments' %}" class="btn-pill-dark">Completed Works</a>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Pet Name</th>
+                    <th>Client (Owner)</th>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Work Status</th>
+                    <th style="text-align: center;">Clinical Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appt in appointments %}
+                <tr>
+                    <td><strong>{{ appt.pet_name }}</strong></td>
+                    <td>
+                        <strong>{{ appt.user.fullname|default:appt.user.username }}</strong><br>
+                        <small style="color: var(--text-secondary);">{{ appt.user.phone }}</small>
+                    </td>
+                    <td>{{ appt.service.name }}</td>
+                    <td>{{ appt.appointment_date }}</td>
+                    <td>{{ appt.appointment_time }}</td>
+                    <td><span class="badge-status badge-approved">Approved</span></td>
+                    <td>
+                        {% if appt.work_status == "Done" %}
+                            <span class="badge-status badge-done">Completed</span>
+                        {% else %}
+                            <span class="badge-status badge-pending">Scheduled / In Clinic</span>
+                        {% endif %}
+                    </td>
+                    <td style="text-align: center;">
+                        {% if appt.work_status == "Not Done" %}
+                            <a href="{% url 'mark_done' appt.id %}" class="btn-pill-success" onclick="return confirm('Mark consultation completed for {{ appt.pet_name }}?');">
+                                ✔ Mark Work Done
+                            </a>
+                        {% else %}
+                            <span style="color: var(--success); font-weight: 700; font-size: 0.85rem;">Finished</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" style="text-align: center; padding: 48px 20px;">
+                        <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 4px;">No Approved Appointments Pending Work</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            There are no active scheduled appointments waiting for completion.
+                        </p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
-
-<!-- ================= CONTENT ================= -->
-<div class="block4">
-    <div class="main">
-        <section id="content">
-            <div class="container_12">
-                <div class="wrapper v_stripe">
-
-                    <article class="grid_12">
-                        <div class="appointment-card fade-anim">
-
-                            <h2 class="ind">
-                                <span>Approved</span> Appointments
-                            </h2>
-
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Pet</th>
-                                        <th>Owner</th>
-                                        <th>Service</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Status</th>
-                                        <th>Work Status</th> <!-- ✅ NEW -->
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {% for appointment in appointments %}
-                                    <tr>
-                                        <td>{{ appointment.pet_name }}</td>
-                                        <td>{{ appointment.user.username }}</td>
-                                        <td>{{ appointment.service.name }}</td>
-                                        <td>{{ appointment.appointment_date }}</td>
-                                        <td>{{ appointment.appointment_time }}</td>
-                                        <td>{{ appointment.status }}</td>
-
-                                        <!-- ✅ WORK STATUS DISPLAY -->
-                                        <td>
-                                            {% if appointment.work_status == "Done" %}
-                                                <span style="color: green; font-weight: bold;">
-                                                    ✔ Done
-                                                </span>
-                                            {% else %}
-                                                <span style="color: red; font-weight: bold;">
-                                                    Not Done
-                                                </span>
-                                            {% endif %}
-                                        </td>
-
-                                        <!-- ✅ ACTION BUTTON -->
-                                        <td>
-                                            {% if appointment.status == "Approved" %}
-                                                {% if appointment.work_status == "Not Done" %}
-                                                    <button type="button" class="button"
-                                                        onclick="window.location.href='{% url 'mark_done' appointment.id %}'">
-                                                        work done
-                                                    </button>
-                                                {% else %}
-                                                    <span style="color: green; font-weight: bold;">
-                                                        Completed
-                                                    </span>
-                                                {% endif %}
-                                            {% else %}
-                                                <span style="color: gray;">
-                                                    Not Allowed
-                                                </span>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    {% empty %}
-                                    <tr>
-                                        <td colspan="8">
-                                            No appointments found.
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-
-                            <button type="button" class="button"
-                                onclick="window.location.href='{% url 'admin_dashboard' %}'">
-                                Back
-                            </button>
-
-                        </div>
-                    </article>
-
-                </div>
-            </div>
-        </section>
-    </div>
-</div>
-
-</body>
-</html>
+{% endblock %}

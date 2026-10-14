@@ -1,137 +1,78 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <title>User Registration | Pet Clinic</title>
-    <meta charset="utf-8">
 
-    <!-- FAVICON -->
-    <link rel="icon" href="{% static 'sbg/images/favicon.ico' %}" type="image/x-icon">
-    <link rel="shortcut icon" href="{% static 'sbg/images/favicon.ico' %}" type="image/x-icon">
+{% block title %}Create Account | VetCare Clinic{% endblock %}
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'sbg/css/ui.totop.css' %}">
+{% block content %}
+<div class="auth-wrapper" style="max-width: 540px;">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="brand-logo-icon" style="margin: 0 auto 16px; width: 48px; height: 48px;">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19 10.5h-5.5V5h-3v5.5H5v3h5.5V19h3v-5.5H19v-3z"/>
+                </svg>
+            </div>
+            <h2>Register Account</h2>
+            <p>Join VetCare to book appointments and track your pet's healthcare</p>
+        </div>
 
-    <!-- JS -->
-    <script src="{% static 'sbg/js/jquery-1.7.min.js' %}"></script>
-    <script src="{% static 'sbg/js/jquery.ui.totop.js' %}"></script>
+        <form method="POST">
+            {% csrf_token %}
 
-    <script>
-        $(function () {
-            $().UItoTop({ easingType: 'easeOutQuart' });
-        });
-    </script>
-</head>
-
-<body>
-
-<!-- ================= HEADER ================= -->
-<div class="block1">
-    <div class="main">
-        <header>
-            <h1><a class="logo" href="{% url 'index' %}">Pet Clinic</a></h1>
-        </header>
-    </div>
-</div>
-
-<!-- ================= REGISTRATION CONTENT ================= -->
-<div class="block4">
-    <div class="main">
-        <section id="content">
-            <div class="container_12">
-                <div class="wrapper v_stripe">
-
-                    <!-- FULL WIDTH LIKE LOGIN -->
-                    <article class="grid_12">
-
-                        <div class="appointment-card fade-anim">
-
-                            <h2 class="ind"><span>User</span> Registration</h2>
-
-                            <form method="post">
-                                {% csrf_token %}
-
-                                <!-- MESSAGES -->
-                                {% if messages %}
-                                    {% for message in messages %}
-                                        <p style="color:red; text-align:center; font-weight:bold;">
-                                            {{ message }}
-                                        </p>
-                                    {% endfor %}
-                                {% endif %}
-
-                                <div class="form-group">
-                                    <label style="color:black; font-weight:bold;">Full Name: </label>
-                                    <input type="text" name="fullname" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label style="color:black; font-weight:bold;">User Name: </label>
-                                    <input type="text" name="username" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label style="color:black; font-weight:bold;">Password: </label>
-                                    <input type="password" name="password" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label style="color:black; font-weight:bold;">Confirm Password: </label>
-                                    <input type="password" name="confirm_password" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label style="color:black; font-weight:bold;">Email: </label>
-                                    <input type="email" name="email" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label style="color:black; font-weight:bold;">Phone no: </label>
-                                    <input type="text"
-                                           name="phone"
-                                           pattern="[0-9]{10}"
-                                           title="Enter exactly 10 digits"
-                                           required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label style="color:black; font-weight:bold;">Registered As</label>
-                                    <select name="role" required>
-                                        <option value="">-- Select Role --</option>
-                                        <option value="user" selected>User</option>
-                                        <option value="admin">Admin</option>
-                                    </select>
-                                </div>
-
-                                <div class="buttons2">
-                                    <button type="submit" class="button">Register</button>
-                                    <button type="button" class="button"
-                                            onclick="window.location.href='{% url 'index' %}'">
-                                        Cancel
-                                    </button>
-                                </div>
-
-                            </form>
-
-                        </div>
-
-                    </article>
-
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                <div class="form-group">
+                    <label class="form-label">Full Name *</label>
+                    <input type="text" name="fullname" class="form-control" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Username *</label>
+                    <input type="text" name="username" class="form-control" placeholder="johndoe" required>
                 </div>
             </div>
-        </section>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                <div class="form-group">
+                    <label class="form-label">Email Address *</label>
+                    <input type="email" name="email" class="form-control" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone Number *</label>
+                    <input type="tel" name="phone" pattern="[0-9]{10}" class="form-control" placeholder="10-digit phone" title="Enter exactly 10 digits" required>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                <div class="form-group">
+                    <label class="form-label">Password *</label>
+                    <input type="password" name="password" class="form-control" placeholder="Create password" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Confirm Password *</label>
+                    <input type="password" name="confirm_password" class="form-control" placeholder="Confirm password" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Register As</label>
+                <select name="role" class="form-control" required>
+                    <option value="user" selected>Pet Owner</option>
+                    <option value="admin">Clinic Staff / Administrator</option>
+                </select>
+            </div>
+
+            <div style="margin-top: 26px;">
+                <button type="submit" class="btn-pill-dark" style="width: 100%; padding: 12px;">
+                    Create My Account
+                </button>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px; font-size: 0.88rem; color: var(--text-secondary);">
+                Already have an account? 
+                <a href="{% url 'login' %}" style="color: var(--accent-cyan-dark); font-weight: 700; text-decoration: none;">
+                    Sign In here
+                </a>
+            </div>
+        </form>
     </div>
 </div>
-
-<!-- ================= FOOTER ================= -->
-<div class="main">
-    <footer>
-        Pet Clinic © 2026
-        <img src="{% static 'sbg/images/heart.png' %}" alt="">
-        <a href="#">Privacy Policy</a>
-    </footer>
-</div>
-
-</body>
-</html>
+{% endblock %}

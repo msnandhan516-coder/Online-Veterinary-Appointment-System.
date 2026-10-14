@@ -1,102 +1,32 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <title>{{ title }} | Pet Clinic</title>
-    <meta charset="utf-8">
 
-    <link rel="icon" href="{% static 'sbg/images/favicon.ico' %}">
-    <link rel="shortcut icon" href="{% static 'sbg/images/favicon.ico' %}">
+{% block title %}{{ title }} | VetCare Specialization{% endblock %}
 
-    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'sbg/css/ui.totop.css' %}">
+{% block content %}
+<div class="content-card" style="max-width: 800px; margin: 30px auto;">
+    <div class="card-header-styled">
+        <div>
+            <span class="section-tag">Specialized Care</span>
+            <h1 class="card-heading">{{ title }}</h1>
+        </div>
+        <a href="{% url 'about_us' %}" class="btn-pill-outline">&larr; All Categories</a>
+    </div>
 
-    <script src="{% static 'sbg/js/jquery-1.7.min.js' %}"></script>
-    <script src="{% static 'sbg/js/jquery.ui.totop.js' %}"></script>
+    <div style="background: var(--surface-offwhite); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 32px; margin-bottom: 32px;">
+        <p style="font-size: 1.05rem; line-height: 1.7; color: var(--text-primary);">
+            {{ description }}
+        </p>
+    </div>
 
-    <script>
-        $(function () {
-            $().UItoTop({ easingType: 'easeOutQuart' });
-        });
-    </script>
-</head>
-
-<body>
-
-<!-- HEADER -->
-<div class="block1">
-    <div class="main">
-        <header>
-            <h1>
-                <a class="logo" href="{% url 'index' %}">
-                    Pet Clinic
-                </a>
-            </h1>
-        </header>
+    <div style="display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+        <div style="font-size: 0.9rem; color: var(--text-secondary);">
+            Have questions regarding this care program? Reach our medical staff anytime.
+        </div>
+        <div style="display: flex; gap: 12px;">
+            <a href="{% url 'contact' %}" class="btn-pill-outline">Contact Clinic</a>
+            <a href="{% url 'create_appointment' %}" class="btn-pill-dark">Book an Appointment &rarr;</a>
+        </div>
     </div>
 </div>
-
-<!-- NAVIGATION -->
-<div class="block2">
-    <div class="main">
-        <nav>
-            <ul class="sf-menu">
-                <li><a href="{% url 'index' %}">HOME</a></li>
-                <li class="current"><a href="{% url 'about_us' %}">ABOUT US</a></li>
-                <li><a href="{% url 'services' %}">OUR SERVICES</a></li>
-                <li><a href="{% url 'contact' %}">CONTACT US</a></li>
-            </ul>
-            <div class="clear"></div>
-        </nav>
-    </div>
-</div>
-
-<!-- CONTENT -->
-<div class="block4">
-    <div class="main">
-        <section id="content">
-            <div class="container_12">
-                <div class="wrapper v_stripe">
-
-                    <article class="grid_12">
-                        <div class="appointment-card">
-
-                            <h2 class="ind">
-                                <span>{{ title}}</span>
-                            </h2>
-
-                            <div class="card-body">
-
-                                <p class="f_19" style="color:#000;">
-                                    {{ description }}
-                                </p>
-
-                                <br><br>
-
-                                 <button type="button" class="button"
-                                        onclick="window.location.href='{% url 'about_us' %}'">
-                                     Back to About Us
-                                 </button>
-
-
-                            </div>
-
-                        </div>
-                    </article>
-
-                </div>
-            </div>
-        </section>
-    </div>
-</div>
-<!-- FOOTER -->
-<div class="main">
-    <footer>
-        Pet Clinic © 2026
-        <img src="{% static 'sbg/images/heart.png' %}" alt="">
-        <a href="#">Privacy Policy</a>
-    </footer>
-</div>
-
-</body>
-</html>
+{% endblock %}

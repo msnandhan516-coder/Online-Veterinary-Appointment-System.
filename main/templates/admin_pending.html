@@ -1,114 +1,76 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html>
-<head>
-    <title>Pending Appointments | Admin</title>
-    <link rel="stylesheet" href="{% static 'sbg/css/style.css' %}">
-        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-       <script>
-    // Force no back navigation after logout
-    window.history.pushState(null, "", window.location.href);
-    window.onpopstate = function () {
-        window.location.href = "{% url 'login' %}";
-    };
-</script>
-</head>
-<body>
 
-<!-- ================= HEADER ================= -->
-<div class="block1">
-    <div class="main">
-        <header>
-            <h1>
-                <a class="logo" href="{% url 'admin_dashboard' %}">
-                    Admin Panel
-                </a>
-            </h1>
-        </header>
+{% block title %}Pending Appointments | VetCare Admin{% endblock %}
+
+{% block content %}
+<div class="content-card">
+    <div class="card-header-styled">
+        <div>
+            <span class="section-tag" style="background: var(--warning-bg); color: var(--warning);">Triage Review</span>
+            <h1 class="card-heading">Pending Appointment Requests</h1>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 4px;">
+                Review incoming client bookings and approve or decline based on clinic capacity.
+            </p>
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <a href="{% url 'admin_dashboard' %}" class="btn-pill-outline">&larr; Admin Dashboard</a>
+            <a href="{% url 'admin_appointments' %}" class="btn-pill-dark">Approved Appointments</a>
+        </div>
     </div>
-</div>
 
-<!-- ================= CONTENT ================= -->
-<div class="block4">
-    <div class="main">
-        <section id="content">
-            <div class="container_12">
-                <div class="wrapper v_stripe">
-
-                    <article class="grid_12">
-                        <div class="appointment-card fade-anim">
-
-                            <h2 class="ind">
-                                <span>Pending</span> Appointments
-                            </h2>
-                            {% if messages %}
-                                {% for message in messages %}
-                                    <div class="alert">
-                                        {{ message }}
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                            <table class="admin-table">
-                                <thead>
-                                    <tr>
-                                        <th>Pet</th>
-                                        <th>Owner</th>
-                                        <th>Service</th>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th style="text-align:center;">Action</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {% for appointment in appointments %}
-                                    <tr>
-                                        <td>{{ appointment.pet_name }}</td>
-                                        <td>{{ appointment.user.username }}</td>
-                                        <td>{{ appointment.service }}</td>
-                                        <td>{{ appointment.appointment_date }}</td>
-                                        <td>{{ appointment.appointment_time }}</td>
-
-                                        <td class="action-buttons">
-
-                                            <a href="{% url 'approve_appointment' appointment.id %}"
-                                               class="button approve-btn">
-                                                Approve
-                                            </a>
-
-                                            <a href="{% url 'reject_appointment' appointment.id %}"
-                                               class="button reject-btn">
-                                                Reject
-                                            </a>
-
-                                        </td>
-                                    </tr>
-
-                                    {% empty %}
-                                    <tr>
-                                        <td colspan="6" style="text-align:center;">
-                                            No pending appointments.
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-
-                            <button type="button" class="button"
-                                onclick="window.location.href='{% url 'admin_dashboard' %}'">
-                                Back
-                            </button>
-
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Pet Name</th>
+                    <th>Client (Owner)</th>
+                    <th>Service Requested</th>
+                    <th>Requested Date</th>
+                    <th>Requested Time</th>
+                    <th>Notes / Symptoms</th>
+                    <th style="text-align: center;">Decision Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appt in appointments %}
+                <tr>
+                    <td><strong>{{ appt.pet_name }}</strong> <small style="color: var(--text-secondary);">({{ appt.pet_breed|default:"-" }})</small></td>
+                    <td>
+                        <strong>{{ appt.user.fullname|default:appt.user.username }}</strong><br>
+                        <small style="color: var(--text-secondary);">{{ appt.user.email }} &bull; {{ appt.user.phone }}</small>
+                    </td>
+                    <td>{{ appt.service.name }}</td>
+                    <td>{{ appt.appointment_date }}</td>
+                    <td>{{ appt.appointment_time }}</td>
+                    <td style="max-width: 220px; font-size: 0.85rem; color: var(--text-secondary);">
+                        {{ appt.description|default:"None provided" }}
+                    </td>
+                    <td style="text-align: center;">
+                        <div style="display: inline-flex; gap: 8px;">
+                            <a href="{% url 'approve_appointment' appt.id %}" class="btn-pill-success" onclick="return confirm('Approve appointment for {{ appt.pet_name }}?');">
+                                ✓ Approve
+                            </a>
+                            <a href="{% url 'reject_appointment' appt.id %}" class="btn-pill-danger" onclick="return confirm('Reject appointment for {{ appt.pet_name }}?');">
+                                ✕ Reject
+                            </a>
                         </div>
-                    </article>
-
-                </div>
-            </div>
-        </section>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" style="text-align: center; padding: 48px 20px;">
+                        <div style="font-size: 2.2rem; margin-bottom: 8px;">🎉</div>
+                        <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 4px;">No Pending Requests</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            All incoming appointment requests have been processed.
+                        </p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
-
-</body>
-</html>
+{% endblock %}

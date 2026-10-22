@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Add New Clinical Service | VetCare Admin{% endblock %}
+{% block title %}Add New Service | VETNEST Admin{% endblock %}
 
 {% block content %}
-<div class="content-card" style="max-width: 640px; margin: 30px auto;">
+<div class="content-card" style="max-width: 660px; margin: 30px auto;">
     <div class="card-header-styled">
         <div>
-            <span class="section-tag">Clinical Departments</span>
+            <span class="section-tag">Clinical Offerings</span>
             <h1 class="card-heading">Add New Veterinary Service</h1>
-            <p style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 4px;">
-                Publish a new medical care procedure or consultation offering.
+            <p style="color: var(--color-muted); font-size: 0.95rem; margin-top: 4px;">
+                Publish a new medical care procedure or clinical treatment.
             </p>
         </div>
-        <a href="{% url 'admin_dashboard' %}" class="btn-pill-outline">&larr; Dashboard</a>
+        <a href="{% url 'services' %}" class="btn-vetnest-outline">&larr; Services List</a>
     </div>
 
     <form method="POST" enctype="multipart/form-data">
@@ -21,24 +21,30 @@
 
         <div class="form-group">
             <label class="form-label">Service Title *</label>
-            <input type="text" name="name" class="form-control" placeholder="e.g. Dental Prophylaxis & Cleaning" required>
+            <input type="text" name="name" class="form-control" placeholder="e.g. Dental Hygiene & Prophylaxis" required>
         </div>
 
         <div class="form-group">
             <label class="form-label">Service Description *</label>
-            <textarea name="description" class="form-control" rows="4" placeholder="Detail the procedure, diagnostic benefits, and care guidelines..." required></textarea>
+            <textarea name="description" class="form-control" rows="4" placeholder="Detail the clinical procedure, diagnostic benefits, and health benefits..." required></textarea>
         </div>
 
         <div class="form-group">
-            <label class="form-label">Department / Procedure Image *</label>
+            <label class="form-label">Service Photograph *</label>
             <input type="file" name="image" class="form-control" accept="image/*" required>
-            <small style="color: var(--text-secondary);">High-resolution JPG or PNG recommended.</small>
+            <small style="color: var(--color-muted); font-size: 0.82rem;">Clear JPG or PNG photograph recommended.</small>
         </div>
 
-        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 28px;">
-            <a href="{% url 'admin_dashboard' %}" class="btn-pill-outline">Cancel</a>
-            <button type="submit" class="btn-pill-cyan">
-                Publish Service &rarr;
+        <div style="display: flex; gap: 14px; justify-content: flex-end; align-items: center; margin-top: 32px;">
+            <a href="{% url 'services' %}" class="btn-vetnest-outline">Cancel</a>
+            <button type="submit" class="btn-vetnest-orange">
+                <span>Publish Service</span>
+                <span class="arrow-circle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </span>
             </button>
         </div>
     </form>

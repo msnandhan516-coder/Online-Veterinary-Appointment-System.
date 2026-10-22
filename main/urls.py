@@ -22,6 +22,7 @@ urlpatterns = [
     path("admin-cancelled/", views.admin_cancelled, name="admin_cancelled"),
     path("about_us/", views.about_us, name="about_us"),
     path('services/', views.services, name='services'),
+    path('gallery/', views.gallery, name='gallery'),
     path("contact/", views.contact, name="contact"),
     path("view-contact/<int:id>/", views.view_feedbacks, name="view_contact"),
     path("reply-contact/<int:id>/", views.reply_feedbacks, name="reply_contact"),

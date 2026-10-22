@@ -1,25 +1,31 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Registration Successful | VetCare Clinic{% endblock %}
+{% block title %}Registration Successful | VETNEST{% endblock %}
 
 {% block content %}
-<div class="content-card" style="max-width: 520px; margin: 40px auto; text-align: center; padding: 48px 36px;">
-    <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--success-bg); border: 2px solid var(--success); color: var(--success); display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 20px;">
+<div class="content-card" style="max-width: 540px; margin: 40px auto; text-align: center; padding: 48px 36px;">
+    <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--color-success-bg); border: 2px solid var(--color-success); color: var(--color-success); display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 20px;">
         ✓
     </div>
 
-    <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; color: var(--text-primary);">
+    <h2 style="font-family: var(--font-serif); font-size: 2rem; font-weight: 700; margin-bottom: 12px; color: var(--color-text);">
         Registration Successful!
     </h2>
 
-    <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 28px;">
-        Your VetCare account has been created successfully. You can now sign in to schedule veterinary visits and manage your pet's appointments.
+    <p style="font-size: 0.95rem; color: var(--color-muted); line-height: 1.6; margin-bottom: 28px;">
+        Your VETNEST account has been created successfully. You can now sign in to schedule veterinary visits and manage your pet's healthcare appointments.
     </p>
 
     <div style="display: flex; gap: 12px; justify-content: center;">
-        <a href="{% url 'login' %}" class="btn-pill-dark" style="padding: 12px 32px;">
-            Sign In Now &rarr;
+        <a href="{% url 'login' %}" class="btn-vetnest-orange" style="padding: 10px 28px;">
+            <span>Sign In Now</span>
+            <span class="arrow-circle">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </span>
         </a>
     </div>
 </div>

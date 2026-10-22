@@ -1,54 +1,72 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Our Veterinary Services | VetCare{% endblock %}
+{% block title %}Our Services | VETNEST Veterinary Clinic{% endblock %}
 
 {% block content %}
 <div class="content-card">
     <div class="card-header-styled">
         <div>
-            <span class="section-tag">Clinical Services</span>
-            <h1 class="card-heading">Our Veterinary Care & Treatments</h1>
-            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 6px;">
-                Comprehensive diagnostics, treatment plans, surgery, and preventive wellness for your animal companions.
+            <span class="section-tag">Our Services</span>
+            <h1 class="card-heading">Comprehensive Care for a Healthier Tomorrow</h1>
+            <p style="color: var(--color-muted); font-size: 0.98rem; margin-top: 6px;">
+                From preventive care to advanced clinical treatments, we offer a wide range of veterinary services to keep your pets happy and healthy.
             </p>
         </div>
 
         {% if request.session.role == 'admin' %}
-            <a href="{% url 'add_service' %}" class="btn-pill-cyan">
+            <a href="{% url 'add_service' %}" class="btn-vetnest-dark">
                 <span>+ Add New Service</span>
+                <span class="arrow-circle-orange">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </span>
             </a>
         {% else %}
-            <a href="{% url 'create_appointment' %}" class="btn-pill-dark">
+            <a href="{% url 'create_appointment' %}" class="btn-vetnest-orange">
                 <span>Book Appointment</span>
+                <span class="arrow-circle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </span>
             </a>
         {% endif %}
     </div>
 
-    <!-- Services Grid -->
+    <!-- Services Grid Matching Panel 3 of Template -->
     <div class="grid-services">
-        {% for service in services %}
+        {% for s in services %}
             <div class="service-card">
-                <div class="service-img-wrapper">
-                    {% if service.image %}
-                        <img src="{{ service.image.url }}" alt="{{ service.name }}" loading="lazy">
-                    {% else %}
-                        <img src="{% static 'sbg/images/3page_img1.jpg' %}" alt="{{ service.name }}" loading="lazy">
-                    {% endif %}
-                </div>
-                <h3 class="service-name">{{ service.name }}</h3>
-                <p class="service-desc">{{ service.description }}</p>
+                {% if s.image %}
+                    <div class="service-img-wrapper">
+                        <img src="{{ s.image.url }}" alt="{{ s.name }}" loading="lazy">
+                    </div>
+                {% else %}
+                    <div class="service-icon-box">🩺</div>
+                {% endif %}
+                <h3 class="service-name">{{ s.name }}</h3>
+                <p class="service-desc">{{ s.description }}</p>
                 <div style="margin-top: auto; padding-top: 14px;">
-                    <a href="{% url 'create_appointment' %}?service_id={{ service.id }}" class="btn-pill-dark" style="width: 100%; font-size: 0.88rem; padding: 10px 18px;">
-                        Book This Service
+                    <a href="{% url 'create_appointment' %}?service_id={{ s.id }}" class="btn-vetnest-orange" style="width: 100%; justify-content: space-between;">
+                        <span>Book Appointment</span>
+                        <span class="arrow-circle">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </span>
                     </a>
                 </div>
             </div>
         {% empty %}
-            <div style="grid-column: 1 / -1; text-align: center; padding: 50px 20px;">
-                <p style="color: var(--text-secondary); font-size: 1rem;">No services listed yet.</p>
+            <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
+                <p style="color: var(--color-muted); font-size: 1.05rem;">No clinical services currently listed.</p>
                 {% if request.session.role == 'admin' %}
-                    <a href="{% url 'add_service' %}" class="btn-pill-cyan" style="margin-top: 16px;">Add First Service</a>
+                    <a href="{% url 'add_service' %}" class="btn-vetnest-dark" style="margin-top: 16px;">Add First Service</a>
                 {% endif %}
             </div>
         {% endfor %}

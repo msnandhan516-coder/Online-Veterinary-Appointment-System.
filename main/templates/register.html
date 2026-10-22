@@ -1,25 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Create Account | VetCare Clinic{% endblock %}
+{% block title %}Register Account | VETNEST{% endblock %}
 
 {% block content %}
 <div class="auth-wrapper" style="max-width: 540px;">
     <div class="auth-card">
         <div class="auth-header">
-            <div class="brand-logo-icon" style="margin: 0 auto 16px; width: 48px; height: 48px;">
-                <svg viewBox="0 0 24 24">
-                    <path d="M19 10.5h-5.5V5h-3v5.5H5v3h5.5V19h3v-5.5H19v-3z"/>
+            <div class="brand-icon-pill" style="margin: 0 auto 16px; width: 48px; height: 48px;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 14c-1.66 0-3 1.34-3 3 0 1.66 1.34 3 3 3s3-1.34 3-3c0-1.66-1.34-3-3-3zm-6-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-9.5-5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
                 </svg>
             </div>
             <h2>Register Account</h2>
-            <p>Join VetCare to book appointments and track your pet's healthcare</p>
+            <p>Join VETNEST to book appointments and track your pet's healthcare</p>
         </div>
 
         <form method="POST">
             {% csrf_token %}
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">Full Name *</label>
                     <input type="text" name="fullname" class="form-control" placeholder="John Doe" required>
@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">Email Address *</label>
                     <input type="email" name="email" class="form-control" placeholder="john@example.com" required>
@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">Password *</label>
                     <input type="password" name="password" class="form-control" placeholder="Create password" required>
@@ -61,14 +61,20 @@
             </div>
 
             <div style="margin-top: 26px;">
-                <button type="submit" class="btn-pill-dark" style="width: 100%; padding: 12px;">
-                    Create My Account
+                <button type="submit" class="btn-vetnest-orange" style="width: 100%; justify-content: center; padding: 10px;">
+                    <span>Create My Account</span>
+                    <span class="arrow-circle">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </span>
                 </button>
             </div>
 
-            <div style="text-align: center; margin-top: 20px; font-size: 0.88rem; color: var(--text-secondary);">
+            <div style="text-align: center; margin-top: 20px; font-size: 0.88rem; color: var(--color-muted);">
                 Already have an account? 
-                <a href="{% url 'login' %}" style="color: var(--accent-cyan-dark); font-weight: 700; text-decoration: none;">
+                <a href="{% url 'login' %}" style="color: var(--color-text); font-weight: 700; text-decoration: underline;">
                     Sign In here
                 </a>
             </div>

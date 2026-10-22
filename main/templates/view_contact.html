@@ -1,41 +1,43 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}View Feedback | VetCare Admin{% endblock %}
+{% block title %}View Feedback | VETNEST Admin{% endblock %}
 
 {% block content %}
-<div class="content-card" style="max-width: 720px; margin: 20px auto;">
+<div class="content-card" style="max-width: 740px; margin: 20px auto;">
     <div class="card-header-styled">
-        <h2 class="card-heading">
-            <span>Customer Message Details</span>
-        </h2>
+        <div>
+            <span class="section-tag">Message Details</span>
+            <h1 class="card-heading">Customer Inquiry</h1>
+        </div>
         <span class="badge-status badge-pending">{{ contact.created_at|date:"M d, Y - H:i" }}</span>
     </div>
 
-    <div style="background: var(--surface-offwhite); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; margin-bottom: 24px;">
+    <!-- Message Details -->
+    <div style="background: var(--color-cream); border: 1px solid var(--color-border); border-radius: 20px; padding: 24px; margin-bottom: 24px;">
         <div style="display: grid; grid-template-columns: 140px 1fr; gap: 14px; margin-bottom: 12px;">
-            <strong style="color: var(--text-secondary);">From:</strong>
+            <strong style="color: var(--color-muted);">From:</strong>
             <span><strong>{{ contact.name }}</strong></span>
         </div>
         <div style="display: grid; grid-template-columns: 140px 1fr; gap: 14px; margin-bottom: 12px;">
-            <strong style="color: var(--text-secondary);">Email:</strong>
-            <a href="mailto:{{ contact.email }}" style="color: var(--accent-cyan-dark); font-weight: 600;">{{ contact.email }}</a>
+            <strong style="color: var(--color-muted);">Email:</strong>
+            <a href="mailto:{{ contact.email }}" style="color: var(--color-text); font-weight: 700;">{{ contact.email }}</a>
         </div>
         <div style="display: grid; grid-template-columns: 140px 1fr; gap: 14px; margin-bottom: 12px;">
-            <strong style="color: var(--text-secondary);">Phone:</strong>
+            <strong style="color: var(--color-muted);">Phone:</strong>
             <span>{{ contact.phone|default:"Not provided" }}</span>
         </div>
         <div style="display: grid; grid-template-columns: 140px 1fr; gap: 14px;">
-            <strong style="color: var(--text-secondary);">Message:</strong>
-            <div style="background: #fff; padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); line-height: 1.6;">
+            <strong style="color: var(--color-muted);">Message:</strong>
+            <div style="background: #fff; padding: 18px; border-radius: 14px; border: 1px solid var(--color-border); line-height: 1.6;">
                 {{ contact.message }}
             </div>
         </div>
 
         {% if contact.reply %}
-            <div style="display: grid; grid-template-columns: 140px 1fr; gap: 14px; margin-top: 16px;">
-                <strong style="color: var(--success);">Previous Reply:</strong>
-                <div style="background: var(--success-bg); padding: 14px; border-radius: var(--radius-sm); border: 1px solid rgba(22, 163, 74, 0.2); color: var(--text-primary);">
+            <div style="display: grid; grid-template-columns: 140px 1fr; gap: 14px; margin-top: 18px;">
+                <strong style="color: var(--color-success);">Previous Reply:</strong>
+                <div style="background: var(--color-success-bg); padding: 16px; border-radius: 14px; border: 1px solid rgba(59, 139, 97, 0.25); color: #1f5c3d;">
                     {{ contact.reply }}
                 </div>
             </div>
@@ -43,21 +45,31 @@
     </div>
 
     <!-- Reply Form -->
-    <div style="background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; margin-bottom: 24px;">
-        <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 14px;">Send Email Reply</h3>
+    <div style="background: var(--color-card); border: 1px solid var(--color-border); border-radius: 20px; padding: 24px; margin-bottom: 24px;">
+        <h3 style="font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; margin-bottom: 14px;">
+            Send Email Reply
+        </h3>
         <form action="{% url 'reply_contact' contact.id %}" method="POST">
             {% csrf_token %}
             <div class="form-group">
-                <label class="form-label">Reply Message to {{ contact.email }}</label>
-                <textarea name="reply" class="form-control" rows="4" placeholder="Write your response here..." required></textarea>
+                <label class="form-label">Response to {{ contact.email }}</label>
+                <textarea name="reply" class="form-control" rows="4" placeholder="Type your clinic response here..." required></textarea>
             </div>
-            <button type="submit" class="btn-pill-dark">Send Reply via Email</button>
+            <button type="submit" class="btn-vetnest-orange">
+                <span>Send Reply via Email</span>
+                <span class="arrow-circle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </span>
+            </button>
         </form>
     </div>
 
-    <div style="display: flex; gap: 12px;">
-        <a href="{% url 'feedbacks' %}" class="btn-pill-outline">&larr; Back to Feedback Messages</a>
-        <a href="{% url 'delete_contact' contact.id %}" class="btn-pill-danger" onclick="return confirm('Are you sure you want to delete this message?');">
+    <div style="display: flex; gap: 12px; justify-content: space-between; flex-wrap: wrap;">
+        <a href="{% url 'feedbacks' %}" class="btn-vetnest-outline">&larr; Back to Feedback</a>
+        <a href="{% url 'delete_contact' contact.id %}" class="btn-vetnest-outline" style="color: var(--color-error); border-color: rgba(199, 75, 75, 0.4);" onclick="return confirm('Are you sure you want to delete this message?');">
             Delete Message
         </a>
     </div>

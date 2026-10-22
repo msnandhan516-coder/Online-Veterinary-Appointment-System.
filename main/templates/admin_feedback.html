@@ -1,75 +1,82 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Customer Inquiries & Feedback | VetCare Admin{% endblock %}
+{% block title %}Customer Feedback | VETNEST Admin{% endblock %}
 
 {% block content %}
 <div class="content-card">
     <div class="card-header-styled">
         <div>
-            <span class="section-tag">Client Communication</span>
-            <h1 class="card-heading">Client Inquiries & Feedback</h1>
-            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 4px;">
-                Messages sent via the website contact form by pet owners and visitors.
+            <span class="section-tag">Communication</span>
+            <h1 class="card-heading">Customer Feedback</h1>
+            <p style="color: var(--color-muted); font-size: 0.95rem; margin-top: 4px;">
+                View feedback, questions, and inquiries sent by website visitors and pet owners.
             </p>
         </div>
 
-        <a href="{% url 'admin_dashboard' %}" class="btn-pill-outline">&larr; Admin Dashboard</a>
+        <a href="{% url 'admin_dashboard' %}" class="btn-vetnest-outline">&larr; Admin Dashboard</a>
     </div>
 
-    <div class="table-responsive">
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Sender Name</th>
-                    <th>Email Address</th>
-                    <th>Phone</th>
-                    <th>Message Excerpt</th>
-                    <th>Date Received</th>
-                    <th>Reply Status</th>
-                    <th style="text-align: center;">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for contact in contacts %}
-                <tr>
-                    <td><strong>{{ contact.name }}</strong></td>
-                    <td>{{ contact.email }}</td>
-                    <td>{{ contact.phone|default:"-" }}</td>
-                    <td style="max-width: 250px; font-size: 0.85rem; color: var(--text-secondary);">
-                        {{ contact.message|truncatewords:15 }}
-                    </td>
-                    <td>{{ contact.created_at|date:"M d, Y" }}</td>
-                    <td>
-                        {% if contact.reply %}
-                            <span class="badge-status badge-approved">Replied</span>
-                        {% else %}
-                            <span class="badge-status badge-pending">Needs Reply</span>
-                        {% endif %}
-                    </td>
-                    <td style="text-align: center;">
-                        <div style="display: inline-flex; gap: 8px;">
-                            <a href="{% url 'view_contact' contact.id %}" class="btn-pill-dark" style="font-size: 0.78rem; padding: 6px 14px;">
-                                View & Reply
-                            </a>
-                            <a href="{% url 'delete_contact' contact.id %}" class="btn-pill-danger" style="font-size: 0.78rem; padding: 6px 12px;" onclick="return confirm('Permanently delete this inquiry?');">
-                                Delete
-                            </a>
+    <!-- Cards Layout Matching Panel 12 of Reference Screenshot -->
+    <div style="display: flex; flex-direction: column; gap: 18px;">
+        {% for contact in contacts %}
+            <div class="contact-info-card" style="justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+                <div style="display: flex; align-items: flex-start; gap: 16px; max-width: 780px;">
+                    <!-- User Avatar -->
+                    <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--color-cream); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; border: 1px solid var(--color-border); color: var(--color-text);">
+                        👤
+                    </div>
+
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 2px;">
+                            <strong style="font-size: 1.05rem;">{{ contact.name }}</strong>
+                            {% if contact.reply %}
+                                <span class="badge-status badge-approved" style="font-size: 0.72rem; padding: 2px 8px;">Replied</span>
+                            {% else %}
+                                <span class="badge-status badge-pending" style="font-size: 0.72rem; padding: 2px 8px;">Pending Reply</span>
+                            {% endif %}
                         </div>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="7" style="text-align: center; padding: 48px 20px;">
-                        <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 4px;">No Inquiries Found</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
-                            There are currently no customer inquiries or feedback messages.
+
+                        <div style="font-size: 0.85rem; color: var(--color-muted); margin-bottom: 8px;">
+                            {{ contact.email }} {% if contact.phone %} &bull; {{ contact.phone }} {% endif %} &bull; {{ contact.created_at|date:"M d, Y" }}
+                        </div>
+
+                        <p style="font-size: 0.95rem; color: var(--color-text); line-height: 1.55;">
+                            "{{ contact.message }}"
                         </p>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+
+                        {% if contact.reply %}
+                            <div style="margin-top: 10px; padding: 10px 14px; background: var(--color-cream); border-radius: 12px; font-size: 0.88rem; border-left: 3px solid var(--color-accent);">
+                                <strong>Clinic Response:</strong> {{ contact.reply }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <a href="{% url 'view_contact' contact.id %}" class="btn-vetnest-orange" style="font-size: 0.8rem; padding: 4px 4px 4px 14px;">
+                        <span>Reply</span>
+                        <span class="arrow-circle" style="width: 24px; height: 24px;">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="{% url 'delete_contact' contact.id %}" class="btn-vetnest-outline" style="color: var(--color-error); border-color: rgba(199, 75, 75, 0.3); font-size: 0.82rem; padding: 6px 14px;" onclick="return confirm('Delete this feedback?');">
+                        Delete
+                    </a>
+                </div>
+            </div>
+        {% empty %}
+            <div style="text-align: center; padding: 60px 20px; background: var(--color-cream); border-radius: 20px; border: 1px solid var(--color-border);">
+                <div style="font-size: 2.2rem; margin-bottom: 8px;">💬</div>
+                <h3 style="font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 6px;">No Customer Inquiries</h3>
+                <p style="color: var(--color-muted); font-size: 0.95rem;">
+                    Inquiries sent from the Contact page will be logged here.
+                </p>
+            </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

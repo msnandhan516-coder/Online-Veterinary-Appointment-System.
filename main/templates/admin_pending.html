@@ -1,69 +1,75 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Pending Appointments | VetCare Admin{% endblock %}
+{% block title %}Pending Appointments | VETNEST Admin{% endblock %}
 
 {% block content %}
 <div class="content-card">
     <div class="card-header-styled">
         <div>
-            <span class="section-tag" style="background: var(--warning-bg); color: var(--warning);">Triage Review</span>
-            <h1 class="card-heading">Pending Appointment Requests</h1>
-            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 4px;">
-                Review incoming client bookings and approve or decline based on clinic capacity.
+            <span class="section-tag">Triage & Reviews</span>
+            <h1 class="card-heading">Pending Appointments</h1>
+            <p style="color: var(--color-muted); font-size: 0.95rem; margin-top: 4px;">
+                Review incoming client bookings and confirm or decline based on clinic capacity.
             </p>
         </div>
 
         <div style="display: flex; gap: 10px;">
-            <a href="{% url 'admin_dashboard' %}" class="btn-pill-outline">&larr; Admin Dashboard</a>
-            <a href="{% url 'admin_appointments' %}" class="btn-pill-dark">Approved Appointments</a>
+            <a href="{% url 'admin_dashboard' %}" class="btn-vetnest-outline">&larr; Admin Dashboard</a>
+            <a href="{% url 'admin_appointments' %}" class="btn-vetnest-outline">Approved Visits</a>
         </div>
     </div>
 
+    <!-- Table Matching Panel 13 of VETNEST Reference -->
     <div class="table-responsive">
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>Pet Name</th>
-                    <th>Client (Owner)</th>
-                    <th>Service Requested</th>
-                    <th>Requested Date</th>
-                    <th>Requested Time</th>
-                    <th>Notes / Symptoms</th>
-                    <th style="text-align: center;">Decision Actions</th>
+                    <th>Pet</th>
+                    <th>Service</th>
+                    <th>Date & Time</th>
+                    <th>Owner / User</th>
+                    <th style="text-align: center;">Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for appt in appointments %}
                 <tr>
-                    <td><strong>{{ appt.pet_name }}</strong> <small style="color: var(--text-secondary);">({{ appt.pet_breed|default:"-" }})</small></td>
                     <td>
-                        <strong>{{ appt.user.fullname|default:appt.user.username }}</strong><br>
-                        <small style="color: var(--text-secondary);">{{ appt.user.email }} &bull; {{ appt.user.phone }}</small>
+                        <strong style="font-size: 0.95rem;">{{ appt.pet_name }}</strong>
+                        <div style="font-size: 0.8rem; color: var(--color-muted);">{{ appt.pet_breed|default:"-" }}</div>
                     </td>
-                    <td>{{ appt.service.name }}</td>
-                    <td>{{ appt.appointment_date }}</td>
-                    <td>{{ appt.appointment_time }}</td>
-                    <td style="max-width: 220px; font-size: 0.85rem; color: var(--text-secondary);">
-                        {{ appt.description|default:"None provided" }}
+                    <td>
+                        <strong style="color: var(--color-text);">{{ appt.service.name }}</strong>
+                        {% if appt.description %}
+                            <div style="font-size: 0.8rem; color: var(--color-muted); max-width: 200px;">{{ appt.description|truncatewords:6 }}</div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div>📅 {{ appt.appointment_date }}</div>
+                        <small style="color: var(--color-muted);">⏰ {{ appt.appointment_time }}</small>
+                    </td>
+                    <td>
+                        <strong>{{ appt.user.fullname|default:appt.user.username }}</strong>
+                        <div style="font-size: 0.8rem; color: var(--color-muted);">{{ appt.user.email }} &bull; {{ appt.user.phone }}</div>
                     </td>
                     <td style="text-align: center;">
                         <div style="display: inline-flex; gap: 8px;">
-                            <a href="{% url 'approve_appointment' appt.id %}" class="btn-pill-success" onclick="return confirm('Approve appointment for {{ appt.pet_name }}?');">
-                                ✓ Approve
+                            <a href="{% url 'approve_appointment' appt.id %}" class="btn-vetnest-orange" style="background: var(--color-success); border-color: var(--color-success); color: #fff; font-size: 0.78rem; padding: 4px 14px;" onclick="return confirm('Approve appointment for {{ appt.pet_name }}?');">
+                                Approve
                             </a>
-                            <a href="{% url 'reject_appointment' appt.id %}" class="btn-pill-danger" onclick="return confirm('Reject appointment for {{ appt.pet_name }}?');">
-                                ✕ Reject
+                            <a href="{% url 'reject_appointment' appt.id %}" class="btn-vetnest-outline" style="color: var(--color-error); border-color: rgba(199, 75, 75, 0.4); font-size: 0.78rem; padding: 4px 14px;" onclick="return confirm('Reject appointment for {{ appt.pet_name }}?');">
+                                Reject
                             </a>
                         </div>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="7" style="text-align: center; padding: 48px 20px;">
-                        <div style="font-size: 2.2rem; margin-bottom: 8px;">🎉</div>
-                        <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 4px;">No Pending Requests</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                    <td colspan="5" style="text-align: center; padding: 50px 20px;">
+                        <div style="font-size: 2rem; margin-bottom: 8px;">🎉</div>
+                        <h4 style="font-family: var(--font-serif); font-size: 1.2rem; margin-bottom: 4px;">No Pending Requests</h4>
+                        <p style="color: var(--color-muted); font-size: 0.9rem;">
                             All incoming appointment requests have been processed.
                         </p>
                     </td>

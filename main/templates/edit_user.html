@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Edit User Account | VetCare Admin{% endblock %}
+{% block title %}Edit User | VETNEST Admin{% endblock %}
 
 {% block content %}
-<div class="content-card" style="max-width: 580px; margin: 30px auto;">
+<div class="content-card" style="max-width: 600px; margin: 30px auto;">
     <div class="card-header-styled">
         <div>
             <span class="section-tag">Account Management</span>
             <h1 class="card-heading">Edit Client Profile</h1>
-            <p style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 4px;">
+            <p style="color: var(--color-muted); font-size: 0.92rem; margin-top: 4px;">
                 User: <strong>@{{ user.username }}</strong>
             </p>
         </div>
-        <a href="{% url 'admin_users' %}" class="btn-pill-outline">&larr; User Directory</a>
+        <a href="{% url 'admin_users' %}" class="btn-vetnest-outline">&larr; User Directory</a>
     </div>
 
     <form method="POST">
@@ -21,17 +21,19 @@
 
         <div class="form-group">
             <label class="form-label">Username</label>
-            <input type="text" value="{{ user.username }}" class="form-control" style="background: #edf2f5; cursor: not-allowed;" readonly>
+            <input type="text" value="{{ user.username }}" class="form-control" style="background: var(--color-cream); cursor: not-allowed;" readonly>
         </div>
 
-        <div class="form-group">
-            <label class="form-label">Email Address *</label>
-            <input type="email" name="email" value="{{ user.email }}" class="form-control" required>
-        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Email Address *</label>
+                <input type="email" name="email" value="{{ user.email }}" class="form-control" required>
+            </div>
 
-        <div class="form-group">
-            <label class="form-label">Phone Number *</label>
-            <input type="tel" name="phone" value="{{ user.phone }}" class="form-control" required>
+            <div class="form-group">
+                <label class="form-label">Phone Number *</label>
+                <input type="tel" name="phone" value="{{ user.phone }}" class="form-control" required>
+            </div>
         </div>
 
         <div class="form-group">
@@ -39,9 +41,17 @@
             <input type="password" name="password" placeholder="Enter new password if changing" class="form-control">
         </div>
 
-        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 28px;">
-            <a href="{% url 'admin_users' %}" class="btn-pill-outline">Cancel</a>
-            <button type="submit" class="btn-pill-dark">Update Client Account</button>
+        <div style="display: flex; gap: 14px; justify-content: flex-end; align-items: center; margin-top: 28px;">
+            <a href="{% url 'admin_users' %}" class="btn-vetnest-outline">Cancel</a>
+            <button type="submit" class="btn-vetnest-orange">
+                <span>Update Client Account</span>
+                <span class="arrow-circle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </span>
+            </button>
         </div>
     </form>
 </div>

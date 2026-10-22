@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Gallery | VETNEST Cherished Moments{% endblock %}
+
+{% block content %}
+<div class="content-card">
+    <div class="section-header-center">
+        <span class="section-tag">Our Gallery</span>
+        <h1 class="card-heading" style="font-size: 2.4rem;">Cherished Moments</h1>
+        <p class="section-subtitle">
+            A glimpse into the happy moments and loving care we provide for our furry patients and their families.
+        </p>
+
+        <!-- Category Filter Pills Matching Panel 5 -->
+        <div class="gallery-filter-bar">
+            <button class="gallery-filter-btn active" data-filter="all">All</button>
+            <button class="gallery-filter-btn" data-filter="dogs">Dogs</button>
+            <button class="gallery-filter-btn" data-filter="cats">Cats</button>
+            <button class="gallery-filter-btn" data-filter="clinic">Our Clinic</button>
+        </div>
+    </div>
+
+    <!-- Photographic Grid Matching Panel 5 -->
+    <div class="gallery-grid" id="galleryGrid">
+        <!-- Dog 1: Dominant Dog Hero Photo -->
+        <div class="gallery-item" data-category="dogs">
+            <img src="{% static 'images/dog_hero.jpg' %}" alt="Smiling Golden Retriever" loading="lazy">
+            <div class="gallery-item-caption">Golden Retriever Wellness Visit</div>
+        </div>
+
+        <!-- Clinic 1: Veterinarian holding dog -->
+        <div class="gallery-item" data-category="clinic">
+            <img src="{% static 'images/vet_holding_dog.jpg' %}" alt="Doctor examining dog" loading="lazy">
+            <div class="gallery-item-caption">Doctor Checkup & Consultation</div>
+        </div>
+
+        <!-- Clinic 2: Clinical Treatment -->
+        <div class="gallery-item" data-category="clinic">
+            <img src="{% static 'sbg/images/3page_img1.jpg' %}" alt="Clinical wellness care" loading="lazy">
+            <div class="gallery-item-caption">Preventive Care Unit</div>
+        </div>
+
+        <!-- Cats 1 -->
+        <div class="gallery-item" data-category="cats">
+            <img src="{% static 'sbg/images/3page_img2.jpg' %}" alt="Internal medicine pet care" loading="lazy">
+            <div class="gallery-item-caption">Feline Health Monitoring</div>
+        </div>
+
+        <!-- Dogs 2 -->
+        <div class="gallery-item" data-category="dogs">
+            <img src="{% static 'sbg/images/3page_img3.jpg' %}" alt="Radiology diagnostic care" loading="lazy">
+            <div class="gallery-item-caption">Diagnostic Imaging Room</div>
+        </div>
+
+        <!-- Cats 2 -->
+        <div class="gallery-item" data-category="cats">
+            <img src="{% static 'sbg/images/3page_img4.jpg' %}" alt="Ultrasound ultrasound pet care" loading="lazy">
+            <div class="gallery-item-caption">Ultrasound Examination</div>
+        </div>
+
+        <!-- Clinic 3 -->
+        <div class="gallery-item" data-category="clinic">
+            <img src="{% static 'sbg/images/3page_img6.jpg' %}" alt="Surgical operation theater" loading="lazy">
+            <div class="gallery-item-caption">Sterile Surgical Theater</div>
+        </div>
+
+        <!-- Dogs 3 -->
+        <div class="gallery-item" data-category="dogs">
+            <img src="{% static 'sbg/images/3page_img7.jpg' %}" alt="Pain management care" loading="lazy">
+            <div class="gallery-item-caption">Rehabilitation & Therapy</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterBtns = document.querySelectorAll('.gallery-filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const filter = this.getAttribute('data-filter');
+
+                galleryItems.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    if (filter === 'all' || category === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

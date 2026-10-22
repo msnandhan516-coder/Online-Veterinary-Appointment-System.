@@ -1,92 +1,67 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Contact & Inquiries | VetCare Clinic{% endblock %}
+{% block title %}Contact Us | VETNEST Clinic{% endblock %}
 
 {% block content %}
 <div class="content-card">
     <div class="card-header-styled">
         <div>
-            <span class="section-tag">Get In Touch</span>
-            <h1 class="card-heading">Contact & Consultations</h1>
-            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 6px;">
-                Reach our team for general questions, appointment inquiries, or feedback.
+            <span class="section-tag">Contact Us</span>
+            <h1 class="card-heading">We're Here for You and Your Pets</h1>
+            <p style="color: var(--color-muted); font-size: 0.95rem; margin-top: 4px;">
+                Have questions or want to schedule an appointment? Get in touch with us.
             </p>
         </div>
-        <div class="nav-phone-pill">
-            <span class="phone-dot"></span>
-            <span>Emergency: 24/7 On-Call</span>
+        <div class="badge-status badge-approved" style="font-size: 0.85rem; padding: 8px 16px;">
+            <span>● Emergency Services: 24/7</span>
         </div>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: start;">
-        <!-- Left: Feedback Form -->
-        <div style="background: var(--surface-offwhite); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 32px;">
-            <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 20px;">Send Us A Message</h3>
-
-            <form method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label class="form-label">Full Name *</label>
-                    <input type="text" name="name" class="form-control" placeholder="Your name" required>
+    <!-- Contact Grid Matching Panel 6 of Reference Template -->
+    <div class="contact-grid">
+        <!-- Left: 4 Contact Information Cards with Orange Icon Circles -->
+        <div class="contact-info-list">
+            <div class="contact-info-card">
+                <div class="contact-icon-circle">📍</div>
+                <div>
+                    <div class="contact-info-title">Our Location</div>
+                    <div class="contact-info-detail">Kochi, Kerala, India &bull; Babushkina Medical Center</div>
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label class="form-label">Email Address *</label>
-                    <input type="email" name="email" class="form-control" placeholder="name@example.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Phone Number</label>
-                    <input type="tel" name="phone" class="form-control" placeholder="10-digit contact number">
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Your Message or Feedback *</label>
-                    <textarea name="message" class="form-control" rows="4" placeholder="How can our veterinary team assist you?" required></textarea>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn-pill-dark">Send Message</button>
-                    <button type="reset" class="btn-pill-outline">Clear</button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Right: Clinic Information & Map -->
-        <div>
-            <div style="background: #fff; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 28px; margin-bottom: 24px;">
-                <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 18px;">Clinic Information</h3>
-                
-                <div style="display: flex; flex-direction: column; gap: 16px;">
-                    <div style="display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="width: 38px; height: 38px; border-radius: 10px; background: var(--bg-page); display: flex; align-items: center; justify-content: center; color: var(--accent-cyan); font-size: 1.1rem; flex-shrink: 0;">📍</div>
-                        <div>
-                            <strong>VetCare Animal Hospital</strong>
-                            <p style="color: var(--text-secondary); font-size: 0.88rem;">Kochi, Kerala, India &bull; Babushkina Medical Center</p>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="width: 38px; height: 38px; border-radius: 10px; background: var(--bg-page); display: flex; align-items: center; justify-content: center; color: var(--accent-cyan); font-size: 1.1rem; flex-shrink: 0;">📞</div>
-                        <div>
-                            <strong>Phone Numbers</strong>
-                            <p style="color: var(--text-secondary); font-size: 0.88rem;">Appointments: +91 98765 43210<br>Emergency: +7 861 250 66 60</p>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; align-items: flex-start; gap: 14px;">
-                        <div style="width: 38px; height: 38px; border-radius: 10px; background: var(--bg-page); display: flex; align-items: center; justify-content: center; color: var(--accent-cyan); font-size: 1.1rem; flex-shrink: 0;">⏰</div>
-                        <div>
-                            <strong>Working Hours</strong>
-                            <p style="color: var(--text-secondary); font-size: 0.88rem;">Monday – Saturday: 08:00 AM – 08:00 PM<br>Emergency & Intensive Care: 24/7</p>
-                        </div>
+            <div class="contact-info-card">
+                <div class="contact-icon-circle">📞</div>
+                <div>
+                    <div class="contact-info-title">Phone Number</div>
+                    <div class="contact-info-detail">
+                        Appointments: +91 98765 43210<br>
+                        Clinic Desk: +7 861 250 66 60
                     </div>
                 </div>
             </div>
 
-            <!-- Google Maps Embed -->
-            <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-color); height: 220px;">
+            <div class="contact-info-card">
+                <div class="contact-icon-circle">✉️</div>
+                <div>
+                    <div class="contact-info-title">Email Address</div>
+                    <div class="contact-info-detail">info@vetnest.com</div>
+                </div>
+            </div>
+
+            <div class="contact-info-card">
+                <div class="contact-icon-circle">⏰</div>
+                <div>
+                    <div class="contact-info-title">Working Hours</div>
+                    <div class="contact-info-detail">
+                        Mon – Sat: 08:00 AM – 08:00 PM<br>
+                        Sunday: Emergency On-Call
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mini Map Embed -->
+            <div style="border-radius: 18px; overflow: hidden; border: 1px solid var(--color-border); height: 180px; margin-top: 8px;">
                 <iframe
                     width="100%"
                     height="100%"
@@ -96,6 +71,50 @@
                     loading="lazy">
                 </iframe>
             </div>
+        </div>
+
+        <!-- Right: Message / Feedback Form -->
+        <div style="background: var(--color-card); border: 1.5px solid var(--color-border); border-radius: 24px; padding: 32px;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.4rem; font-weight: 700; margin-bottom: 20px;">
+                Send Us a Message
+            </h3>
+
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="form-label">Your Name *</label>
+                    <input type="text" name="name" class="form-control" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Your Email *</label>
+                        <input type="email" name="email" class="form-control" placeholder="name@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" name="phone" class="form-control" placeholder="Your phone number">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Message *</label>
+                    <textarea name="message" class="form-control" rows="4" placeholder="How can our veterinary team assist your pet?" required></textarea>
+                </div>
+
+                <div style="margin-top: 24px;">
+                    <button type="submit" class="btn-vetnest-orange" style="width: 100%; justify-content: center; padding: 10px 24px;">
+                        <span>Send Message</span>
+                        <span class="arrow-circle">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

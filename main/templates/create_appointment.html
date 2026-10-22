@@ -1,34 +1,82 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Book Veterinary Appointment | VetCare{% endblock %}
+{% block title %}Book an Appointment | VETNEST{% endblock %}
 
 {% block content %}
-<div class="content-card" style="max-width: 760px; margin: 20px auto;">
+<div class="content-card" style="max-width: 820px; margin: 20px auto;">
+    <!-- Breadcrumbs matching Panel 7 -->
+    <div style="display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--color-muted); margin-bottom: 20px;">
+        <a href="{% url 'index' %}" style="color: inherit; text-decoration: none;">Home</a>
+        <span>&rsaquo;</span>
+        <a href="{% url 'appointments' %}" style="color: inherit; text-decoration: none;">Appointments</a>
+        <span>&rsaquo;</span>
+        <span style="color: var(--color-text); font-weight: 700;">Create</span>
+    </div>
+
+    <!-- Header -->
     <div class="card-header-styled">
         <div>
-            <span class="section-tag">Appointment Booking</span>
-            <h1 class="card-heading">Schedule a Visit for Your Pet</h1>
-            <p style="color: var(--text-secondary); font-size: 0.92rem; margin-top: 4px;">
-                Owner: <strong>{{ user.fullname }}</strong> ({{ user.email }})
+            <h1 class="card-heading">Book an Appointment</h1>
+            <p style="color: var(--color-muted); font-size: 0.95rem; margin-top: 4px;">
+                Fill in the details below to schedule an appointment for your pet.
             </p>
         </div>
-        <a href="{% url 'appointments' %}" class="btn-pill-outline">&larr; My Appointments</a>
+        <a href="{% url 'appointments' %}" class="btn-vetnest-outline">&larr; My Appointments</a>
+    </div>
+
+    <!-- 4 Step Indicator Pills (Matching Panel 7) -->
+    <div class="booking-steps-bar">
+        <div class="booking-step-item active">
+            <span class="booking-step-num">1</span>
+            <span>Pet Details</span>
+        </div>
+        <div class="booking-step-item active">
+            <span class="booking-step-num">2</span>
+            <span>Service</span>
+        </div>
+        <div class="booking-step-item active">
+            <span class="booking-step-num">3</span>
+            <span>Date & Time</span>
+        </div>
+        <div class="booking-step-item">
+            <span class="booking-step-num">4</span>
+            <span>Confirmation</span>
+        </div>
     </div>
 
     <form method="POST">
         {% csrf_token %}
 
-        <!-- STEP 1: SERVICE SELECTION -->
-        <div style="background: var(--surface-offwhite); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; margin-bottom: 24px;">
-            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-cyan-dark); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">
-                Step 1 &bull; Clinical Service
+        <!-- SECTION 1: PET INFORMATION -->
+        <div style="background: var(--color-cream); border: 1px solid var(--color-border); border-radius: 20px; padding: 24px; margin-bottom: 24px;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">
+                Pet Information
+            </h3>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Pet Name *</label>
+                    <input type="text" name="pet_name" class="form-control" placeholder="Enter pet name" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Breed / Species *</label>
+                    <input type="text" name="pet_breed" class="form-control" placeholder="e.g. Golden Retriever, Persian Cat" required>
+                </div>
             </div>
+        </div>
+
+        <!-- SECTION 2: SERVICE SELECTION -->
+        <div style="background: var(--color-cream); border: 1px solid var(--color-border); border-radius: 20px; padding: 24px; margin-bottom: 24px;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">
+                Veterinary Service
+            </h3>
 
             <div class="form-group" style="margin-bottom: 0;">
                 <label class="form-label">Select Medical Service *</label>
                 <select name="service" class="form-control" required>
-                    <option value="">-- Choose Veterinary Service --</option>
+                    <option value="">-- Choose Veterinary Care Service --</option>
                     {% for s in services %}
                         <option value="{{ s.id }}" {% if selected_service_id|stringformat:"s" == s.id|stringformat:"s" %}selected{% endif %}>
                             {{ s.name }}
@@ -38,55 +86,41 @@
             </div>
         </div>
 
-        <!-- STEP 2: PET INFORMATION -->
-        <div style="background: var(--surface-offwhite); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; margin-bottom: 24px;">
-            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-cyan-dark); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">
-                Step 2 &bull; Pet Information
-            </div>
+        <!-- SECTION 3: SCHEDULE DATE & TIME -->
+        <div style="background: var(--color-cream); border: 1px solid var(--color-border); border-radius: 20px; padding: 24px; margin-bottom: 24px;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; margin-bottom: 16px;">
+                Consultation Schedule
+            </h3>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                <div class="form-group">
-                    <label class="form-label">Pet's Name *</label>
-                    <input type="text" name="pet_name" class="form-control" placeholder="e.g. Luna, Max" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Breed / Animal Species *</label>
-                    <input type="text" name="pet_breed" class="form-control" placeholder="e.g. Golden Retriever, Siamese Cat" required>
-                </div>
-            </div>
-
-            <div class="form-group" style="margin-bottom: 0;">
-                <label class="form-label">Reason for Visit / Symptoms (Optional)</label>
-                <textarea name="description" class="form-control" rows="3" placeholder="Briefly describe your pet's current health condition or questions..."></textarea>
-            </div>
-        </div>
-
-        <!-- STEP 3: SCHEDULE & TIMING -->
-        <div style="background: var(--surface-offwhite); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; margin-bottom: 28px;">
-            <div style="font-size: 0.8rem; font-weight: 800; color: var(--accent-cyan-dark); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">
-                Step 3 &bull; Date & Time Preference
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">Appointment Date *</label>
                     <input type="date" name="appointment_date" id="appointment_date" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Preferred Time (09:00 - 17:00) *</label>
+                    <label class="form-label">Available Time (09:00 - 17:00) *</label>
                     <input type="time" name="appointment_time" min="09:00" max="17:00" class="form-control" required>
                 </div>
             </div>
-            <small style="color: var(--text-secondary);">Clinic hours: 08:00 AM - 08:00 PM. Appointments are scheduled between 09:00 AM and 05:00 PM.</small>
+
+            <div class="form-group" style="margin-bottom: 0;">
+                <label class="form-label">Reason for Visit / Symptoms (Optional)</label>
+                <textarea name="description" class="form-control" rows="3" placeholder="Briefly describe health concerns, symptoms, or preventive checkup needs..."></textarea>
+            </div>
         </div>
 
-        <!-- SUBMIT ACTIONS -->
-        <div style="display: flex; gap: 14px; align-items: center; justify-content: flex-end;">
-            <a href="{% url 'dashboard' %}" class="btn-pill-outline">Cancel</a>
-            <button type="submit" class="btn-pill-dark" style="padding: 12px 32px;">
-                Confirm & Submit Booking
+        <!-- FORM ACTIONS -->
+        <div style="display: flex; gap: 14px; align-items: center; justify-content: flex-end; flex-wrap: wrap;">
+            <a href="{% url 'appointments' %}" class="btn-vetnest-outline">Cancel</a>
+            <button type="submit" class="btn-vetnest-orange" style="padding: 10px 24px;">
+                <span>Submit Appointment Request</span>
+                <span class="arrow-circle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </span>
             </button>
         </div>
     </form>

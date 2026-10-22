@@ -37,6 +37,7 @@ class VetCareSystemTests(TestCase):
             reverse('index'),
             reverse('about_us'),
             reverse('services'),
+            reverse('gallery'),
             reverse('contact'),
             reverse('login'),
             reverse('register'),
@@ -46,7 +47,7 @@ class VetCareSystemTests(TestCase):
         for url in pages:
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200, f"Page {url} failed to load.")
-            self.assertContains(response, "VetCare")
+            self.assertContains(response, "VETNEST")
 
     def test_category_404_handler(self):
         """Verify invalid category returns 404 or custom 404 template"""

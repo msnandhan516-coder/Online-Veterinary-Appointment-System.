@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Owner Dashboard | VetCare Clinic{% endblock %}
+{% block title %}Owner Dashboard | VETNEST{% endblock %}
 
 {% block content %}
 <div class="content-card">
@@ -10,80 +10,88 @@
         <div>
             <span class="section-tag">Pet Owner Portal</span>
             <h1 class="card-heading">Welcome, {{ user.fullname }} 👋</h1>
-            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 4px;">
+            <p style="color: var(--color-muted); font-size: 0.95rem; margin-top: 4px;">
                 Manage appointments, track clinic visit statuses, and maintain your account.
             </p>
         </div>
 
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <a href="{% url 'edit_profile' %}" class="btn-pill-outline">Edit Profile</a>
-            <a href="{% url 'create_appointment' %}" class="btn-pill-dark">+ Book Appointment</a>
+            <a href="{% url 'edit_profile' %}" class="btn-vetnest-outline">Edit Profile</a>
+            <a href="{% url 'create_appointment' %}" class="btn-vetnest-orange">
+                <span>+ Book Appointment</span>
+                <span class="arrow-circle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </span>
+            </a>
         </div>
     </div>
 
     <!-- Real Statistics Grid -->
     <div class="stats-grid">
-        <div class="stat-widget">
+        <div class="stat-widget" style="border-top: 4px solid var(--color-accent);">
             <div class="stat-header">
-                <span class="stat-title">Total Appointments</span>
+                <span class="stat-title">Total Bookings</span>
                 <div class="stat-icon">📅</div>
             </div>
             <div class="stat-count">{{ total_appointments }}</div>
             <a href="{% url 'appointments' %}" class="stat-footer-link">View all &rarr;</a>
         </div>
 
-        <div class="stat-widget">
+        <div class="stat-widget" style="border-top: 4px solid var(--color-success);">
             <div class="stat-header">
-                <span class="stat-title">Approved Visits</span>
-                <div class="stat-icon" style="color: var(--success);">✓</div>
+                <span class="stat-title">Confirmed Visits</span>
+                <div class="stat-icon">✓</div>
             </div>
-            <div class="stat-count" style="color: var(--success);">{{ approved_count }}</div>
-            <span style="font-size: 0.8rem; color: var(--text-secondary);">Confirmed by clinic</span>
+            <div class="stat-count" style="color: var(--color-success);">{{ approved_count }}</div>
+            <span style="font-size: 0.8rem; color: var(--color-muted);">Approved by clinic</span>
         </div>
 
-        <div class="stat-widget">
+        <div class="stat-widget" style="border-top: 4px solid var(--color-warning);">
             <div class="stat-header">
                 <span class="stat-title">Under Review</span>
-                <div class="stat-icon" style="color: var(--warning);">⏳</div>
+                <div class="stat-icon">⏳</div>
             </div>
-            <div class="stat-count" style="color: var(--warning);">{{ pending_count }}</div>
-            <span style="font-size: 0.8rem; color: var(--text-secondary);">Awaiting confirmation</span>
+            <div class="stat-count" style="color: var(--color-warning);">{{ pending_count }}</div>
+            <span style="font-size: 0.8rem; color: var(--color-muted);">Awaiting review</span>
         </div>
 
-        <div class="stat-widget">
+        <div class="stat-widget" style="border-top: 4px solid var(--color-muted);">
             <div class="stat-header">
                 <span class="stat-title">Completed Care</span>
-                <div class="stat-icon" style="color: #4338CA;">🐾</div>
+                <div class="stat-icon">🐾</div>
             </div>
-            <div class="stat-count" style="color: #4338CA;">{{ completed_count }}</div>
-            <span style="font-size: 0.8rem; color: var(--text-secondary);">Finished consultations</span>
+            <div class="stat-count">{{ completed_count }}</div>
+            <span style="font-size: 0.8rem; color: var(--color-muted);">Past consultations</span>
         </div>
     </div>
 
-    <!-- Quick Owner Profile Info Banner -->
-    <div style="background: var(--surface-offwhite); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px 24px; margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-        <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+    <!-- User Profile Banner -->
+    <div style="background: var(--color-cream); border: 1px solid var(--color-border); border-radius: 18px; padding: 20px 24px; margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div style="display: flex; gap: 28px; flex-wrap: wrap;">
             <div>
-                <small style="color: var(--text-secondary); text-transform: uppercase; font-weight: 700; font-size: 0.72rem;">Email</small>
-                <div style="font-weight: 600;">{{ user.email }}</div>
+                <small style="color: var(--color-muted); text-transform: uppercase; font-weight: 700; font-size: 0.72rem;">Email</small>
+                <div style="font-weight: 700;">{{ user.email }}</div>
             </div>
             <div>
-                <small style="color: var(--text-secondary); text-transform: uppercase; font-weight: 700; font-size: 0.72rem;">Phone</small>
-                <div style="font-weight: 600;">{{ user.phone|default:"Not specified" }}</div>
+                <small style="color: var(--color-muted); text-transform: uppercase; font-weight: 700; font-size: 0.72rem;">Phone</small>
+                <div style="font-weight: 700;">{{ user.phone|default:"Not specified" }}</div>
             </div>
             <div>
-                <small style="color: var(--text-secondary); text-transform: uppercase; font-weight: 700; font-size: 0.72rem;">Username</small>
-                <div style="font-weight: 600;">@{{ user.username }}</div>
+                <small style="color: var(--color-muted); text-transform: uppercase; font-weight: 700; font-size: 0.72rem;">Username</small>
+                <div style="font-weight: 700;">@{{ user.username }}</div>
             </div>
         </div>
-        <a href="{% url 'edit_profile' %}" class="btn-pill-outline" style="font-size: 0.82rem; padding: 6px 16px;">Update Details</a>
+        <a href="{% url 'edit_profile' %}" class="btn-vetnest-outline" style="font-size: 0.82rem; padding: 6px 16px;">Update Details</a>
     </div>
 
-    <!-- Recent Bookings Table -->
+    <!-- Recent Appointments Table -->
     <div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <h3 style="font-size: 1.2rem; font-weight: 800;">Recent Appointments</h3>
-            <a href="{% url 'appointments' %}" style="font-size: 0.88rem; font-weight: 700; color: var(--accent-cyan-dark); text-decoration: none;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.3rem; font-weight: 700;">Recent Appointments</h3>
+            <a href="{% url 'appointments' %}" style="font-size: 0.88rem; font-weight: 700; color: var(--color-text); text-decoration: none;">
                 View All Appointments &rarr;
             </a>
         </div>
@@ -109,26 +117,26 @@
                         <td>{{ appt.appointment_time }}</td>
                         <td>
                             {% if appt.status == "Approved" %}
-                                <span class="badge-status badge-approved">Approved</span>
+                                <span class="badge-status badge-approved">Confirmed</span>
                             {% elif appt.status == "Rejected" %}
-                                <span class="badge-status badge-rejected">Rejected</span>
+                                <span class="badge-status badge-rejected">Cancelled</span>
                             {% else %}
                                 <span class="badge-status badge-pending">Pending</span>
                             {% endif %}
                         </td>
                         <td>
                             {% if appt.work_status == "Done" %}
-                                <span class="badge-status badge-done">Completed</span>
+                                <span class="badge-status badge-completed">Completed</span>
                             {% else %}
-                                <span style="color: var(--text-muted); font-size: 0.85rem;">Not Done</span>
+                                <span style="color: var(--color-muted); font-size: 0.85rem;">In Progress</span>
                             {% endif %}
                         </td>
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="6" style="text-align: center; padding: 36px 20px;">
-                            <p style="color: var(--text-secondary); margin-bottom: 12px;">You haven't made any appointments yet.</p>
-                            <a href="{% url 'create_appointment' %}" class="btn-pill-dark">Schedule First Visit</a>
+                        <td colspan="6" style="text-align: center; padding: 40px 20px;">
+                            <p style="color: var(--color-muted); margin-bottom: 14px;">You haven't scheduled any appointments yet.</p>
+                            <a href="{% url 'create_appointment' %}" class="btn-vetnest-orange">Schedule First Visit</a>
                         </td>
                     </tr>
                     {% endfor %}

@@ -4,42 +4,40 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}VetCare | Online Veterinary Clinic{% endblock %}</title>
+    <title>{% block title %}VETNEST | Online Veterinary Clinic{% endblock %}</title>
 
-    <!-- Google Fonts: Plus Jakarta Sans -->
+    <!-- Google Fonts: Playfair Display (Serif Headings) & Plus Jakarta Sans (Modern Clean UI) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" href="{% static 'images/vet_logo.svg' %}" type="image/svg+xml">
 
-    <!-- Modern Theme Stylesheet -->
+    <!-- VETNEST Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/theme.css' %}">
 
     {% block extra_head %}{% endblock %}
 </head>
 <body>
 
-    <!-- Outer Master White Rounded Container -->
+    <!-- Outer Master Cream Rounded Container (VETNEST Website Frame) -->
     <div class="site-container">
 
-        <!-- Global Header & Navigation -->
+        <!-- Global Navigation (Pill Header) -->
         <header class="site-header">
             <!-- Brand Logo -->
-            <a href="{% url 'index' %}" class="brand-wrapper">
-                <div class="brand-logo-icon">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M19 10.5h-5.5V5h-3v5.5H5v3h5.5V19h3v-5.5H19v-3z"/>
+            <a href="{% url 'index' %}" class="brand-wrapper" title="VETNEST Veterinary Clinic">
+                <div class="brand-icon-pill">
+                    <!-- Paw Icon -->
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 14c-1.66 0-3 1.34-3 3 0 1.66 1.34 3 3 3s3-1.34 3-3c0-1.66-1.34-3-3-3zm-6-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-9.5-5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
                     </svg>
                 </div>
-                <div class="brand-info">
-                    <span class="brand-title">VetCare Clinic</span>
-                    <span class="brand-subtitle">Professional Healthcare & Assistance</span>
-                </div>
+                <span class="brand-name">VETNEST</span>
             </a>
 
-            <!-- Mobile Menu Toggle Button -->
+            <!-- Mobile Nav Toggle -->
             <button class="mobile-nav-toggle" id="mobileNavBtn" aria-label="Toggle navigation">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
                     <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -49,44 +47,64 @@
             </button>
 
             <!-- Navigation Links -->
-            <nav>
+            <nav class="nav-menu-wrapper">
                 <ul class="nav-menu" id="navMenu">
                     <li><a href="{% url 'index' %}" class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}">Home</a></li>
-                    <li><a href="{% url 'about_us' %}" class="nav-link {% if request.resolver_match.url_name == 'about_us' %}active{% endif %}">About Clinic</a></li>
+                    <li><a href="{% url 'about_us' %}" class="nav-link {% if request.resolver_match.url_name == 'about_us' %}active{% endif %}">About Us</a></li>
                     <li><a href="{% url 'services' %}" class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}">Services</a></li>
-                    <li><a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contacts</a></li>
+                    <li><a href="{% url 'gallery' %}" class="nav-link {% if request.resolver_match.url_name == 'gallery' %}active{% endif %}">Gallery</a></li>
+                    <li><a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
 
                     {% if request.session.role == 'admin' %}
-                        <li><a href="{% url 'admin_dashboard' %}" class="nav-link {% if 'admin' in request.resolver_match.url_name %}active{% endif %}">Admin Panel</a></li>
+                        <li><a href="{% url 'admin_dashboard' %}" class="nav-link {% if 'admin' in request.resolver_match.url_name %}active{% endif %}">Admin Portal</a></li>
                     {% elif request.session.username %}
                         <li><a href="{% url 'dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Dashboard</a></li>
                         <li><a href="{% url 'appointments' %}" class="nav-link {% if request.resolver_match.url_name == 'appointments' %}active{% endif %}">My Bookings</a></li>
                     {% endif %}
+
+                    <!-- Mobile only auth actions -->
+                    <li class="mobile-only-actions">
+                        {% if request.session.username %}
+                            <a href="{% url 'logout' %}" class="btn-vetnest-outline" style="text-align: center;">Logout ({{ request.session.username }})</a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="btn-vetnest-outline" style="text-align: center;">Sign In</a>
+                        {% endif %}
+                        <a href="{% url 'create_appointment' %}" class="btn-vetnest-orange" style="justify-content: center;">
+                            <span>Book Appointment</span>
+                            <span class="arrow-circle">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
 
-            <!-- Navigation Actions on Right -->
+            <!-- Navigation Actions on Right (Desktop) -->
             <div class="nav-actions">
-                <a href="tel:+919876543210" class="nav-phone-pill" title="Call Clinic">
-                    <span class="phone-dot"></span>
-                    <span>+91 98765 43210</span>
-                </a>
-
                 {% if request.session.username %}
-                    <a href="{% url 'logout' %}" class="btn-pill-outline" style="padding: 8px 16px; font-size: 0.82rem;">Logout</a>
+                    <a href="{% url 'logout' %}" class="btn-vetnest-outline" title="Sign Out">Logout</a>
                 {% else %}
-                    <a href="{% url 'login' %}" class="btn-pill-outline" style="padding: 8px 16px; font-size: 0.82rem;">Sign In</a>
+                    <a href="{% url 'login' %}" class="btn-vetnest-outline">Sign In</a>
                 {% endif %}
 
-                <a href="{% url 'create_appointment' %}" class="btn-pill-dark">
-                    <span>Book Appointment</span>
+                <a href="{% url 'create_appointment' %}" class="btn-vetnest-orange">
+                    <span>Get in Touch</span>
+                    <span class="arrow-circle">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </span>
                 </a>
             </div>
         </header>
 
         <!-- Django Flash Messages -->
         {% if messages %}
-            <div class="messages-container" style="margin-top: 10px; margin-bottom: 20px;">
+            <div class="messages-container" style="margin-bottom: 24px;">
                 {% for message in messages %}
                     <div class="alert-box {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %}">
                         {% if message.tags == 'success' %}
@@ -104,23 +122,29 @@
             </div>
         {% endif %}
 
-        <!-- Page Specific Content -->
+        <!-- Main Page Content -->
         <main class="page-main-body">
             {% block content %}{% endblock %}
         </main>
 
         <!-- Global Site Footer -->
         <footer class="site-footer">
-            <div>
-                <strong>VetCare Animal Healthcare</strong> &copy; {% now "Y" %} &bull; All Rights Reserved
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="brand-icon-pill" style="width: 26px; height: 26px;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 14c-1.66 0-3 1.34-3 3 0 1.66 1.34 3 3 3s3-1.34 3-3c0-1.66-1.34-3-3-3zm-6-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-9.5-5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                    </svg>
+                </div>
+                <strong>VETNEST Veterinary Healthcare</strong> &bull; &copy; {% now "Y" %} All Rights Reserved
             </div>
             <ul class="footer-links">
                 <li><a href="{% url 'index' %}" class="footer-link">Home</a></li>
-                <li><a href="{% url 'about_us' %}" class="footer-link">About Clinic</a></li>
+                <li><a href="{% url 'about_us' %}" class="footer-link">About Us</a></li>
                 <li><a href="{% url 'services' %}" class="footer-link">Services</a></li>
+                <li><a href="{% url 'gallery' %}" class="footer-link">Gallery</a></li>
                 <li><a href="{% url 'contact' %}" class="footer-link">Contact</a></li>
                 {% if not request.session.username %}
-                    <li><a href="{% url 'login' %}" class="footer-link">Admin / Staff Login</a></li>
+                    <li><a href="{% url 'login' %}" class="footer-link">Admin / Staff</a></li>
                 {% endif %}
             </ul>
         </footer>

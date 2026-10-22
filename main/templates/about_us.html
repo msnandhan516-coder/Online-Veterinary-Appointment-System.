@@ -1,105 +1,148 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}About Our Clinic | VetCare{% endblock %}
+{% block title %}About Us | VETNEST Veterinary Clinic{% endblock %}
 
 {% block content %}
 <div class="content-card">
     <div class="card-header-styled">
         <div>
-            <span class="section-tag">About VetCare</span>
-            <h1 class="card-heading">Compassionate Veterinary Healthcare</h1>
+            <span class="section-tag">About Us</span>
+            <h1 class="card-heading">Compassionate Care for Every Paw</h1>
+            <p style="color: var(--color-muted); font-size: 0.98rem; margin-top: 6px;">
+                We are dedicated to providing high-quality veterinary care with a focus on prevention, wellness, and lifelong health for your pets.
+            </p>
         </div>
-        <a href="{% url 'create_appointment' %}" class="btn-pill-dark">Book an Appointment</a>
+        <a href="{% url 'create_appointment' %}" class="btn-vetnest-orange">
+            <span>Book an Appointment</span>
+            <span class="arrow-circle">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </span>
+        </a>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1.1fr; gap: 40px; align-items: center; margin-bottom: 48px;">
+    <!-- Two-Column Introduction Matching Panel 2 of VETNEST Template -->
+    <div class="about-grid" style="margin-bottom: 40px;">
         <div>
-            <h3 style="font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 16px;">
-                Caring for your beloved pets since 2014
+            <h3 style="font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; margin-bottom: 16px;">
+                Experienced Care, Genuine Kindness
             </h3>
-            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px;">
-                At VetCare Clinic, we understand that pets are cherished family members. Founded in 2014, our mission is to deliver comprehensive veterinary medicine combining cutting-edge diagnostic technology with gentle, patient-centered care.
+            <p style="color: var(--color-muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 16px;">
+                Founded with a deep love for animals, VETNEST operates as a comprehensive veterinary center where pets receive scientific, cutting-edge medical attention combined with heartfelt personal care.
             </p>
-            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 24px;">
-                Our dedicated doctors, licensed veterinary nurses, and certified technicians operate an in-house medical lab, digital imaging suite, surgical theater, and 24/7 emergency response service.
+            <p style="color: var(--color-muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 24px;">
+                Whether your pet is visiting for a routine vaccination, diagnostic testing, dental hygiene, or specialized surgical recovery, our doctors and technicians ensure they feel safe, calm, and comforted.
             </p>
 
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
-                <div style="background: var(--surface-offwhite); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
-                    <div style="font-size: 1.6rem; font-weight: 800; color: var(--accent-cyan);">10+ Years</div>
-                    <div style="font-size: 0.82rem; color: var(--text-secondary);">Of Dedicated Veterinary Service</div>
+            <!-- 3 Stat Badges Matching Template -->
+            <div class="stats-row">
+                <div class="stat-box">
+                    <div class="stat-box-number">10+</div>
+                    <div class="stat-box-label">Years of Experience</div>
                 </div>
-                <div style="background: var(--surface-offwhite); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
-                    <div style="font-size: 1.6rem; font-weight: 800; color: var(--accent-cyan);">24/7</div>
-                    <div style="font-size: 0.82rem; color: var(--text-secondary);">Emergency Support & On-Call Care</div>
+                <div class="stat-box">
+                    <div class="stat-box-number">2K+</div>
+                    <div class="stat-box-label">Happy Pet Owners</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-number">5K+</div>
+                    <div class="stat-box-label">Pets Treated</div>
+                </div>
+            </div>
+
+            <!-- Mission Card with Paw Icon -->
+            <div class="mission-card">
+                <div class="mission-icon">🐾</div>
+                <div>
+                    <strong style="font-size: 1.05rem; display: block; margin-bottom: 4px;">Our Mission</strong>
+                    <p style="color: var(--color-muted); font-size: 0.88rem; line-height: 1.55;">
+                        To provide compassionate, affordable, and high-quality veterinary care while promoting responsible pet ownership and wellness across the community.
+                    </p>
                 </div>
             </div>
         </div>
 
-        <div style="border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); background: var(--bg-page);">
-            <img src="{% static 'images/hero_cat.jpg' %}" alt="Clinic Pet Care" style="width: 100%; height: auto; display: block; object-fit: cover;">
+        <!-- Prominent Veterinarian Holding Dog Photograph -->
+        <div class="about-image-card">
+            <img src="{% static 'images/vet_holding_dog.jpg' %}" alt="VETNEST Veterinarian examining dog" loading="eager">
         </div>
     </div>
 
-    <!-- Category Programs -->
-    <div class="section-spacer" style="margin-top: 20px;">
-        <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 20px;">Specialized Veterinary Programs</h3>
-        <div class="grid-categories">
-            <a href="{% url 'category_detail' 'wildlife' %}" class="category-card">
-                <div class="category-icon">🦌</div>
+    <!-- Specialized Care Programs from Existing Project -->
+    <div style="margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--color-border);">
+        <div class="section-header-center">
+            <span class="section-tag">Specialized Programs</span>
+            <h2 class="section-title" style="font-size: 1.8rem;">Our Veterinary Care Approach</h2>
+            <p class="section-subtitle">
+                Explore our specialized programs tailored to specific animal health requirements.
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px;">
+            <a href="{% url 'category_detail' 'wildlife' %}" class="contact-info-card" style="text-decoration: none; color: inherit;">
+                <div class="contact-icon-circle">🦌</div>
                 <div>
-                    <div class="category-title">Wildlife Care</div>
-                    <small style="color: var(--text-secondary);">Specialized rescue & recovery</small>
+                    <strong style="font-size: 0.95rem; display: block;">Wildlife Care</strong>
+                    <small style="color: var(--color-muted);">Specialized rescue & recovery</small>
                 </div>
             </a>
-            <a href="{% url 'category_detail' 'rehabilitation' %}" class="category-card">
-                <div class="category-icon">🐕</div>
+
+            <a href="{% url 'category_detail' 'rehabilitation' %}" class="contact-info-card" style="text-decoration: none; color: inherit;">
+                <div class="contact-icon-circle">🐕</div>
                 <div>
-                    <div class="category-title">Rehabilitation</div>
-                    <small style="color: var(--text-secondary);">Post-operative guided therapy</small>
+                    <strong style="font-size: 0.95rem; display: block;">Rehabilitation</strong>
+                    <small style="color: var(--color-muted);">Post-operative guided therapy</small>
                 </div>
             </a>
-            <a href="{% url 'category_detail' 'exotic-pets' %}" class="category-card">
-                <div class="category-icon">🦜</div>
+
+            <a href="{% url 'category_detail' 'exotic-pets' %}" class="contact-info-card" style="text-decoration: none; color: inherit;">
+                <div class="contact-icon-circle">🦜</div>
                 <div>
-                    <div class="category-title">Exotic Pets</div>
-                    <small style="color: var(--text-secondary);">Reptiles, birds & small mammals</small>
+                    <strong style="font-size: 0.95rem; display: block;">Exotic Pets</strong>
+                    <small style="color: var(--color-muted);">Reptiles, birds & small pets</small>
                 </div>
             </a>
-            <a href="{% url 'category_detail' 'health-medicine' %}" class="category-card">
-                <div class="category-icon">🩺</div>
+
+            <a href="{% url 'category_detail' 'health-medicine' %}" class="contact-info-card" style="text-decoration: none; color: inherit;">
+                <div class="contact-icon-circle">🩺</div>
                 <div>
-                    <div class="category-title">Health & Medicine</div>
-                    <small style="color: var(--text-secondary);">Wellness & preventive plans</small>
+                    <strong style="font-size: 0.95rem; display: block;">Health & Medicine</strong>
+                    <small style="color: var(--color-muted);">Wellness & preventive plans</small>
                 </div>
             </a>
-            <a href="{% url 'category_detail' 'consulting' %}" class="category-card">
-                <div class="category-icon">📋</div>
+
+            <a href="{% url 'category_detail' 'consulting' %}" class="contact-info-card" style="text-decoration: none; color: inherit;">
+                <div class="contact-icon-circle">📋</div>
                 <div>
-                    <div class="category-title">Consulting</div>
-                    <small style="color: var(--text-secondary);">Nutrition & behavior guidance</small>
+                    <strong style="font-size: 0.95rem; display: block;">Consulting</strong>
+                    <small style="color: var(--color-muted);">Nutrition & behavior advice</small>
                 </div>
             </a>
-            <a href="{% url 'category_detail' 'our-staff' %}" class="category-card">
-                <div class="category-icon">👩‍⚕️</div>
+
+            <a href="{% url 'category_detail' 'our-staff' %}" class="contact-info-card" style="text-decoration: none; color: inherit;">
+                <div class="contact-icon-circle">👩‍⚕️</div>
                 <div>
-                    <div class="category-title">Our Staff</div>
-                    <small style="color: var(--text-secondary);">Certified doctors & nurses</small>
+                    <strong style="font-size: 0.95rem; display: block;">Our Staff</strong>
+                    <small style="color: var(--color-muted);">Experienced doctors & nurses</small>
                 </div>
             </a>
-            <a href="{% url 'category_detail' 'animals-pets' %}" class="category-card">
-                <div class="category-icon">🐾</div>
+
+            <a href="{% url 'category_detail' 'animals-pets' %}" class="contact-info-card" style="text-decoration: none; color: inherit;">
+                <div class="contact-icon-circle">🐾</div>
                 <div>
-                    <div class="category-title">Animals & Pets</div>
-                    <small style="color: var(--text-secondary);">Domestic dog & cat treatments</small>
+                    <strong style="font-size: 0.95rem; display: block;">Animals & Pets</strong>
+                    <small style="color: var(--color-muted);">Domestic dog & cat treatments</small>
                 </div>
             </a>
-            <a href="{% url 'category_detail' 'emergency' %}" class="category-card">
-                <div class="category-icon">🚨</div>
+
+            <a href="{% url 'category_detail' 'emergency' %}" class="contact-info-card" style="text-decoration: none; color: inherit;">
+                <div class="contact-icon-circle">🚨</div>
                 <div>
-                    <div class="category-title">Emergency Care</div>
-                    <small style="color: var(--text-secondary);">24/7 urgent intensive care</small>
+                    <strong style="font-size: 0.95rem; display: block;">Emergency Care</strong>
+                    <small style="color: var(--color-muted);">24/7 on-call medical response</small>
                 </div>
             </a>
         </div>

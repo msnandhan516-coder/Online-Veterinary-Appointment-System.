@@ -1,45 +1,76 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Edit Profile | VetCare{% endblock %}
+{% block title %}Edit Profile | VETNEST{% endblock %}
 
 {% block content %}
-<div class="content-card" style="max-width: 580px; margin: 30px auto;">
+<div class="content-card" style="max-width: 640px; margin: 30px auto;">
     <div class="card-header-styled">
         <div>
             <span class="section-tag">Account Settings</span>
-            <h1 class="card-heading">Edit My Profile</h1>
+            <h1 class="card-heading">Edit Profile</h1>
+            <p style="color: var(--color-muted); font-size: 0.95rem; margin-top: 4px;">
+                Update your contact details and account credentials.
+            </p>
         </div>
-        <a href="{% url 'dashboard' %}" class="btn-pill-outline">&larr; Back to Dashboard</a>
+        <a href="{% url 'dashboard' %}" class="btn-vetnest-outline">&larr; Dashboard</a>
+    </div>
+
+    <!-- User Avatar & Badge Matching Panel 14/15 -->
+    <div style="display: flex; align-items: center; gap: 20px; padding: 18px 24px; background: var(--color-cream); border-radius: 20px; border: 1px solid var(--color-border); margin-bottom: 28px;">
+        <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--color-surface); border: 2px solid var(--color-accent); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0;">
+            👤
+        </div>
+        <div>
+            <h3 style="font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 2px;">{{ user.fullname|default:user.username }}</h3>
+            <span style="font-size: 0.85rem; color: var(--color-muted);">@{{ user.username }} &bull; Pet Owner Account</span>
+        </div>
     </div>
 
     <form method="POST">
         {% csrf_token %}
 
-        <div class="form-group">
-            <label class="form-label">Username</label>
-            <input type="text" value="{{ user.username }}" class="form-control" style="background: #edf2f5; cursor: not-allowed;" readonly>
-            <small style="color: var(--text-muted);">Username cannot be changed.</small>
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" value="{{ user.fullname|default:user.username }}" class="form-control" style="background: var(--color-cream); cursor: not-allowed;" readonly>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Username</label>
+                <input type="text" value="{{ user.username }}" class="form-control" style="background: var(--color-cream); cursor: not-allowed;" readonly>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Email Address *</label>
+                <input type="email" name="email" value="{{ user.email }}" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Phone Number *</label>
+                <input type="tel" name="phone" value="{{ user.phone }}" class="form-control" pattern="[0-9]{10}" title="Enter exactly 10 digits" required>
+            </div>
         </div>
 
         <div class="form-group">
-            <label class="form-label">Email Address *</label>
-            <input type="email" name="email" value="{{ user.email }}" class="form-control" required>
-        </div>
-
-        <div class="form-group">
-            <label class="form-label">Phone Number *</label>
-            <input type="tel" name="phone" value="{{ user.phone }}" class="form-control" pattern="[0-9]{10}" title="Enter exactly 10 digits" required>
-        </div>
-
-        <div class="form-group">
-            <label class="form-label">New Password (or keep current)</label>
+            <label class="form-label">Password *</label>
             <input type="password" name="password" value="{{ user.password }}" class="form-control" required>
+            <small style="color: var(--color-muted); font-size: 0.8rem;">Enter a new password or keep your current one.</small>
         </div>
 
-        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 28px;">
-            <a href="{% url 'dashboard' %}" class="btn-pill-outline">Cancel</a>
-            <button type="submit" class="btn-pill-dark">Save Profile Changes</button>
+        <div style="display: flex; gap: 14px; justify-content: flex-end; align-items: center; margin-top: 32px;">
+            <a href="{% url 'dashboard' %}" class="btn-vetnest-outline">Cancel</a>
+            <button type="submit" class="btn-vetnest-orange">
+                <span>Save Changes</span>
+                <span class="arrow-circle">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </span>
+            </button>
         </div>
     </form>
 </div>

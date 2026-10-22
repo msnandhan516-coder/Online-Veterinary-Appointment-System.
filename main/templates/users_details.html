@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}User Management | VetCare Admin{% endblock %}
+{% block title %}User Management | VETNEST Admin{% endblock %}
 
 {% block content %}
 <div class="content-card">
@@ -9,19 +9,19 @@
         <div>
             <span class="section-tag">Account Directory</span>
             <h1 class="card-heading">Registered Pet Owners</h1>
-            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 4px;">
+            <p style="color: var(--color-muted); font-size: 0.95rem; margin-top: 4px;">
                 Directory of registered clients and pet owners with active accounts.
             </p>
         </div>
 
-        <a href="{% url 'admin_dashboard' %}" class="btn-pill-outline">&larr; Admin Dashboard</a>
+        <a href="{% url 'admin_dashboard' %}" class="btn-vetnest-outline">&larr; Admin Dashboard</a>
     </div>
 
     <div class="table-responsive">
         <table class="data-table">
             <thead>
                 <tr>
-                    <th>Full Name</th>
+                    <th>Client Name</th>
                     <th>Username</th>
                     <th>Email Address</th>
                     <th>Phone Number</th>
@@ -39,10 +39,10 @@
                     <td><span class="badge-status badge-approved">{{ user.role|upper }}</span></td>
                     <td style="text-align: center;">
                         <div style="display: inline-flex; gap: 8px;">
-                            <a href="{% url 'edit_user' user.id %}" class="btn-pill-outline" style="font-size: 0.78rem; padding: 6px 14px;">
+                            <a href="{% url 'edit_user' user.id %}" class="btn-vetnest-outline" style="font-size: 0.78rem; padding: 4px 12px;">
                                 Edit
                             </a>
-                            <a href="{% url 'delete_user' user.id %}" class="btn-pill-danger" style="font-size: 0.78rem; padding: 6px 12px;" onclick="return confirm('Are you sure you want to delete user {{ user.username }} and all their appointments?');">
+                            <a href="{% url 'delete_user' user.id %}" class="btn-vetnest-outline" style="color: var(--color-error); border-color: rgba(199, 75, 75, 0.4); font-size: 0.78rem; padding: 4px 12px;" onclick="return confirm('Are you sure you want to delete user {{ user.username }} and all their appointments?');">
                                 Delete
                             </a>
                         </div>
@@ -50,9 +50,9 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="6" style="text-align: center; padding: 48px 20px;">
-                        <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 4px;">No Registered Users</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                    <td colspan="6" style="text-align: center; padding: 50px 20px;">
+                        <h4 style="font-family: var(--font-serif); font-size: 1.2rem; margin-bottom: 4px;">No Registered Users</h4>
+                        <p style="color: var(--color-muted); font-size: 0.9rem;">
                             No client accounts found.
                         </p>
                     </td>

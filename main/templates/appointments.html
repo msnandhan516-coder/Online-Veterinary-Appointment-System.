@@ -1,76 +1,122 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}My Appointments | VetCare{% endblock %}
+{% block title %}My Appointments | VETNEST{% endblock %}
 
 {% block content %}
 <div class="content-card">
     <div class="card-header-styled">
         <div>
-            <span class="section-tag">Pet Health Records</span>
-            <h1 class="card-heading">My Scheduled Appointments</h1>
-            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 4px;">
-                Review the approval status and consultation details for your registered pets.
+            <h1 class="card-heading">My Appointments</h1>
+            <p style="color: var(--color-muted); font-size: 0.95rem; margin-top: 4px;">
+                View and manage your upcoming and past clinic consultations.
             </p>
         </div>
-        <div style="display: flex; gap: 10px;">
-            <a href="{% url 'dashboard' %}" class="btn-pill-outline">Dashboard</a>
-            <a href="{% url 'create_appointment' %}" class="btn-pill-dark">+ Book New Visit</a>
-        </div>
+
+        <a href="{% url 'create_appointment' %}" class="btn-vetnest-orange">
+            <span>+ Book New Appointment</span>
+            <span class="arrow-circle">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </span>
+        </a>
     </div>
 
-    <div class="table-responsive">
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Pet Name</th>
-                    <th>Breed / Species</th>
-                    <th>Clinical Service</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Approval Status</th>
-                    <th>Clinical Work</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for appt in appointments %}
-                <tr>
-                    <td><strong>{{ appt.pet_name }}</strong></td>
-                    <td>{{ appt.pet_breed|default:"-" }}</td>
-                    <td>{{ appt.service.name }}</td>
-                    <td>{{ appt.appointment_date|default:"-" }}</td>
-                    <td>{{ appt.appointment_time|default:"-" }}</td>
-                    <td>
-                        {% if appt.status == "Approved" %}
-                            <span class="badge-status badge-approved">✓ Approved</span>
-                        {% elif appt.status == "Rejected" %}
-                            <span class="badge-status badge-rejected">✕ Rejected</span>
+    <!-- Filter Pills Matching Panel 8 -->
+    <div class="gallery-filter-bar" style="justify-content: flex-start; margin-bottom: 24px;">
+        <button class="gallery-filter-btn active" data-status-filter="all">All Appointments</button>
+        <button class="gallery-filter-btn" data-status-filter="approved">Confirmed</button>
+        <button class="gallery-filter-btn" data-status-filter="pending">Pending</button>
+        <button class="gallery-filter-btn" data-status-filter="rejected">Cancelled</button>
+    </div>
+
+    <!-- Appointments Cards / Rows Matching Panel 8 -->
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+        {% for appt in appointments %}
+            <div class="contact-info-card appt-item" data-status="{{ appt.status|lower }}" style="justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <!-- Pet Avatar -->
+                    <div style="width: 52px; height: 52px; border-radius: 16px; overflow: hidden; background: var(--color-cream); flex-shrink: 0; border: 1px solid var(--color-border);">
+                        {% if appt.service.image %}
+                            <img src="{{ appt.service.image.url }}" alt="{{ appt.pet_name }}" style="width: 100%; height: 100%; object-fit: cover;">
                         {% else %}
-                            <span class="badge-status badge-pending">⏳ Pending</span>
+                            <img src="{% static 'images/dog_hero.jpg' %}" alt="{{ appt.pet_name }}" style="width: 100%; height: 100%; object-fit: cover;">
                         {% endif %}
-                    </td>
-                    <td>
-                        {% if appt.work_status == "Done" %}
-                            <span class="badge-status badge-done">Completed</span>
-                        {% else %}
-                            <span style="color: var(--text-muted); font-size: 0.85rem;">In Progress</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="7" style="text-align: center; padding: 48px 20px;">
-                        <div style="font-size: 2.2rem; margin-bottom: 8px;">🐾</div>
-                        <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 6px;">No Appointments Scheduled</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 18px;">
-                            You haven't scheduled any veterinary consultations yet.
-                        </p>
-                        <a href="{% url 'create_appointment' %}" class="btn-pill-dark">Book Your Pet's First Visit</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                    </div>
+
+                    <div>
+                        <h4 style="font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; margin-bottom: 4px;">
+                            {{ appt.service.name }} &bull; <span style="font-family: var(--font-sans); font-size: 0.95rem; font-weight: 600; color: var(--color-text);">{{ appt.pet_name }} ({{ appt.pet_breed }})</span>
+                        </h4>
+                        <div style="display: flex; gap: 14px; font-size: 0.85rem; color: var(--color-muted); flex-wrap: wrap;">
+                            <span>📅 {{ appt.appointment_date|default:"TBD" }}</span>
+                            <span>⏰ {{ appt.appointment_time|default:"TBD" }}</span>
+                            {% if appt.description %}
+                                <span>📝 {{ appt.description|truncatewords:6 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    {% if appt.work_status == "Done" %}
+                        <span class="badge-status badge-completed">Completed</span>
+                    {% elif appt.status == "Approved" %}
+                        <span class="badge-status badge-approved">Confirmed</span>
+                    {% elif appt.status == "Rejected" %}
+                        <span class="badge-status badge-rejected">Cancelled</span>
+                    {% else %}
+                        <span class="badge-status badge-pending">Pending</span>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <div style="text-align: center; padding: 60px 20px; background: var(--color-cream); border-radius: 20px; border: 1px solid var(--color-border);">
+                <div style="font-size: 2.2rem; margin-bottom: 10px;">🐾</div>
+                <h3 style="font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 6px;">No Appointments Found</h3>
+                <p style="color: var(--color-muted); font-size: 0.95rem; margin-bottom: 20px;">
+                    You haven't scheduled any veterinary consultations yet.
+                </p>
+                <a href="{% url 'create_appointment' %}" class="btn-vetnest-orange">
+                    <span>Book Your First Visit</span>
+                    <span class="arrow-circle">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+        {% endfor %}
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterBtns = document.querySelectorAll('[data-status-filter]');
+        const apptItems = document.querySelectorAll('.appt-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const filter = this.getAttribute('data-status-filter');
+
+                apptItems.forEach(item => {
+                    const status = item.getAttribute('data-status');
+                    if (filter === 'all' || status === filter) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
 {% endblock %}

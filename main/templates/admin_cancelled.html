@@ -1,62 +1,71 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Rejected Appointments | VetCare Admin{% endblock %}
+{% block title %}Cancelled Appointments | VETNEST Admin{% endblock %}
 
 {% block content %}
 <div class="content-card">
     <div class="card-header-styled">
         <div>
-            <span class="section-tag" style="background: var(--danger-bg); color: var(--danger);">Declined Requests</span>
-            <h1 class="card-heading">Rejected / Cancelled Appointments</h1>
-            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 4px;">
-                Log of appointment booking requests that could not be accommodated.
+            <span class="section-tag">Cancelled</span>
+            <h1 class="card-heading">Cancelled Appointments</h1>
+            <p style="color: var(--color-muted); font-size: 0.95rem; margin-top: 4px;">
+                View the list of cancelled and rejected appointment requests.
             </p>
         </div>
 
         <div style="display: flex; gap: 10px;">
-            <a href="{% url 'admin_dashboard' %}" class="btn-pill-outline">&larr; Dashboard</a>
-            <a href="{% url 'admin_pending' %}" class="btn-pill-dark">Pending Reviews</a>
+            <a href="{% url 'admin_dashboard' %}" class="btn-vetnest-outline">&larr; Admin Dashboard</a>
+            <a href="{% url 'admin_pending' %}" class="btn-vetnest-orange">
+                <span>Pending Reviews</span>
+                <span class="arrow-circle">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </span>
+            </a>
         </div>
     </div>
 
-    <div class="table-responsive">
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Pet Name</th>
-                    <th>Client (Owner)</th>
-                    <th>Service</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for appt in appointments %}
-                <tr>
-                    <td><strong>{{ appt.pet_name }}</strong></td>
-                    <td>
-                        <strong>{{ appt.user.fullname|default:appt.user.username }}</strong><br>
-                        <small style="color: var(--text-secondary);">{{ appt.user.email }}</small>
-                    </td>
-                    <td>{{ appt.service.name }}</td>
-                    <td>{{ appt.appointment_date }}</td>
-                    <td>{{ appt.appointment_time }}</td>
-                    <td><span class="badge-status badge-rejected">✕ Rejected</span></td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="6" style="text-align: center; padding: 48px 20px;">
-                        <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 4px;">No Cancelled Appointments</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
-                            No appointments have been rejected.
-                        </p>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <!-- Cards Matching Panel 10 of VETNEST Reference -->
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+        {% for appt in appointments %}
+            <div class="contact-info-card" style="justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <div style="width: 52px; height: 52px; border-radius: 16px; overflow: hidden; background: var(--color-cream); flex-shrink: 0; border: 1px solid var(--color-border);">
+                        {% if appt.service.image %}
+                            <img src="{{ appt.service.image.url }}" alt="{{ appt.pet_name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% else %}
+                            <img src="{% static 'images/dog_hero.jpg' %}" alt="{{ appt.pet_name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <h4 style="font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; margin-bottom: 4px;">
+                            {{ appt.service.name }} &bull; <span style="font-family: var(--font-sans); font-size: 0.95rem; font-weight: 600; color: var(--color-text);">{{ appt.pet_name }} ({{ appt.pet_breed }})</span>
+                        </h4>
+                        <div style="display: flex; gap: 14px; font-size: 0.85rem; color: var(--color-muted); flex-wrap: wrap;">
+                            <span>📅 {{ appt.appointment_date }}</span>
+                            <span>⏰ {{ appt.appointment_time }}</span>
+                            <span>👤 {{ appt.user.fullname|default:appt.user.username }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="badge-status badge-rejected">Cancelled</span>
+                </div>
+            </div>
+        {% empty %}
+            <div style="text-align: center; padding: 60px 20px; background: var(--color-cream); border-radius: 20px; border: 1px solid var(--color-border);">
+                <div style="font-size: 2.2rem; margin-bottom: 10px;">🐾</div>
+                <h3 style="font-family: var(--font-serif); font-size: 1.3rem; margin-bottom: 6px;">No Cancelled Appointments</h3>
+                <p style="color: var(--color-muted); font-size: 0.95rem;">
+                    All appointment requests are currently active or completed.
+                </p>
+            </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

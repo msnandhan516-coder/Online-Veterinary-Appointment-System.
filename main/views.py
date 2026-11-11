@@ -288,7 +288,7 @@ def reject_appointment(request, appointment_id):
 def admin_dashboard(request):
 
 
-    if request.session.get("role") != "admin":
+    if not request.session.get("user_id") or request.session.get("role") != "admin":
         return redirect("login")
 
     total_users = UserRegister.objects.exclude(role='admin').count()

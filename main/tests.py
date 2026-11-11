@@ -163,5 +163,14 @@ class VetCareSystemTests(TestCase):
         # Mark done
         done_resp = self.client.get(reverse('mark_done', kwargs={'id': appt.id}), follow=True)
         self.assertEqual(done_resp.status_code, 200)
+
+        logout_resp = self.client.get(reverse('logout'))
+        self.assertEqual(logout_resp.status_code, 302)
+        self.assertNotIn('user_id', self.client.session)
+        self.assertNotIn('role', self.client.session)
+        self.assertIn('no-store', logout_resp['Cache-Control'])
+
+        admin_dash_after_logout = self.client.get(reverse('admin_dashboard'))
+        self.assertRedirects(admin_dash_after_logout, reverse('login'))
         appt.refresh_from_db()
         self.assertEqual(appt.work_status, 'Done')

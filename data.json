@@ -1,0 +1,864 @@
+[
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add user register",
+    "content_type": [
+      "main",
+      "userregister"
+    ],
+    "codename": "add_userregister"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change user register",
+    "content_type": [
+      "main",
+      "userregister"
+    ],
+    "codename": "change_userregister"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete user register",
+    "content_type": [
+      "main",
+      "userregister"
+    ],
+    "codename": "delete_userregister"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view user register",
+    "content_type": [
+      "main",
+      "userregister"
+    ],
+    "codename": "view_userregister"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add appointment",
+    "content_type": [
+      "main",
+      "appointment"
+    ],
+    "codename": "add_appointment"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change appointment",
+    "content_type": [
+      "main",
+      "appointment"
+    ],
+    "codename": "change_appointment"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete appointment",
+    "content_type": [
+      "main",
+      "appointment"
+    ],
+    "codename": "delete_appointment"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view appointment",
+    "content_type": [
+      "main",
+      "appointment"
+    ],
+    "codename": "view_appointment"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add contact",
+    "content_type": [
+      "main",
+      "contact"
+    ],
+    "codename": "add_contact"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change contact",
+    "content_type": [
+      "main",
+      "contact"
+    ],
+    "codename": "change_contact"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete contact",
+    "content_type": [
+      "main",
+      "contact"
+    ],
+    "codename": "delete_contact"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view contact",
+    "content_type": [
+      "main",
+      "contact"
+    ],
+    "codename": "view_contact"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add service",
+    "content_type": [
+      "main",
+      "service"
+    ],
+    "codename": "add_service"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change service",
+    "content_type": [
+      "main",
+      "service"
+    ],
+    "codename": "change_service"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete service",
+    "content_type": [
+      "main",
+      "service"
+    ],
+    "codename": "delete_service"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view service",
+    "content_type": [
+      "main",
+      "service"
+    ],
+    "codename": "view_service"
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1200000$qKh0vhv6z271lCRSpFjbhi$xS6v74KXxns7ChHH7tOEruUkU50p/Sywzs61IBSOUWw=",
+    "last_login": "2026-04-14T07:47:49.396Z",
+    "is_superuser": true,
+    "username": "Nandhan",
+    "first_name": "",
+    "last_name": "",
+    "email": "msnandhan516@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-04-13T10:39:05.380Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$JLQG0sSF0bNjgZoIJnYLic$x+qspWNMfL/M/bdeLKFlG7TSQzAW5ACSXvdJ8YCv7bA=",
+    "last_login": "2026-11-11T15:18:59.116Z",
+    "is_superuser": true,
+    "username": "nandhan",
+    "first_name": "",
+    "last_name": "",
+    "email": "msnandhan516@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-10-22T15:14:17.242Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "main.userregister",
+  "pk": 1,
+  "fields": {
+    "fullname": "Nandhan MS",
+    "email": "msnandhan516@gmail.com",
+    "username": "Nandhan",
+    "password": "1234",
+    "phone": "7736551481",
+    "role": "admin"
+  }
+},
+{
+  "model": "main.userregister",
+  "pk": 2,
+  "fields": {
+    "fullname": "Rahul",
+    "email": "rahul@gmail.com",
+    "username": "rahul",
+    "password": "123",
+    "phone": "9656948255",
+    "role": "user"
+  }
+},
+{
+  "model": "main.userregister",
+  "pk": 3,
+  "fields": {
+    "fullname": "Nandhan",
+    "email": "nandhanms04@gmail.com",
+    "username": "nandhu",
+    "password": "123",
+    "phone": "9446429153",
+    "role": "user"
+  }
+},
+{
+  "model": "main.userregister",
+  "pk": 4,
+  "fields": {
+    "fullname": "Mejo",
+    "email": "mejo@gmail.com",
+    "username": "mejo",
+    "password": "123",
+    "phone": "2872422222",
+    "role": "user"
+  }
+},
+{
+  "model": "main.userregister",
+  "pk": 5,
+  "fields": {
+    "fullname": "Sivadev",
+    "email": "sivdev@gmail.com",
+    "username": "siva",
+    "password": "123",
+    "phone": "9656948255",
+    "role": "user"
+  }
+},
+{
+  "model": "main.userregister",
+  "pk": 6,
+  "fields": {
+    "fullname": "Rohan",
+    "email": "rohan@gmail.com",
+    "username": "rohan",
+    "password": "rohan123",
+    "phone": "9539561481",
+    "role": "user"
+  }
+},
+{
+  "model": "main.service",
+  "pk": 2,
+  "fields": {
+    "name": "Immunization & Wellness Care",
+    "description": "Complete vaccination programs and preventive healthcare services.",
+    "image": "services/3page_img1_y9TkIxM.jpg"
+  }
+},
+{
+  "model": "main.service",
+  "pk": 3,
+  "fields": {
+    "name": "Internal Medicine",
+    "description": "Diagnosis and treatment of complex internal conditions.",
+    "image": "services/3page_img2_Oq1Vc9C.jpg"
+  }
+},
+{
+  "model": "main.service",
+  "pk": 4,
+  "fields": {
+    "name": "Radiology",
+    "description": "Advanced X-ray imaging and diagnostic services.",
+    "image": "services/3page_img3_8G7ev23.jpg"
+  }
+},
+{
+  "model": "main.service",
+  "pk": 5,
+  "fields": {
+    "name": "Ultrasound",
+    "description": "Non-invasive imaging for accurate diagnosis.",
+    "image": "services/3page_img4_n0Ambuo.jpg"
+  }
+},
+{
+  "model": "main.service",
+  "pk": 6,
+  "fields": {
+    "name": "Dental Care",
+    "description": "Professional pet dental cleaning and oral surgery.",
+    "image": "services/3page_img5_NJH1Jna.jpg"
+  }
+},
+{
+  "model": "main.service",
+  "pk": 7,
+  "fields": {
+    "name": "Surgery",
+    "description": "Safe and advanced surgical procedures.",
+    "image": "services/3page_img6_nsN8e3e.jpg"
+  }
+},
+{
+  "model": "main.service",
+  "pk": 8,
+  "fields": {
+    "name": "Pain Management",
+    "description": "Compassionate pain relief and recovery care.",
+    "image": "services/3page_img7_p2iSUdV.jpg"
+  }
+},
+{
+  "model": "main.service",
+  "pk": 9,
+  "fields": {
+    "name": "Pharmacy",
+    "description": "In-house veterinary pharmacy for convenience.",
+    "image": "services/3page_img8_iQmKE0m.jpg"
+  }
+},
+{
+  "model": "main.appointment",
+  "pk": 1,
+  "fields": {
+    "user": 2,
+    "pet_name": "Dog",
+    "pet_breed": "german",
+    "service": 5,
+    "appointment_date": "2026-04-24",
+    "appointment_time": "10:08:00",
+    "description": "Ultra sound checkup",
+    "status": "Approved",
+    "work_status": "Done",
+    "created_at": "2026-04-13T11:34:15.494Z"
+  }
+},
+{
+  "model": "main.appointment",
+  "pk": 2,
+  "fields": {
+    "user": 3,
+    "pet_name": "Dog",
+    "pet_breed": "german",
+    "service": 4,
+    "appointment_date": "2026-04-23",
+    "appointment_time": "12:23:00",
+    "description": "Radiology",
+    "status": "Approved",
+    "work_status": "Done",
+    "created_at": "2026-04-14T06:53:24.342Z"
+  }
+},
+{
+  "model": "main.appointment",
+  "pk": 3,
+  "fields": {
+    "user": 3,
+    "pet_name": "Cat",
+    "pet_breed": "Persian",
+    "service": 2,
+    "appointment_date": "2026-04-30",
+    "appointment_time": "16:59:00",
+    "description": "Take care of my pet.",
+    "status": "Approved",
+    "work_status": "Not Done",
+    "created_at": "2026-04-14T07:28:52.807Z"
+  }
+},
+{
+  "model": "main.appointment",
+  "pk": 4,
+  "fields": {
+    "user": 3,
+    "pet_name": "Mouse",
+    "pet_breed": "White footed",
+    "service": 6,
+    "appointment_date": "2026-05-30",
+    "appointment_time": "14:00:00",
+    "description": "Give a good dental care",
+    "status": "Rejected",
+    "work_status": "Not Done",
+    "created_at": "2026-04-14T07:32:37.564Z"
+  }
+},
+{
+  "model": "main.appointment",
+  "pk": 5,
+  "fields": {
+    "user": 5,
+    "pet_name": "Dog",
+    "pet_breed": "Alsesian",
+    "service": 6,
+    "appointment_date": "2026-04-30",
+    "appointment_time": "16:15:00",
+    "description": "",
+    "status": "Rejected",
+    "work_status": "Not Done",
+    "created_at": "2026-04-14T07:40:42.118Z"
+  }
+},
+{
+  "model": "main.appointment",
+  "pk": 6,
+  "fields": {
+    "user": 5,
+    "pet_name": "Cat",
+    "pet_breed": "Persian",
+    "service": 3,
+    "appointment_date": "2026-05-01",
+    "appointment_time": "10:00:00",
+    "description": "",
+    "status": "Approved",
+    "work_status": "Done",
+    "created_at": "2026-04-14T07:41:55.586Z"
+  }
+},
+{
+  "model": "main.appointment",
+  "pk": 7,
+  "fields": {
+    "user": 5,
+    "pet_name": "Cat",
+    "pet_breed": "Ragdoll",
+    "service": 8,
+    "appointment_date": "2026-04-22",
+    "appointment_time": "15:15:00",
+    "description": "",
+    "status": "Approved",
+    "work_status": "Not Done",
+    "created_at": "2026-04-14T07:44:33.289Z"
+  }
+},
+{
+  "model": "main.appointment",
+  "pk": 8,
+  "fields": {
+    "user": 2,
+    "pet_name": "Cat",
+    "pet_breed": "Ragdoll",
+    "service": 9,
+    "appointment_date": "2026-04-23",
+    "appointment_time": "13:00:00",
+    "description": "",
+    "status": "Approved",
+    "work_status": "Not Done",
+    "created_at": "2026-04-14T07:49:25.218Z"
+  }
+},
+{
+  "model": "main.appointment",
+  "pk": 9,
+  "fields": {
+    "user": 2,
+    "pet_name": "Cat",
+    "pet_breed": "Persian",
+    "service": 6,
+    "appointment_date": "2026-04-29",
+    "appointment_time": "13:20:00",
+    "description": "",
+    "status": "Rejected",
+    "work_status": "Not Done",
+    "created_at": "2026-04-14T07:49:50.454Z"
+  }
+},
+{
+  "model": "main.appointment",
+  "pk": 10,
+  "fields": {
+    "user": 2,
+    "pet_name": "mouse",
+    "pet_breed": "White footed",
+    "service": 7,
+    "appointment_date": "2026-04-28",
+    "appointment_time": "15:00:00",
+    "description": "",
+    "status": "Pending",
+    "work_status": "Not Done",
+    "created_at": "2026-04-14T07:50:22.903Z"
+  }
+},
+{
+  "model": "main.appointment",
+  "pk": 11,
+  "fields": {
+    "user": 2,
+    "pet_name": "Dog",
+    "pet_breed": "Alsesian",
+    "service": 9,
+    "appointment_date": "2026-05-30",
+    "appointment_time": "13:00:00",
+    "description": "",
+    "status": "Pending",
+    "work_status": "Not Done",
+    "created_at": "2026-04-14T07:51:20.643Z"
+  }
+},
+{
+  "model": "main.appointment",
+  "pk": 12,
+  "fields": {
+    "user": 3,
+    "pet_name": "Cat",
+    "pet_breed": "Persian",
+    "service": 6,
+    "appointment_date": "2026-04-30",
+    "appointment_time": "10:30:00",
+    "description": "Give my pet a dental care",
+    "status": "Pending",
+    "work_status": "Not Done",
+    "created_at": "2026-04-14T08:15:20.401Z"
+  }
+},
+{
+  "model": "main.appointment",
+  "pk": 13,
+  "fields": {
+    "user": 6,
+    "pet_name": "Dog",
+    "pet_breed": "Alsesian",
+    "service": 4,
+    "appointment_date": "2026-10-30",
+    "appointment_time": "09:45:00",
+    "description": "Nothing",
+    "status": "Pending",
+    "work_status": "Not Done",
+    "created_at": "2026-10-22T15:12:45.364Z"
+  }
+},
+{
+  "model": "main.contact",
+  "pk": 1,
+  "fields": {
+    "name": "Nandhan MS",
+    "email": "msnandhan516@gmail.com",
+    "phone": "7736551481",
+    "message": "Your service are good.",
+    "reply": null,
+    "created_at": "2026-04-14T08:19:41.490Z"
+  }
+},
+{
+  "model": "main.contact",
+  "pk": 2,
+  "fields": {
+    "name": "Rahul",
+    "email": "rahul@gmail.com",
+    "phone": "9446429153",
+    "message": "The clinic has good doctors and staffs",
+    "reply": null,
+    "created_at": "2026-04-14T08:20:24.992Z"
+  }
+},
+{
+  "model": "main.contact",
+  "pk": 3,
+  "fields": {
+    "name": "Sivadev",
+    "email": "sivdev@gmail.com",
+    "phone": "9656948255",
+    "message": "Clients frequently highlight the caring, friendly, and knowledgeable nature of the veterinary team.",
+    "reply": null,
+    "created_at": "2026-04-14T08:22:30.224Z"
+  }
+}
+]

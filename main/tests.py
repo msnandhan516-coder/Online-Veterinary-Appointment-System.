@@ -81,6 +81,16 @@ class VetCareSystemTests(TestCase):
         dash_response = self.client.get(reverse('dashboard'))
         self.assertEqual(dash_response.status_code, 200)
         self.assertContains(dash_response, "Welcome, Test Owner")
+        self.assertIn("no-store", dash_response["Cache-Control"])
+        self.assertContains(dash_response, 'data-authenticated="true"')
+
+        logout_response = self.client.get(reverse('logout'))
+        self.assertEqual(logout_response.status_code, 302)
+        self.assertIn("no-store", logout_response["Cache-Control"])
+        self.assertNotIn("user_id", self.client.session)
+
+        dashboard_after_logout = self.client.get(reverse('dashboard'))
+        self.assertRedirects(dashboard_after_logout, reverse('login'))
 
     def test_appointment_creation_and_past_date_validation(self):
         """Verify past dates are rejected and valid future appointments succeed"""

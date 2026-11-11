@@ -19,7 +19,7 @@
 
     {% block extra_head %}{% endblock %}
 </head>
-<body>
+<body{% if request.session.username %} data-authenticated="true"{% endif %}>
 
     <!-- Outer Master Cream Rounded Container (VETNEST Website Frame) -->
     <div class="site-container">
@@ -209,6 +209,13 @@
 
     <!-- Mobile Navigation Toggle Script -->
     <script>
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted &&
+                document.body.dataset.authenticated === 'true') {
+                window.location.reload();
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             var toggleBtn = document.getElementById('mobileNavBtn');
             var navMenu = document.getElementById('navMenu');

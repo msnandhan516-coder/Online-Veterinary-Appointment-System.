@@ -13,7 +13,7 @@ from datetime import datetime
 
 from .models import UserRegister, Appointment,Contact,Service
 
-from django.views.decorators.cache import never_cache
+from django.views.decorators.cache import never_cache, cache_control
 # =========================
 # PUBLIC PAGES
 # =========================
@@ -383,6 +383,7 @@ def completed_appointments(request):
     return render(request, 'completed_appointments.html', {'appointments': appointments})
 
 
+@never_cache
 def admin_pending(request):
     appointments = Appointment.objects.filter(status="Pending")
     return render(request, "admin_pending.html", {
@@ -526,6 +527,7 @@ def category_detail(request, category_name):
     return render(request, "category_detail.html", category)
 
 
+@never_cache
 def logout_user(request):
 
     request.session.flush()   # clears all session data

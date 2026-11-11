@@ -15,18 +15,6 @@
             </p>
         </div>
 
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <a href="{% url 'edit_profile' %}" class="btn-vetnest-outline">Edit Profile</a>
-            <a href="{% url 'create_appointment' %}" class="btn-vetnest-orange">
-                <span>+ Book Appointment</span>
-                <span class="arrow-circle">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                </span>
-            </a>
-        </div>
     </div>
 
     <!-- Real Statistics Grid -->
@@ -84,7 +72,6 @@
                 <div style="font-weight: 700;">@{{ user.username }}</div>
             </div>
         </div>
-        <a href="{% url 'edit_profile' %}" class="btn-vetnest-outline" style="font-size: 0.82rem; padding: 6px 16px;">Update Details</a>
     </div>
 
     <!-- Recent Appointments Table -->

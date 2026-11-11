@@ -14,13 +14,11 @@
             </p>
         </div>
 
-        <div style="display: flex; gap: 10px;">
-            {% if request.session.role == 'admin' %}
-                <a href="{% url 'admin_dashboard' %}" class="btn-vetnest-outline">&larr; Admin Dashboard</a>
-            {% else %}
+        {% if request.session.role != 'admin' %}
+            <div style="display: flex; gap: 10px;">
                 <a href="{% url 'appointments' %}" class="btn-vetnest-outline">&larr; My Appointments</a>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
     </div>
 
     <!-- Cards Matching Panel 9 of VETNEST Reference -->

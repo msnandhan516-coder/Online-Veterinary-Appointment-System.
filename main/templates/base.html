@@ -49,57 +49,78 @@
             <!-- Navigation Links -->
             <nav class="nav-menu-wrapper">
                 <ul class="nav-menu" id="navMenu">
-                    <li><a href="{% url 'index' %}" class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}">Home</a></li>
-                    <li><a href="{% url 'about_us' %}" class="nav-link {% if request.resolver_match.url_name == 'about_us' %}active{% endif %}">About Us</a></li>
-                    <li><a href="{% url 'services' %}" class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}">Services</a></li>
-                    <li><a href="{% url 'gallery' %}" class="nav-link {% if request.resolver_match.url_name == 'gallery' %}active{% endif %}">Gallery</a></li>
-                    <li><a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
-
                     {% if request.session.role == 'admin' %}
-                        <li><a href="{% url 'admin_dashboard' %}" class="nav-link {% if 'admin' in request.resolver_match.url_name %}active{% endif %}">Admin Portal</a></li>
+                        <li><a href="{% url 'admin_dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}">Admin Dashboard</a></li>
+                        <li><a href="{% url 'admin_pending' %}" class="nav-link {% if request.resolver_match.url_name == 'admin_pending' %}active{% endif %}">Pending</a></li>
+                        <li><a href="{% url 'admin_appointments' %}" class="nav-link {% if request.resolver_match.url_name == 'admin_appointments' %}active{% endif %}">Appointments</a></li>
+                        <li><a href="{% url 'completed_appointments' %}" class="nav-link {% if request.resolver_match.url_name == 'completed_appointments' %}active{% endif %}">Completed</a></li>
+                        <li><a href="{% url 'admin_cancelled' %}" class="nav-link {% if request.resolver_match.url_name == 'admin_cancelled' %}active{% endif %}">Cancelled</a></li>
+                        <li><a href="{% url 'feedbacks' %}" class="nav-link {% if request.resolver_match.url_name == 'feedbacks' %}active{% endif %}">Feedback</a></li>
+                        <li><a href="{% url 'admin_users' %}" class="nav-link {% if request.resolver_match.url_name == 'admin_users' %}active{% endif %}">Users</a></li>
+                        <li><a href="{% url 'add_service' %}" class="nav-link {% if request.resolver_match.url_name == 'add_service' %}active{% endif %}">Add Service</a></li>
                     {% elif request.session.username %}
                         <li><a href="{% url 'dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Dashboard</a></li>
                         <li><a href="{% url 'appointments' %}" class="nav-link {% if request.resolver_match.url_name == 'appointments' %}active{% endif %}">My Bookings</a></li>
+                        <li>
+                            <a href="{% url 'create_appointment' %}" class="nav-booking-cta btn-vetnest-orange {% if request.resolver_match.url_name == 'create_appointment' %}is-current{% endif %}">
+                                <span>Book Appointment</span>
+                                <span class="arrow-circle" aria-hidden="true">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li><a href="{% url 'index' %}" class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}">Home</a></li>
+                        <li><a href="{% url 'about_us' %}" class="nav-link {% if request.resolver_match.url_name == 'about_us' %}active{% endif %}">About Us</a></li>
+                        <li><a href="{% url 'services' %}" class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}">Services</a></li>
+                        <li><a href="{% url 'gallery' %}" class="nav-link {% if request.resolver_match.url_name == 'gallery' %}active{% endif %}">Gallery</a></li>
+                        <li><a href="{% url 'contact' %}" class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
                     {% endif %}
 
-                    <!-- Mobile only auth actions -->
-                    <li class="mobile-only-actions">
+                    <li class="nav-auth-action">
                         {% if request.session.username %}
-                            <a href="{% url 'logout' %}" class="btn-vetnest-outline" style="text-align: center;">Logout ({{ request.session.username }})</a>
+                            <div class="profile-menu-container">
+                                <button
+                                    type="button"
+                                    class="profile-menu-toggle"
+                                    id="profileMenuBtn"
+                                    aria-label="Open profile menu"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                    aria-controls="profileMenu"
+                                >
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <circle cx="12" cy="8" r="4"></circle>
+                                        <path d="M5 21a7 7 0 0 1 14 0"></path>
+                                    </svg>
+                                </button>
+                                <div class="profile-dropdown" id="profileMenu" hidden>
+                                    <span class="profile-dropdown-name">{{ request.session.username }}</span>
+                                    {% if request.session.role == 'admin' %}
+                                        <a href="{% url 'edit_admin_profile' %}">Edit Profile</a>
+                                    {% else %}
+                                        <a href="{% url 'edit_profile' %}">Edit Profile</a>
+                                    {% endif %}
+                                    <a class="profile-logout" href="{% url 'logout' %}">Log Out</a>
+                                </div>
+                            </div>
                         {% else %}
-                            <a href="{% url 'login' %}" class="btn-vetnest-outline" style="text-align: center;">Sign In</a>
+                            <a href="{% url 'login' %}" class="btn-vetnest-orange">
+                                <span>Sign In</span>
+                                <span class="arrow-circle">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </span>
+                            </a>
                         {% endif %}
-                        <a href="{% url 'create_appointment' %}" class="btn-vetnest-orange" style="justify-content: center;">
-                            <span>Book Appointment</span>
-                            <span class="arrow-circle">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                    <polyline points="12 5 19 12 12 19"></polyline>
-                                </svg>
-                            </span>
-                        </a>
                     </li>
                 </ul>
             </nav>
-
-            <!-- Navigation Actions on Right (Desktop) -->
-            <div class="nav-actions">
-                {% if request.session.username %}
-                    <a href="{% url 'logout' %}" class="btn-vetnest-outline" title="Sign Out">Logout</a>
-                {% else %}
-                    <a href="{% url 'login' %}" class="btn-vetnest-outline">Sign In</a>
-                {% endif %}
-
-                <a href="{% url 'create_appointment' %}" class="btn-vetnest-orange">
-                    <span>Get in Touch</span>
-                    <span class="arrow-circle">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </span>
-                </a>
-            </div>
         </header>
 
         <!-- Django Flash Messages -->
@@ -129,24 +150,59 @@
 
         <!-- Global Site Footer -->
         <footer class="site-footer">
-            <div style="display: flex; align-items: center; gap: 8px;">
-                <div class="brand-icon-pill" style="width: 26px; height: 26px;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 14c-1.66 0-3 1.34-3 3 0 1.66 1.34 3 3 3s3-1.34 3-3c0-1.66-1.34-3-3-3zm-6-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-9.5-5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
-                    </svg>
+            <div class="footer__inner">
+                <div class="footer__brand">
+                    <a href="{% url 'index' %}" class="footer__brand-link">
+                        <span class="brand-icon-pill footer__brand-icon" aria-hidden="true">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 14c-1.66 0-3 1.34-3 3 0 1.66 1.34 3 3 3s3-1.34 3-3c0-1.66-1.34-3-3-3zm-6-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-9.5-5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
+                        </span>
+                        <span class="footer__logo">VETNEST</span>
+                    </a>
+                    <p>Compassionate veterinary care for happier, healthier pets.</p>
                 </div>
-                <strong>VETNEST Veterinary Healthcare</strong> &bull; &copy; {% now "Y" %} All Rights Reserved
+
+                <nav class="footer__col" aria-label="Explore">
+                    <h2>Explore</h2>
+                    <a href="{% url 'index' %}">Home</a>
+                    <a href="{% url 'about_us' %}">About Us</a>
+                    <a href="{% url 'services' %}">Our Services</a>
+                    <a href="{% url 'gallery' %}">Gallery</a>
+                </nav>
+
+                <nav class="footer__col" aria-label="Pet care">
+                    <h2>Pet Care</h2>
+                    <a href="{% url 'create_appointment' %}">Book an Appointment</a>
+                    <a href="{% url 'contact' %}">Contact the Clinic</a>
+                    {% if request.session.username %}
+                        {% if request.session.role == 'admin' %}
+                            <a href="{% url 'admin_dashboard' %}">Admin Dashboard</a>
+                        {% else %}
+                            <a href="{% url 'dashboard' %}">My Dashboard</a>
+                            <a href="{% url 'appointments' %}">My Bookings</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'login' %}">Staff Sign In</a>
+                    {% endif %}
+                </nav>
+
+                <div class="footer__col footer__contact">
+                    <h2>Visit or Say Hello</h2>
+                    <a href="https://maps.google.com/?q=Kochi,Kerala" target="_blank" rel="noopener noreferrer">
+                        Kochi, Kerala, India
+                    </a>
+                    <a href="tel:+919876543210">+91 98765 43210</a>
+                    <a href="mailto:info@vetnest.com">info@vetnest.com</a>
+                    <p>Mon – Sat: 8:00 AM – 8:00 PM<br>Sunday: Emergency on-call</p>
+                </div>
             </div>
-            <ul class="footer-links">
-                <li><a href="{% url 'index' %}" class="footer-link">Home</a></li>
-                <li><a href="{% url 'about_us' %}" class="footer-link">About Us</a></li>
-                <li><a href="{% url 'services' %}" class="footer-link">Services</a></li>
-                <li><a href="{% url 'gallery' %}" class="footer-link">Gallery</a></li>
-                <li><a href="{% url 'contact' %}" class="footer-link">Contact</a></li>
-                {% if not request.session.username %}
-                    <li><a href="{% url 'login' %}" class="footer-link">Admin / Staff</a></li>
-                {% endif %}
-            </ul>
+            <div class="footer__bottom">
+                <div class="footer__bottom-inner">
+                    <span>&copy; {% now "Y" %} VETNEST Veterinary Healthcare. All rights reserved.</span>
+                    <a href="{% url 'contact' %}">We’re here for you and your pets.</a>
+                </div>
+            </div>
         </footer>
 
     </div>
@@ -156,10 +212,89 @@
         document.addEventListener('DOMContentLoaded', function() {
             var toggleBtn = document.getElementById('mobileNavBtn');
             var navMenu = document.getElementById('navMenu');
+            var profileMenuBtn = document.getElementById('profileMenuBtn');
+            var profileMenu = document.getElementById('profileMenu');
+
+            if (profileMenuBtn && profileMenu) {
+                function closeProfileMenu() {
+                    profileMenu.hidden = true;
+                    profileMenuBtn.setAttribute('aria-expanded', 'false');
+                    profileMenuBtn.setAttribute('aria-label', 'Open profile menu');
+                }
+
+                profileMenuBtn.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    var isOpen = !profileMenu.hidden;
+                    profileMenu.hidden = isOpen;
+                    profileMenuBtn.setAttribute('aria-expanded', String(!isOpen));
+                    profileMenuBtn.setAttribute(
+                        'aria-label',
+                        isOpen ? 'Open profile menu' : 'Close profile menu'
+                    );
+                });
+
+                document.addEventListener('click', function(event) {
+                    if (!profileMenu.contains(event.target) &&
+                        !profileMenuBtn.contains(event.target)) {
+                        closeProfileMenu();
+                    }
+                });
+
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && !profileMenu.hidden) {
+                        closeProfileMenu();
+                        profileMenuBtn.focus();
+                    }
+                });
+            }
+
             if (toggleBtn && navMenu) {
+                var navLinks = navMenu.querySelectorAll('.nav-link');
+                var activeLink = navMenu.querySelector('.nav-link.active');
+                var bubble = document.createElement('span');
+                bubble.className = 'nav-bubble';
+                bubble.setAttribute('aria-hidden', 'true');
+                navMenu.insertBefore(bubble, navMenu.firstChild);
+
+                function moveBubble(link) {
+                    if (!link || window.matchMedia('(max-width: 1280px)').matches) {
+                        bubble.style.opacity = '0';
+                        return;
+                    }
+
+                    var menuRect = navMenu.getBoundingClientRect();
+                    var linkRect = link.getBoundingClientRect();
+                    bubble.style.width = linkRect.width + 'px';
+                    bubble.style.height = linkRect.height + 'px';
+                    bubble.style.transform = 'translate3d(' +
+                        (linkRect.left - menuRect.left) + 'px, ' +
+                        (linkRect.top - menuRect.top) + 'px, 0)';
+                    bubble.style.opacity = '1';
+                }
+
+                navLinks.forEach(function(link) {
+                    link.addEventListener('mouseenter', function() {
+                        moveBubble(link);
+                    });
+                    link.addEventListener('focus', function() {
+                        moveBubble(link);
+                    });
+                });
+
+                navMenu.addEventListener('mouseleave', function() {
+                    moveBubble(activeLink);
+                });
+
                 toggleBtn.addEventListener('click', function() {
                     navMenu.classList.toggle('is-open');
                 });
+
+                window.addEventListener('resize', function() {
+                    moveBubble(navMenu.querySelector('.nav-link:hover') ||
+                        navMenu.querySelector('.nav-link:focus') || activeLink);
+                });
+
+                moveBubble(activeLink);
             }
         });
     </script>

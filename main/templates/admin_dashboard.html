@@ -15,46 +15,6 @@
             </p>
         </div>
 
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <a href="{% url 'edit_admin_profile' %}" class="btn-vetnest-outline">Admin Profile</a>
-            <a href="{% url 'add_service' %}" class="btn-vetnest-orange">
-                <span>+ Add Service</span>
-                <span class="arrow-circle">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                </span>
-            </a>
-            <a href="{% url 'logout' %}" class="btn-vetnest-outline" style="color: var(--color-error);">Sign Out</a>
-        </div>
-    </div>
-
-    <!-- Admin Navigation Links Toolbar -->
-    <div class="admin-toolbar">
-        <div style="font-weight: 700; font-size: 0.88rem; color: var(--color-text);">
-            Quick Operations:
-        </div>
-        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-            <a href="{% url 'admin_pending' %}" class="btn-vetnest-outline" style="font-size: 0.82rem; padding: 6px 14px;">
-                Pending ({{ pending_appointments }})
-            </a>
-            <a href="{% url 'admin_appointments' %}" class="btn-vetnest-outline" style="font-size: 0.82rem; padding: 6px 14px;">
-                Approved ({{ total_appointments }})
-            </a>
-            <a href="{% url 'completed_appointments' %}" class="btn-vetnest-outline" style="font-size: 0.82rem; padding: 6px 14px;">
-                Completed ({{ completed_appointments_count }})
-            </a>
-            <a href="{% url 'admin_cancelled' %}" class="btn-vetnest-outline" style="font-size: 0.82rem; padding: 6px 14px;">
-                Cancelled ({{ cancelled_appointments }})
-            </a>
-            <a href="{% url 'feedbacks' %}" class="btn-vetnest-outline" style="font-size: 0.82rem; padding: 6px 14px;">
-                Feedback ({{ total_contacts }})
-            </a>
-            <a href="{% url 'admin_users' %}" class="btn-vetnest-outline" style="font-size: 0.82rem; padding: 6px 14px;">
-                User Accounts ({{ total_users }})
-            </a>
-        </div>
     </div>
 
     <!-- 4 Real Metric Stat Widgets Matching Panel 11 -->
@@ -113,10 +73,6 @@
             </div>
         </div>
 
-        <div style="display: flex; gap: 10px;">
-            <a href="{% url 'admin_users' %}" class="btn-vetnest-outline" style="font-size: 0.85rem;">Manage Users</a>
-            <a href="{% url 'feedbacks' %}" class="btn-vetnest-outline" style="font-size: 0.85rem;">View Messages</a>
-        </div>
     </div>
 </div>
 {% endblock %}

@@ -17,6 +17,8 @@ A premium, full-featured web application for veterinary clinics, pet owners, and
   - `dog_hero.jpg`: Dominant, polished golden retriever hero image on homepage.
   - `vet_holding_dog.jpg`: Prominent photograph in About Us and clinic introduction sections.
   - `vetnest_template.jpg`: Visual blueprint reference.
+  - `images/clinic/`: Additional clinic and veterinary-team photographs.
+  - `images/services/`: Service and gallery photography.
 
 ---
 

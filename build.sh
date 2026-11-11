@@ -10,3 +10,9 @@ python manage.py collectstatic --no-input
 
 # Apply database migrations
 python manage.py migrate
+
+# Load existing data (runs once, safe to repeat)
+if [ -f data.json ]; then
+  python manage.py loaddata data.json
+  echo "Data loaded successfully"
+fi
